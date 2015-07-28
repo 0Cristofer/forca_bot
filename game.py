@@ -40,6 +40,7 @@ class Jogo:
     palavra = palavras.get_palavra(randint(0,2))
 
     def comandos(self, uId, uName, chat_id, text):
+        rpl = []
         state = getGame(chat_id)
         if text.startswith('/'):
             if text.startswith('/newgame') or text.startswith('/newgame@forca_bot'):
@@ -58,8 +59,8 @@ class Jogo:
             elif text.startswith('/help') or text.startswith('/help@forca_bot'):
                 str1 = 'Sou o Forca_bot, para comecar um jogo use o comando /newgame\nnao sei se vou dar toda a help aqui ou varias helps dependendo do contexto'
                 rpl = [str1]
+            else:
+                rpl = ['oi']
         else:
             rpl = ['oi']
-        #for i in range(0, len(rpl)):
-        #    print rpl[i]
         return rpl

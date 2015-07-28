@@ -21,7 +21,7 @@ TOKEN = '123881753:AAEQXNdXS9fMLIFjzlVkpQw9mMd40vvChBw'
 
 BASE_URL = 'https://api.telegram.org/bot' + TOKEN + '/'
 
-Jogo = game.Jogo
+Jogo = game.Jogo()
 
 # ================================
 
@@ -110,7 +110,7 @@ class WebhookHandler(webapp2.RequestHandler):
 
             logging.info('send response:')
             logging.info(resp)
-        pala = Jogo.comandos(Jogo, uId, uName, chat_id, text)
+        pala = Jogo.comandos(uId, uName, chat_id, text)
         for i in range(0, len(pala)):
             reply(pala[i])
 #-------------------
