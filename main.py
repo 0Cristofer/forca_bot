@@ -110,9 +110,10 @@ class WebhookHandler(webapp2.RequestHandler):
 
             logging.info('send response:')
             logging.info(resp)
-        pala = Jogo.comandos(uId, uName, chat_id, text)
-        for i in range(0, len(pala)):
-            reply(pala[i])
+
+        send = Jogo.comandos(uId, uName, chat_id, text)
+        for i in range(0, len(send)):
+            reply(send[i])
 #-------------------
 app = webapp2.WSGIApplication([
     ('/me', MeHandler),

@@ -43,24 +43,31 @@ class Jogo:
         rpl = []
         state = getGame(chat_id)
         if text.startswith('/'):
-            if text.startswith('/newgame') or text.startswith('/newgame@forca_bot'):
-                if state:
+            if text.startswith('/novojogo') or text.startswith('/novojogo@forca_bot'):
+                if state == False:
                     str1 = 'Comecando um novo jogo!'
                     setGame(chat_id,True)
-                    str2 = 'Vamos comecar definindo os jogadores? Quem quiser participar do jogo envie um /entrar :D'
+                    str2 = 'Vamos comecar definindo os jogadores\nQuem quiser participar dessa rodada envie um /entrar :D'
                     rpl = [str1, str2]
                     #Continuar
                 else:
-                    str1 = 'Existe um jogo em andamento neste chat!\nCaso voce queira abandonar ele use o comando /cancelar_jogo'
+                    str1 = 'Existe um jogo em andamento neste chat!\nCaso voce queira abandonar ele use o comando /cancelar'
                     rpl = [str1]
             elif text.startswith('/entrar') or text.startswith('/entrar@forca_bot'):
-                    str1 = 'Certo, '+uName+' voce vai participar do jogo'
-                    rpl = [str1]
+                str1 = 'Certo, '+uName+' voce vai participar desta rodada'
+                rpl = [str1]
+            elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
+                if state:
+                    str1 = 'Voce cancelou o jogo' #implementar cancelamento por votacao
+                    setGame(chat_id,False)
+                else:
+                    str1 = 'Nao existe nenhum jogo ativo! Comece um com o comando /novojogo'
+                rpl = [str1]
             elif text.startswith('/help') or text.startswith('/help@forca_bot'):
                 str1 = 'Sou o Forca_bot, para comecar um jogo use o comando /newgame\nnao sei se vou dar toda a help aqui ou varias helps dependendo do contexto'
                 rpl = [str1]
             else:
-                rpl = ['oi']
+                rpl = ['Comando nao reconhecido']
         else:
-            rpl = ['oi']
+            rpl = ['Nao eh um comando, lembre se que comandos comecam com /']
         return rpl
