@@ -95,7 +95,7 @@ class WebhookHandler(webapp2.RequestHandler):
                     'chat_id': str(chat_id),
                     'text': msg.encode('utf-8'),
                     'disable_web_page_preview': 'true',
-                    'reply_to_message_id': str(message_id),
+                    #'reply_to_message_id': str(message_id),
                 })).read()
             elif img:
                 resp = multipart.post_multipart(BASE_URL + 'sendPhoto', [
@@ -110,7 +110,7 @@ class WebhookHandler(webapp2.RequestHandler):
 
             logging.info('send response:')
             logging.info(resp)
-            
+
         send = Jogo.comandos(uId, uName, chat_id, text)
         for i in range(0, len(send)):
             reply(send[i])
