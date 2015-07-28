@@ -1,63 +1,39 @@
 #imports
 import main
-import palavras
+import dbs
 from random import randint
 from google.appengine.ext import ndb
 
-#Classes no Ndb
-#Classes para GameStates =======================================
-class GameStates(ndb.Model):
-    PreState = ndb.BooleanProperty(indexed=False, default=False)
-    State = ndb.BooleanProperty(indexed=False, default=False)
+def updateList(palavras, dicas):
+    dbs.updateList(palavras, dicas)
+
+def getPalavra(k):
+    return dbs.getPalavra(k)
 
 def setPreGame(chat_id, status):
-    es = GameStates.get_or_insert(str(chat_id))
-    es.PreState = status
-    es.put()
+    dbs.setPreGame(chat_id, status)
 
 def getPreGame(chat_id):
-    es = GameStates.get_by_id(str(chat_id))
-    if es:
-        return es.PreState
-    return False
+    return dbs.getPreGame(chat_id)
 
-def setInGame(ndb.Model,status):
-    es = GameStates.get_or_insert(str(chat_id))
-    es.State = status
-    es.put()
+def setInGame(chat_id, status):
+    dbs.setInGame(chat_id, status)
 
-def getInGame(ndb.Model):
-    es = GameStates.get_by_id(str(chat_id))
-    if es:
-        return es.State
-    return False
-
-#Classes para lista de jogares ==================================
-class Players(ndb.Model):
-    jogadores = [ndb.StringProperty(indexed=False, default=False)]
-    nomes = [ndb.StringProperty(indexed=False, default=False)]
+def getInGame(chat_id):
+    return dbs.getInGame(chat_id)
 
 def addPlayer(chat_id, uId, uName):
-    es = Players.get_or_insert(str(chat_id))
-    es.jogadores.append(uId)
-    es.nomes.append(uName)
-    es.put()
+    dbs.addPlayer(chat_id, uId, uName)
 
-def getPlayer(chat_id,uId):
-    es = Players.get_by_id(str(chat_id))
-    pos = es.jogadores.index(uId)
-    nome = es.jogadores[pos]
-    return nome
+def getPlayer(chat_id, uId):
+    return dbs.getPlayer(chat_id, uId)
 
 def getPlayers(chat_id):
-    es = Players.get_by_id(str(chat_id))
-    nomes = es.nomes
-    return nomes
+    return dbs.getPlayers(chat_id)
 
 class Jogo:
-    update = palavras.update_list
-    update(palavras.palavras, palavras.dicas)
-    palavra = palavras.get_palavra(randint(0,2))
+    updateList(dbs.palavras, dbs.dicas)
+    palavra = getPalavra(randint(0,2))
 
     def comandos(self, uId, uName, chat_id, text):
         rpl = []
