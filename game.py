@@ -40,6 +40,7 @@ class Jogo:
         PreState = getPreGame(chat_id)
         State = getInGame(chat_id)
         if (State == False):
+            nomes = getPlayers(chat_id)
             if text.startswith('/'):
                 if text.startswith('/novojogo') or text.startswith('/novojogo@forca_bot'):
                     if PreState == False:
@@ -57,17 +58,17 @@ class Jogo:
                     addPlayer(chat_id, uId, uName)
                     str1 = 'Certo, '+uName+' voce vai participar desta rodada'
                     rpl = [str1]
-                elif text.startswith('/fechar') or text.startswith('/fechar@forca_bot'):
-                    nomes = getPlayers(chat_id)
+                elif text.startswith('/fecharJogo') or text.startswith('/fecharJogo@forca_bot'):
                     str1 = 'Grupo de participantes fechados! Jogarao nesta rodada:'
                     rpl = [str1]
                     for i in range(1,len(nomes)):
                         rpl.append(nomes[i])
+                    setInGame(chat_id,True)
                     rpl.append('O jogo vai comecar agora!') #Mudar talvez
                 elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
                     if PreState:
                         str1 = 'Voce cancelou o jogo' #implementar cancelamento por votacao
-                        setGame(chat_id,False)
+                        setPreGame(chat_id,False)
                     else:
                         str1 = 'Nao existe nenhum jogo ativo! Comece um com o comando /novojogo'
                     rpl = [str1]
@@ -79,13 +80,14 @@ class Jogo:
             else:
                 rpl = ['Nao eh um comando, lembre se que comandos comecam com /']
         else: #Existe um jogo em andamento
+            nomes = getPlayers(chat_id)
             if text.startswith('/help') or text.startswith('/help@forca_bot'):
                 str1 = 'O jogo esta em andamento, aqui vao estar varias ajudas hue'
                 rpl = [str1]
             elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'): #Mudar, sei la
                 if uName == nomes[1]:
                     str1 = 'O administador cancelou jogo que estava em andamento!'
-                    State = False
+                    setInGame(chat_id,False)
                     rpl = [str1]
                 else:
                     str1 = 'Somente o administrador do jogo pode cancelar!\nVoce nao eh administrador!'
