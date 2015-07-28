@@ -110,7 +110,7 @@ class WebhookHandler(webapp2.RequestHandler):
 
             logging.info('send response:')
             logging.info(resp)
-
+            
         send = Jogo.comandos(uId, uName, chat_id, text)
         for i in range(0, len(send)):
             reply(send[i])

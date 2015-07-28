@@ -36,7 +36,8 @@ def getPlayer(chat_id,uId):
 
 def getPlayers(chat_id):
     es = Players.get_by_id(str(chat_id))
-    return es.nomes
+    nomes = es.nomes
+    return nomes
 
 class Jogo:
     update = palavras.update_list
@@ -46,7 +47,6 @@ class Jogo:
     def comandos(self, uId, uName, chat_id, text):
         rpl = []
         state = getGame(chat_id)
-        nomes = getPlayers(chat_id)
         if text.startswith('/'):
             if text.startswith('/novojogo') or text.startswith('/novojogo@forca_bot'):
                 if state == False:
@@ -55,10 +55,6 @@ class Jogo:
                     str2 = 'Vamos comecar definindo os jogadores\nQuem quiser participar dessa rodada envie um /entrar :D'
                     str3 = 'Para fechar o grupo de participantes mande um /fechar Administador'
                     rpl = [str1, str2, str3]
-                    str1 = 'Comecando um novo jogo!'
-                    setGame(chat_id,True)
-                    str2 = 'Vamos comecar definindo os jogadores\nQuem quiser participar dessa rodada envie um /entrar :D'
-                    rpl = [str1, str2]
                     #Continuar
                 else:
                     str1 = 'Existe um jogo em andamento neste chat!\nCaso voce queira abandonar ele use o comando /cancelar'
@@ -68,12 +64,11 @@ class Jogo:
                 str1 = 'Certo, '+uName+' voce vai participar desta rodada'
                 rpl = [str1]
             elif text.startswith('/fechar') or text.startswith('/fechar@forca_bot'):
-                str1 = 'Grupo de participantes fechados! Jogaram nesta rodada:'
+                nomes = getPlayers(chat_id)
+                str1 = 'Grupo de participantes fechados! Jogarao nesta rodada:'
                 rpl = [str1]
-                for i in range(0,len(nomes)):
+                for i in range(1,len(nomes)):
                     rpl.append(nomes[i])
-                str1 = 'Certo, '+uName+' voce vai participar desta rodada'
-                rpl = [str1]
             elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
                 if state:
                     str1 = 'Voce cancelou o jogo' #implementar cancelamento por votacao
