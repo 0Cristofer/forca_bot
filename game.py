@@ -44,7 +44,7 @@ class Jogo:
                 if text.startswith('/novojogo') or text.startswith('/novojogo@forca_bot'):
                     if PreState == False:
                         str1 = 'Comecando um novo jogo! Voce sera o administrador dessa rodada '+uName
-                        setGame(chat_id,True)
+                        setPreGame(chat_id,True)
                         str2 = 'Vamos comecar definindo os jogadores\nQuem quiser participar dessa rodada envie um /entrar :D'
                         str3 = 'Para fechar o grupo de participantes mande um /fechar Administador'
                         addPlayer(chat_id, uId, uName)
@@ -78,9 +78,16 @@ class Jogo:
                     rpl = ['Comando nao reconhecido']
             else:
                 rpl = ['Nao eh um comando, lembre se que comandos comecam com /']
-            return rpl
         else: #Existe um jogo em andamento
-            if text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'): #Mudar, sei la
-                str1 = 'O jogo que estava em andamento foi cancelado!'
+            if text.startswith('/help') or text.startswith('/help@forca_bot'):
+                str1 = 'O jogo esta em andamento, aqui vao estar varias ajudas hue'
                 rpl = [str1]
+            elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'): #Mudar, sei la
+                if uName == nomes[1]:
+                    str1 = 'O administador cancelou jogo que estava em andamento!'
+                    State = False
+                    rpl = [str1]
+                else:
+                    str1 = 'Somente o administrador do jogo pode cancelar!\nVoce nao eh administrador!'
+                    rpl = [str1]
         return rpl

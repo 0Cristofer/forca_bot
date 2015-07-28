@@ -38,12 +38,12 @@ def getPreGame(chat_id):
         return es.PreState
     return False
 
-def setInGame(ndb.Model,status):
+def setInGame(chat_id,status):
     es = GameStates.get_or_insert(str(chat_id))
     es.State = status
     es.put()
 
-def getInGame(ndb.Model):
+def getInGame(chat_id):
     es = GameStates.get_by_id(str(chat_id))
     if es:
         return es.State
