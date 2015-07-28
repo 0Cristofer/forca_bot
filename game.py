@@ -1,16 +1,13 @@
 #imports
-import main
 import palavras
+from random import randint
 from google.appengine.ext import ndb
 
-class NewGame(ndb.Model):
+update = palavras.update_list
 
-class Jogo:
-    keys = palavras.update_list(palavras.palavras, palavras.dicas)
-    WebHook = main.WebhookHandler()
-    reply = WebHook.reply
-    uId = WebHook.uId
-    text = WebHook.text.lower()
-
+def comandos(self, text):
     if text.startswith('/'):
         if (text.startswith('/newgame'))  or (text.startswith('/newgame@forca_bot')):
+            update(self, palavras.palavras, palavras.dicas)
+            pala = palavras.get_palavra(self, randint(1,3))
+            return pala

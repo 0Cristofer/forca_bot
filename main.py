@@ -14,6 +14,9 @@ from google.appengine.api import urlfetch
 from google.appengine.ext import ndb
 import webapp2
 
+#game imports
+import game
+
 TOKEN = '123881753:AAEQXNdXS9fMLIFjzlVkpQw9mMd40vvChBw'
 
 BASE_URL = 'https://api.telegram.org/bot' + TOKEN + '/'
@@ -38,7 +41,6 @@ def getEnabled(chat_id):
     if es:
         return es.enabled
     return False
-
 
 # ================================
 
@@ -77,15 +79,16 @@ class WebhookHandler(webapp2.RequestHandler):
         text = message.get('text')
         fr = message.get('from')
         chat = message['chat']
-        chat_id = chat['id']
+        chat_id = chat['id'] #gets chat id
         user_id = message['from']
         uId = user_id.get('id')    #gets user id
+        uName = user_id.get('first_name') #gets user first name
 
         if not text:
             logging.info('no text')
             return
 
-        def reply(self, msg=None, img=None):
+        def reply(msg=None, img=None):
             if msg:
                 resp = urllib2.urlopen(BASE_URL + 'sendMessage', urllib.urlencode({
                     'chat_id': str(chat_id),
@@ -106,8 +109,9 @@ class WebhookHandler(webapp2.RequestHandler):
 
             logging.info('send response:')
             logging.info(resp)
-            jogo = game()
-            jogo
+        reply('oi')
+        pala = game.comandos(self, text)
+        reply(pala[0])
 #-------------------
 app = webapp2.WSGIApplication([
     ('/me', MeHandler),
