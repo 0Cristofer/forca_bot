@@ -50,16 +50,24 @@ class Jogo:
         if text.startswith('/'):
             if text.startswith('/novojogo') or text.startswith('/novojogo@forca_bot'):
                 if state == False:
+<<<<<<< HEAD
                     str1 = 'Comecando um novo jogo! Voce sera o administrador dessa rodada '+uName
                     setGame(chat_id,True)
                     str2 = 'Vamos comecar definindo os jogadores\nQuem quiser participar dessa rodada envie um /entrar :D'
                     str3 = 'Para fechar o grupo de participantes mande um /fechar Administador'
                     rpl = [str1, str2, str3]
+=======
+                    str1 = 'Comecando um novo jogo!'
+                    setGame(chat_id,True)
+                    str2 = 'Vamos comecar definindo os jogadores\nQuem quiser participar dessa rodada envie um /entrar :D'
+                    rpl = [str1, str2]
+>>>>>>> upstream/master
                     #Continuar
                 else:
                     str1 = 'Existe um jogo em andamento neste chat!\nCaso voce queira abandonar ele use o comando /cancelar'
                     rpl = [str1]
             elif text.startswith('/entrar') or text.startswith('/entrar@forca_bot'):
+<<<<<<< HEAD
                 addPlayer(chat_id, uId, uName)
                 str1 = 'Certo, '+uName+' voce vai participar desta rodada'
                 rpl = [str1]
@@ -68,6 +76,10 @@ class Jogo:
                 rpl = [str1]
                 for i in range(0,len(nomes)):
                     rpl.append(nomes[i])
+=======
+                str1 = 'Certo, '+uName+' voce vai participar desta rodada'
+                rpl = [str1]
+>>>>>>> upstream/master
             elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
                 if state:
                     str1 = 'Voce cancelou o jogo' #implementar cancelamento por votacao
