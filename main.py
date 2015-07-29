@@ -1,6 +1,6 @@
-#Responsável pela comunicação do nosso código com o app engine (a sem melhor comentado)
+#Responsavel pela comunicação do nosso codigo com o app engine (a ser melhor comentado)
 
-#Imports necessários para codificação dos dados
+#Imports necessarios para codificação dos dados
 
 import StringIO
 import json
