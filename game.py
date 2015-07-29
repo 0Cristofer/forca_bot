@@ -34,9 +34,22 @@ def getPlayers(chat_id):
 def cleanPlayers(chat_id):
     dbs.cleanPlayers(chat_id)
 
+def setFirst(chat_id, status):
+    dbs.setF(chat_id)
+
+def getFirst(chat_id):
+    return dbs.getFirst(chat_id)
+
 class Jogo:
     updateList(dbs.palavras, dbs.dicas)
     palavra = getPalavra(randint(0,2))
+
+    """def getF(self, chat_id):
+        return getFirst(chat_id)
+
+    def setF(self, chat_id, status):
+        setFirst(chat_id, status)
+        addPlayer(chat_id, 'uId', 'uName')"""
 
     def comandos(self, uId, uName, chat_id, text):
         rpl = []
@@ -44,6 +57,7 @@ class Jogo:
         state = getInGame(chat_id)
         nomes = getPlayers(chat_id)
         uIds = getuIds(chat_id)
+        print uId
         #print uIds[1]
         if text.startswith('/'):
             if state == False:
@@ -66,13 +80,17 @@ class Jogo:
                         str1 = 'Existe um jogo em modo de entrada, se quiser entrar digite /entrar'
                         rpl = [str1]
                     elif text.startswith('/entrar') or text.startswith('/entrar@forca_bot'):
-                        if (uId in uIds):
+                        """if uId in uIds:
                             str1 = 'Voce ja participa desse jogo'
                             rpl = [str1]
                         else:
                             addPlayer(chat_id, uId, uName)
                             str1 = 'Certo, '+uName+' voce vai participar desta rodada'
-                            rpl = [str1]
+                            rpl = [str1]"""
+                        for i in range(len(uIds)):
+                            if uIds[i] == uId:
+                                rpl.append(uId)
+                                print uIds[i]
                     elif text.startswith('/fecharjogo') or text.startswith('/fecharjogo@forca_bot'):
                         if uId == uIds[1]:
                             str1 = 'Grupo de participantes fechados! Jogarao nesta rodada:'

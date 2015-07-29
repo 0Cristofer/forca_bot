@@ -22,6 +22,17 @@ def getPalavra(k):
     ped = [palavra, dica]
     return ped
 
+"""class First(ndb.Model):
+    first = ndb.BooleanProperty(indexed=False, default=False)
+
+def setFirst(chat_id, status):
+    es = First.get_or_insert(str(chat_id))
+    es.first = status
+    es.put()
+
+def getFirst(chat_id):
+    es = First.get_by_id(str(chat_id))
+    return es.first"""
 
 class GameStates(ndb.Model):
     PreState = ndb.BooleanProperty(indexed=False, default=False)
@@ -62,14 +73,18 @@ def addPlayer(chat_id, uId, uName):
 
 def getuIds(chat_id):
     es = Players.get_by_id(str(chat_id))
-    uIds = es.jogadores
-    return uIds
+    if es:
+        return es.jogadores
+    return []
 
 def getPlayers(chat_id):
     es = Players.get_by_id(str(chat_id))
-    nomes = es.nomes
-    return nomes
+    if es:
+        return es.nomes
+    return []
 
 def cleanPlayers(chat_id):
-    ndb.delete_multi(
-        Players.query().fetch(keys_only=True))
+    es = Players.get_or_insert(str(chat_id))
+    es.jogadores = ['jogadores']
+    es.nomes = ['nomes']
+    es.put()
