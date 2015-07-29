@@ -1,47 +1,55 @@
-#imports
-import main
-import dbs
+#Contém a lógica do jogo
+
+#Importa os BDs
+
+import bds
+
+#Importa função que randomiza um int
+
 from random import randint
-from google.appengine.ext import ndb
+
+#Pega as funções dos BDs para poderem ser utilizadas nesse arquivo
 
 def updateList(palavras, dicas):
-    dbs.updateList(palavras, dicas)
+    bds.updateList(palavras, dicas)
 
 def getPalavra(k):
-    return dbs.getPalavra(k)
+    return bds.getPalavra(k)
 
 def setPreGame(chat_id, status):
-    dbs.setPreGame(chat_id, status)
+    bds.setPreGame(chat_id, status)
 
 def getPreGame(chat_id):
-    return dbs.getPreGame(chat_id)
+    return bds.getPreGame(chat_id)
 
 def setInGame(chat_id, status):
-    dbs.setInGame(chat_id, status)
+    bds.setInGame(chat_id, status)
 
 def getInGame(chat_id):
-    return dbs.getInGame(chat_id)
+    return bds.getInGame(chat_id)
 
 def addPlayer(chat_id, uId, uName):
-    dbs.addPlayer(chat_id, uId, uName)
+    bds.addPlayer(chat_id, uId, uName)
+
+def setAdm(chat_id, uId):
+    bds.setAdm(chat_id, uId)
 
 def getuIds(chat_id):
-    return dbs.getuIds(chat_id)
+    return bds.getuIds(chat_id)
 
 def getPlayers(chat_id):
-    return dbs.getPlayers(chat_id)
+    return bds.getPlayers(chat_id)
+
+def getAdm(chat_id):
+    return bds.getAdm(chat_id)
 
 def cleanPlayers(chat_id):
-    dbs.cleanPlayers(chat_id)
+    bds.cleanPlayers(chat_id)
 
-def setFirst(chat_id, status):
-    dbs.setF(chat_id)
-
-def getFirst(chat_id):
-    return dbs.getFirst(chat_id)
+#Classe que contém toda lógica do jogo (a ser melhor comentada)
 
 class Jogo:
-    updateList(dbs.palavras, dbs.dicas)
+    updateList(bds.palavras, bds.dicas)
     palavra = getPalavra(randint(0,2))
 
     def comandos(self, uId, uName, chat_id, text):
@@ -50,6 +58,7 @@ class Jogo:
         state = getInGame(chat_id)
         nomes = getPlayers(chat_id)
         uIds = getuIds(chat_id)
+        adm = getAdm(chat_id)
         if text.startswith('/'):
             if state == False:
                 if preState == False:
@@ -58,6 +67,7 @@ class Jogo:
                         setPreGame(chat_id,True)
                         str2 = 'Vamos comecar definindo os jogadores\nQuem quiser participar dessa rodada envie um /entrar :D'
                         str3 = 'Para fechar o grupo de participantes mande um /fechar Administador'
+                        setAdm(chat_id, uId)
                         addPlayer(chat_id, uId, uName)
                         rpl = [str1, str2, str3]
                     elif text.startswith('/help') or text.startswith('/help@forca_bot'):
@@ -79,7 +89,7 @@ class Jogo:
                             str1 = 'Certo, '+uName+' voce vai participar desta rodada'
                             rpl = [str1]
                     elif text.startswith('/fecharjogo') or text.startswith('/fecharjogo@forca_bot'):
-                        if uId == uIds[1]:
+                        if uId == adm:
                             str1 = 'Grupo de participantes fechados! Jogarao nesta rodada:'
                             rpl = [str1]
                             for i in range(1,len(nomes)):
@@ -90,7 +100,7 @@ class Jogo:
                             str1 = 'Voce nao tem autorizacao para fechar o jogo\nApenas o administrador pode fazer isso'
                             rpl = [str1]
                     elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
-                        if uId == uIds[1]:
+                        if uId == adm:
                             str1 = 'Voce cancelou o jogo' #implementar cancelamento por votacao
                             setPreGame(chat_id, False)
                             setInGame(chat_id, False)
@@ -107,7 +117,7 @@ class Jogo:
                         rpl = [str1]
             else:
                 if text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
-                    if uId == uIds[1]:
+                    if uId == adm:
                         str1 = 'Voce cancelou o jogo' #implementar cancelamento por votacao
                         setPreGame(chat_id, False)
                         setInGame(chat_id, False)

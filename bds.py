@@ -1,4 +1,10 @@
+#Contem todo o gerenciamento do banco de dados
+
+#Importa os BDs da Google
+
 from google.appengine.ext import ndb
+
+#BD que grava as palavras
 
 palavras = ['teste','madalena','rodrigo schulz']
 dicas = ['Nome da variavel usado frequentemente','A professora complexa','Sem ressentimentos']
@@ -21,6 +27,8 @@ def getPalavra(k):
     dica = es.dica[k]
     ped = [palavra, dica]
     return ped
+
+#BD que guarda os estados de cada jogo
 
 class GameStates(ndb.Model):
     PreState = ndb.BooleanProperty(indexed=False, default=False)
@@ -48,15 +56,22 @@ def getInGame(chat_id):
         return es.State
     return False
 
-#Classes para lista de jogares ==================================
+#BD que grava os jogadores
+
 class Players(ndb.Model):
     jogadores = [ndb.StringProperty(indexed=True)]
     nomes = [ndb.StringProperty(indexed=True)]
+    adm = ndb.StringProperty(indexed=True)
 
 def addPlayer(chat_id, uId, uName):
     es = Players.get_or_insert(str(chat_id))
     es.jogadores.append(uId)
     es.nomes.append(uName)
+    es.put()
+
+def setAdm(chat_id, uId):
+    es = Players.get_or_insert(str(chat_id))
+    es.adm = uId
     es.put()
 
 def getuIds(chat_id):
@@ -70,6 +85,12 @@ def getPlayers(chat_id):
     if es:
         return es.nomes
     return []
+
+def getAdm(chat_id):
+    es = Players.get_by_id(str(chat_id))
+    if es:
+        return es.adm
+    return False
 
 def cleanPlayers(chat_id):
     es = Players.get_or_insert(str(chat_id))

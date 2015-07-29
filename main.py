@@ -1,3 +1,7 @@
+#Responsável pela comunicação do nosso código com o app engine (a sem melhor comentado)
+
+#Imports necessários para codificação dos dados
+
 import StringIO
 import json
 import logging
@@ -5,16 +9,19 @@ import random
 import urllib
 import urllib2
 
-# for sending images
+#Para enviar imagens
+
 from PIL import Image
 import multipart
 
-# standard app engine imports
+#Utilizados para fins da app engine
+
 from google.appengine.api import urlfetch
 from google.appengine.ext import ndb
 import webapp2
 
-#game imports
+#Importa o jogo em si
+
 import game
 
 TOKEN = '123881753:AAEQXNdXS9fMLIFjzlVkpQw9mMd40vvChBw'
