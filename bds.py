@@ -6,8 +6,7 @@ from google.appengine.ext import ndb
 
 #BD que grava as palavras
 
-palavras = ['teste','madalena','rodrigo schulz']
-dicas = ['Nome da variavel usado frequentemente','A professora complexa','Sem ressentimentos']
+
 
 class Palavras(ndb.Model):
     palavra = [ndb.StringProperty(indexed=False, default=False)]
