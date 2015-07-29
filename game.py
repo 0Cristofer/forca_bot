@@ -46,10 +46,10 @@ def cleanPlayers(chat_id):
 #Classe que contem toda logica do jogo (a ser melhor comentada)
 
 class Jogo:
-    updateList(bds.palavras, bds.dicas)
-    palavra = getPalavra(randint(0,2))
 
     def comandos(self, uId, uName, chat_id, text):
+        palavras = ['teste','madalena','rodrigo schulz']
+        dicas = ['Nome da variavel usado frequentemente','A professora complexa','Sem ressentimentos']
         rpl = []
         preState = getPreGame(chat_id)
         state = getInGame(chat_id)
@@ -68,6 +68,7 @@ class Jogo:
                         cleanPlayers(chat_id)
                         setAdm(chat_id, uId)
                         addPlayer(chat_id, uId, uName)
+                        updateList(palavras,dicas)
                         rpl = [str1, str2, str3]
                     elif text.startswith('/help') or text.startswith('/help@forca_bot'):
                         str1 = 'Nao existe jogo em andamento, utilize /novojogo para comecar e irei te guiando :)'
@@ -98,6 +99,9 @@ class Jogo:
                             setInGame(chat_id, False)
                             cleanPlayers(chat_id)
                             rpl = [str1]
+                        else:
+                            str1 = 'Voce nao tem autorizacao para fechar o jogo\nApenas o administrador pode fazer isso'
+                            rpl = [str1]
                     elif text.startswith('/fecharjogo') or text.startswith('/fecharjogo@forca_bot'):
                         if uId == adm:
                             str1 = 'Grupo de participantes fechados! Jogarao nesta rodada:'
@@ -106,10 +110,8 @@ class Jogo:
                                 rpl.append(nomes[i])
                             setInGame(chat_id,True)
                             rpl.append('O jogo vai comecar agora!') #Mudar talvez
-                            rpl.append('A palavra eh:'+palavra)
-                        else:
-                            str1 = 'Voce nao tem autorizacao para fechar o jogo\nApenas o administrador pode fazer isso'
-                            rpl = [str1]
+                            palavra = getPalavra(randint(0,2))
+                            rpl.append('A palavra eh: '+palavra[0])
                         else:
                             str1 = 'Voce nao tem autorizacao para cancelar o jogo\nApenas o administrador pode fazer isso'
                             rpl = [str1]
