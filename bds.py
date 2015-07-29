@@ -59,9 +59,9 @@ def getInGame(chat_id):
 #BD que grava os jogadores
 
 class Players(ndb.Model):
-    jogadores = [ndb.StringProperty(indexed=True)]
-    nomes = [ndb.StringProperty(indexed=True)]
-    adm = ndb.StringProperty(indexed=True)
+    jogadores = [ndb.StringProperty()]
+    nomes = [ndb.StringProperty()]
+    adm = ndb.StringProperty()
 
 def addPlayer(chat_id, uId, uName):
     es = Players.get_or_insert(str(chat_id))
@@ -94,6 +94,11 @@ def getAdm(chat_id):
 
 def cleanPlayers(chat_id):
     es = Players.get_or_insert(str(chat_id))
-    es.jogadores = ['jogadores']
-    es.nomes = ['nomes']
+    jog = es.jogadores
+    nom = es.nomes
+    for i in range(len(jog)):
+        es.jogadores.remove(jog[i])
+    for i in range(len(nom)):
+        es.nomes.remove(nom[i])
+    es.adm = False
     es.put()

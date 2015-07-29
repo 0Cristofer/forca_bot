@@ -61,12 +61,12 @@ class Jogo:
         adm = getAdm(chat_id)
         if text.startswith('/'):
             if state == False:
-                if preState == False:
+                if preState == False: #Bloco PreGame================================================
                     if text.startswith('/novojogo') or text.startswith('/novojogo@forca_bot'):
                         str1 = 'Comecando um novo jogo! Voce sera o administrador dessa rodada '+uName
                         setPreGame(chat_id,True)
                         str2 = 'Vamos comecar definindo os jogadores\nQuem quiser participar dessa rodada envie um /entrar :D'
-                        str3 = 'Para fechar o grupo de participantes mande um /fechar Administador'
+                        str3 = 'Para fechar o grupo de participantes mande um /fecharjogo Administador'
                         setAdm(chat_id, uId)
                         addPlayer(chat_id, uId, uName)
                         rpl = [str1, str2, str3]
@@ -76,6 +76,7 @@ class Jogo:
                     else:
                         str1 = 'Comando nao reconhecido no momento'
                         rpl = [str1]
+                #Fim do bloco PreGame ==============================================================
                 else:
                     if text.startswith('/novojogo') or text.startswith('/novojogo@forca_bot'):
                         str1 = 'Existe um jogo em modo de entrada, se quiser entrar digite /entrar'
