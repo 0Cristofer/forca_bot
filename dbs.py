@@ -22,18 +22,6 @@ def getPalavra(k):
     ped = [palavra, dica]
     return ped
 
-"""class First(ndb.Model):
-    first = ndb.BooleanProperty(indexed=False, default=False)
-
-def setFirst(chat_id, status):
-    es = First.get_or_insert(str(chat_id))
-    es.first = status
-    es.put()
-
-def getFirst(chat_id):
-    es = First.get_by_id(str(chat_id))
-    return es.first"""
-
 class GameStates(ndb.Model):
     PreState = ndb.BooleanProperty(indexed=False, default=False)
     State = ndb.BooleanProperty(indexed=False, default=False)

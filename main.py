@@ -110,16 +110,6 @@ class WebhookHandler(webapp2.RequestHandler):
 
             logging.info('send response:')
             logging.info(resp)
-        """first = Jogo.getF(chat_id)
-        if first:
-            send = Jogo.comandos(uId, uName, chat_id, text)
-            for i in range(0, len(send)):
-                reply(send[i])
-        else:
-             Jogo.setF(chat_id, True)
-             send = Jogo.comandos(uId, uName, chat_id, text)
-             for i in range(0, len(send)):
-                 reply(send[i])"""
         send = Jogo.comandos(uId, uName, chat_id, text)
         for i in range(0, len(send)):
             reply(send[i])
