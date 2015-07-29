@@ -67,6 +67,7 @@ class Jogo:
                         setPreGame(chat_id,True)
                         str2 = 'Vamos comecar definindo os jogadores\nQuem quiser participar dessa rodada envie um /entrar :D'
                         str3 = 'Para fechar o grupo de participantes mande um /fecharjogo Administador'
+                        cleanPlayers(chat_id)
                         setAdm(chat_id, uId)
                         addPlayer(chat_id, uId, uName)
                         rpl = [str1, str2, str3]
@@ -79,7 +80,7 @@ class Jogo:
                     else:
                         str1 = 'Comando nao reconhecido no momento'
                         rpl = [str1]
-                #Fim do bloco PreGame ==============================================================
+                #Fim do bloco PreGame ===   ===========================================================
                 else:
                     if text.startswith('/novojogo') or text.startswith('/novojogo@forca_bot'):
                         str1 = 'Existe um jogo em modo de entrada, se quiser entrar digite /entrar'
@@ -96,7 +97,7 @@ class Jogo:
                         if uId == adm:
                             str1 = 'Grupo de participantes fechados! Jogarao nesta rodada:'
                             rpl = [str1]
-                            for i in range(1,len(nomes)):
+                            for i in range(0,len(nomes)):
                                 rpl.append(nomes[i])
                             setInGame(chat_id,True)
                             rpl.append('O jogo vai comecar agora!') #Mudar talvez
@@ -105,7 +106,6 @@ class Jogo:
                             rpl = [str1]
                     elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
                         if uId == adm:
-                            print 'cancelar adm'
                             str1 = 'Voce cancelou o jogo' #implementar cancelamento por votacao
                             setPreGame(chat_id, False)
                             setInGame(chat_id, False)
@@ -118,7 +118,6 @@ class Jogo:
                         str1 = 'Nesse momento os a partida esta aberta para entrada de novos jogadores\nUtilize /entrar para participar'
                         rpl = [str1]
                     else:
-                        print 'entrei no else'
                         str1 = 'Comando nao reconhecido no momento'
                         rpl = [str1]
             else:
@@ -136,7 +135,6 @@ class Jogo:
                     str1 = 'Existe um jogo em andamento\nUse este comando /help e irei te guiando!'
                     rpl = [str1]
                 else:
-                    print 'else'
                     rpl = ['Comando nao reconhecido no momento']
         else:
             rpl = ['Nao eh um comando, lembre se que comandos comecam com /']

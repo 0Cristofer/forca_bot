@@ -96,9 +96,15 @@ def cleanPlayers(chat_id):
     es = Players.get_or_insert(str(chat_id))
     jog = es.jogadores
     nom = es.nomes
-    for i in range(len(jog)):
+    i = len(jog)
+    i -= 1
+    while(i >= 0):
         es.jogadores.remove(jog[i])
-    for i in range(len(nom)):
+        i -= 1
+    i = len(nom)
+    i -= 1
+    while(i >= 0):
         es.nomes.remove(nom[i])
-    es.adm = False
+        i -= 1
+    es.adm = ''
     es.put()
