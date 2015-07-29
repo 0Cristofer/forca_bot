@@ -1,15 +1,12 @@
-#Contém a lógica do jogo
+#Contem a logica do jogo
 
 #Importa os BDs
-
 import bds
 
-#Importa função que randomiza um int
-
+#Importa funcao que randomiza um int
 from random import randint
 
-#Pega as funções dos BDs para poderem ser utilizadas nesse arquivo
-
+#Pega as funcoes dos BDs para poderem ser utilizadas nesse arquivo
 def updateList(palavras, dicas):
     bds.updateList(palavras, dicas)
 
@@ -46,7 +43,7 @@ def getAdm(chat_id):
 def cleanPlayers(chat_id):
     bds.cleanPlayers(chat_id)
 
-#Classe que contém toda lógica do jogo (a ser melhor comentada)
+#Classe que contem toda logica do jogo (a ser melhor comentada)
 
 class Jogo:
     updateList(bds.palavras, bds.dicas)
@@ -61,7 +58,8 @@ class Jogo:
         adm = getAdm(chat_id)
         if text.startswith('/'):
             if state == False:
-                if preState == False: #Bloco PreGame================================================
+                #Bloco Inicial================================================
+                if preState == False:
                     if text.startswith('/novojogo') or text.startswith('/novojogo@forca_bot'):
                         str1 = 'Comecando um novo jogo! Voce sera o administrador dessa rodada '+uName
                         setPreGame(chat_id,True)
@@ -80,7 +78,7 @@ class Jogo:
                     else:
                         str1 = 'Comando nao reconhecido no momento'
                         rpl = [str1]
-                #Fim do bloco PreGame ===   ===========================================================
+                #Fim do bloco incial /// Comeco do bloco PreGame ===================================
                 else:
                     if text.startswith('/novojogo') or text.startswith('/novojogo@forca_bot'):
                         str1 = 'Existe um jogo em modo de entrada, se quiser entrar digite /entrar'
@@ -93,6 +91,13 @@ class Jogo:
                             addPlayer(chat_id, uId, uName)
                             str1 = 'Certo, '+uName+' voce vai participar desta rodada'
                             rpl = [str1]
+                    elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
+                        if uId == adm:
+                            str1 = 'Voce cancelou o jogo' #implementar cancelamento por votacao
+                            setPreGame(chat_id, False)
+                            setInGame(chat_id, False)
+                            cleanPlayers(chat_id)
+                            rpl = [str1]
                     elif text.startswith('/fecharjogo') or text.startswith('/fecharjogo@forca_bot'):
                         if uId == adm:
                             str1 = 'Grupo de participantes fechados! Jogarao nesta rodada:'
@@ -101,15 +106,9 @@ class Jogo:
                                 rpl.append(nomes[i])
                             setInGame(chat_id,True)
                             rpl.append('O jogo vai comecar agora!') #Mudar talvez
+                            rpl.append('A palavra eh:'+palavra)
                         else:
                             str1 = 'Voce nao tem autorizacao para fechar o jogo\nApenas o administrador pode fazer isso'
-                            rpl = [str1]
-                    elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
-                        if uId == adm:
-                            str1 = 'Voce cancelou o jogo' #implementar cancelamento por votacao
-                            setPreGame(chat_id, False)
-                            setInGame(chat_id, False)
-                            cleanPlayers(chat_id)
                             rpl = [str1]
                         else:
                             str1 = 'Voce nao tem autorizacao para cancelar o jogo\nApenas o administrador pode fazer isso'
@@ -120,6 +119,7 @@ class Jogo:
                     else:
                         str1 = 'Comando nao reconhecido no momento'
                         rpl = [str1]
+            #fim do bloco PreGame /// Comeco do bloco InGame ====================================
             else:
                 if text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
                     if uId == adm:
