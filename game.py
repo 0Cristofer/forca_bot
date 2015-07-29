@@ -73,6 +73,9 @@ class Jogo:
                     elif text.startswith('/help') or text.startswith('/help@forca_bot'):
                         str1 = 'Nao existe jogo em andamento, utilize /novojogo para comecar e irei te guiando :)'
                         rpl = [str1]
+                    elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
+                        str1 = 'Nao existe jogo no momento'
+                        rpl = [str1]
                     else:
                         str1 = 'Comando nao reconhecido no momento'
                         rpl = [str1]
@@ -102,6 +105,7 @@ class Jogo:
                             rpl = [str1]
                     elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
                         if uId == adm:
+                            print 'cancelar adm'
                             str1 = 'Voce cancelou o jogo' #implementar cancelamento por votacao
                             setPreGame(chat_id, False)
                             setInGame(chat_id, False)
@@ -114,6 +118,7 @@ class Jogo:
                         str1 = 'Nesse momento os a partida esta aberta para entrada de novos jogadores\nUtilize /entrar para participar'
                         rpl = [str1]
                     else:
+                        print 'entrei no else'
                         str1 = 'Comando nao reconhecido no momento'
                         rpl = [str1]
             else:
@@ -131,6 +136,7 @@ class Jogo:
                     str1 = 'Existe um jogo em andamento\nUse este comando /help e irei te guiando!'
                     rpl = [str1]
                 else:
+                    print 'else'
                     rpl = ['Comando nao reconhecido no momento']
         else:
             rpl = ['Nao eh um comando, lembre se que comandos comecam com /']
