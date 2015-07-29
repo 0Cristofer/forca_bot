@@ -80,10 +80,10 @@ class WebhookHandler(webapp2.RequestHandler):
         text = message.get('text')
         fr = message.get('from')
         chat = message['chat']
-        chat_id = chat['id'] #gets chat id
+        chat_id = str(chat['id']) #gets chat id
         user_id = message['from']
-        uId = user_id.get('id')    #gets user id
-        uName = user_id.get('first_name') #gets user first name
+        uId = str(user_id.get('id'))    #gets user id
+        uName = str(user_id.get('first_name')) #gets user first name
 
         if not text:
             logging.info('no text')

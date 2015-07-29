@@ -51,8 +51,8 @@ def getInGame(chat_id):
 
 #Classes para lista de jogares ==================================
 class Players(ndb.Model):
-    jogadores = [ndb.StringProperty(indexed=False, default=False)]
-    nomes = [ndb.StringProperty(indexed=False, default=False)]
+    jogadores = [ndb.StringProperty(indexed=True)]
+    nomes = [ndb.StringProperty(indexed=True)]
 
 def addPlayer(chat_id, uId, uName):
     es = Players.get_or_insert(str(chat_id))
@@ -60,13 +60,16 @@ def addPlayer(chat_id, uId, uName):
     es.nomes.append(uName)
     es.put()
 
-def getPlayer(chat_id,uId):
+def getuIds(chat_id):
     es = Players.get_by_id(str(chat_id))
-    pos = es.jogadores.index(uId)
-    nome = es.jogadores[pos]
-    return nome
+    uIds = es.jogadores
+    return uIds
 
 def getPlayers(chat_id):
     es = Players.get_by_id(str(chat_id))
     nomes = es.nomes
     return nomes
+
+def cleanPlayers(chat_id):
+    ndb.delete_multi(
+        Players.query().fetch(keys_only=True))
