@@ -6,26 +6,38 @@ from google.appengine.ext import ndb
 
 #BD que grava as palavras
 
-
-
 class Palavras(ndb.Model):
-    palavra = [ndb.StringProperty(indexed=False, default=False)]
-    dica = [ndb.StringProperty(indexed=False, default=False)]
+    palavras = [ndb.StringProperty(indexed=False, default=False)]
+    dicas = [ndb.StringProperty(indexed=False, default=False)]
+    palavra = ndb.StringProperty()
+    dica = ndb.StringProperty()
+    mascara = ndb.StringProperty()
 
-def updateList(palavras, dicas):
+
+def updateList(plvras, dcs):
     es = Palavras.get_or_insert(str(001))
-    for i in range(0,len(palavras)):
-        es.palavra.append(palavras[i])
-        es.dica.append(dicas[i])
-        es.put()
+    for i in range(0,len(plvras)):
+        es.palavras.append(plvras[i])
+        es.dicas.append(dcs[i])
+    es.put()
 
 def getPalavra(k):
     k = k+1
     es = Palavras.get_by_id(str(001))
-    palavra = es.palavra[k]
-    dica = es.dica[k]
+    palavra = es.palavras[k]
+    dica = es.dicas[k]
     ped = [palavra, dica]
     return ped
+
+
+def setMascara(chat_id, ped):
+    es = Palavras.get_or_insert(str(chat_id))
+    es.palavra = ped[0]
+    es.dica = ped[1]
+    mscra = '*'*(len(ped[0]))
+    es.mascara = mscra
+    es.put()
+    return mscra
 
 #BD que guarda os estados de cada jogo
 

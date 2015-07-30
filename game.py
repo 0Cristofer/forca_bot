@@ -43,6 +43,9 @@ def getAdm(chat_id):
 def cleanPlayers(chat_id):
     bds.cleanPlayers(chat_id)
 
+def setMascara(chat_id, ped):
+    return bds.setMascara(chat_id, ped)
+
 #Classe que contem toda logica do jogo (a ser melhor comentada)
 
 class Jogo:
@@ -110,8 +113,11 @@ class Jogo:
                                 rpl.append(nomes[i])
                             setInGame(chat_id,True)
                             rpl.append('O jogo vai comecar agora!') #Mudar talvez
-                            palavra = getPalavra(randint(0,2))
-                            rpl.append('A palavra eh: '+palavra[0])
+                            ped = getPalavra(randint(0,2))
+                            mascara = setMascara(chat_id, ped)
+                            rpl.append('A palavra eh: '+ped[0])
+                            rpl.append('A dica eh: '+ped[1])
+                            rpl.append('A mascara eh: '+mascara)
                         else:
                             str1 = 'Voce nao tem autorizacao para cancelar o jogo\nApenas o administrador pode fazer isso'
                             rpl = [str1]
