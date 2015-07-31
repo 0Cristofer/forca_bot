@@ -12,6 +12,7 @@ class Palavras(ndb.Model):
     palavra = ndb.StringProperty()
     dica = ndb.StringProperty()
     mascara = ndb.StringProperty()
+    letras = [ndb.StringProperty()]
 
 
 def updateList(plvras, dcs):
@@ -21,7 +22,17 @@ def updateList(plvras, dcs):
         es.dicas.append(dcs[i])
     es.put()
 
-def getPalavra(k):
+def setPeD(chat_id, ped):
+    es = Palavras.get_or_insert(str(chat_id))
+    es.palavra = ped[0]
+    es.dica = ped[1]
+    es.put()
+
+def getPeD(chat_id):
+    es = Palavras.get_by_id(str(chat_id))
+    return [es.palavra, es.dica]
+
+def getNPeD(k):
     k = k+1
     es = Palavras.get_by_id(str(001))
     palavra = es.palavras[k]
@@ -29,15 +40,34 @@ def getPalavra(k):
     ped = [palavra, dica]
     return ped
 
-
-def setMascara(chat_id, ped):
+def setMascara(chat_id, masc):
     es = Palavras.get_or_insert(str(chat_id))
-    es.palavra = ped[0]
-    es.dica = ped[1]
-    mscra = '*'*(len(ped[0]))
-    es.mascara = mscra
+    es.mascara = masc
     es.put()
-    return mscra
+
+def getMascara(chat_id):
+    es = Palavras.get_by_id(str(chat_id))
+    return es.mascara
+
+def setLetra(chat_id, letra):
+    es = Palavras.get_or_insert(str(chat_id))
+    es.letras.append(letra)
+    es.put()
+
+def getLetras(chat_id):
+    es = Palavras.get_by_id(str(chat_id))
+    return es.letras
+
+def cleanLetras(chat_id):
+    es = Palavras.get_or_insert(str(chat_id))
+    let = es.letras
+    i = len(let)
+    i -= 1
+    while(i >= 0):
+        es.letras.remove(let[i])
+        i -= 1
+
+    es.put()
 
 #BD que guarda os estados de cada jogo
 

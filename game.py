@@ -1,28 +1,13 @@
 import bds
 
-def updateList(palavras, dicas):
-    bds.updateList(palavras, dicas)
-
-def getPalavra(k):
-    return bds.getPalavra(k)
+def getPeD(chat_id):
+    return bds.getPeD(chat_id)
 
 def setPreGame(chat_id, status):
     bds.setPreGame(chat_id, status)
 
-def getPreGame(chat_id):
-    return bds.getPreGame(chat_id)
-
 def setInGame(chat_id, status):
     bds.setInGame(chat_id, status)
-
-def getInGame(chat_id):
-    return bds.getInGame(chat_id)
-
-def addPlayer(chat_id, uId, uName):
-    bds.addPlayer(chat_id, uId, uName)
-
-def setAdm(chat_id, uId):
-    bds.setAdm(chat_id, uId)
 
 def getuIds(chat_id):
     return bds.getuIds(chat_id)
@@ -36,19 +21,36 @@ def getAdm(chat_id):
 def cleanPlayers(chat_id):
     bds.cleanPlayers(chat_id)
 
-def setMascara(chat_id, ped):
-    return bds.setMascara(chat_id, ped)
+def setPeD(chat_id, ped):
+    bds.PeD(chat_id, ped)
+
+def setMascara(chat_id, mascara):
+    bds.setMascara(chat_id, mascara)
+
+def getMascara(chat_id):
+    return bds.getMascara(chat_id)
+
+def setLetra(chat_id, letra):
+    bds.setLetra(chat_id, letra)
+
+def getLetras(chat_id):
+    return bds.getLetras(chat_id)
+
+def cleanLetras(chat_id):
+    bds.cleanLetras(chat_id)
 
 class Jogo:
     def game(self, uId, uName, chat_id, text):
         palavras = ['teste','madalena','rodrigo schulz']
         dicas = ['Nome da variavel usado frequentemente','A professora complexa','Sem ressentimentos']
         rpl = []
-        preState = getPreGame(chat_id)
-        state = getInGame(chat_id)
         nomes = getPlayers(chat_id)
         uIds = getuIds(chat_id)
         adm = getAdm(chat_id)
+        palavra = getPeD(chat_id)[0]
+        dica = getPeD(chat_id)[1]
+        letras = getLetras(chat_id)
+        mascara = getMascara(chat_id)
         if text.startswith('/'):
             if text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
                 if uId == adm:
@@ -60,8 +62,43 @@ class Jogo:
                 else:
                     str1 = 'Voce nao tem autorizacao para cancelar o jogo\nApenas o administrador pode fazer isso'
                     rpl = [str1]
+            elif text.startswith('/chutarletra'):
+                if len(text) == 14:
+                    letra = text[13]
+                    setLetra(chat_id, letra)
+                    locais = []
+                    mscra = ''
+                    newM = ''
+                    if letra in palavra:
+                        for i in range(len(palavra)):
+                            if palavra[i] == letra:
+                                mscra = mscra+letra
+                            else:
+                                mscra = mscra+'*'
+                        for i in range(len(mascara)):
+                            if (mascara[i] == '*') and (mscra[i] == '*'):
+                                newM = newM+'*'
+                            elif mascara[i] == '*':
+                                newM = newM+mscra[i]
+                            elif mscra[i] == '*':
+                                newM = newM+mascara[i]
+                        setMascara(chat_id, newM)
+                        rpl = ['acertoooo']
+                    else:
+                        rpl = ['errrrou']
+                else:
+                    rpl = ['Nao pode chutar mais que uma letra']
+            elif text.startswith('/getpalavra'):
+                rpl = ['A palavra ate agora esta assim: '+mascara]
+            elif text.startswith('/getdica'):
+                rpl = ['A dica eh: '+dica]
+            elif text.startswith('/getletras'):
+                rpl = ['As letras ate agora foram:']
+                for i in range(len(letras)):
+                    if i != 0:    
+                        rpl.append(letras[i])
             elif text.startswith('/help') or text.startswith('/help@forca_bot'):
-                str1 = 'Existe um jogo em andamento\nUse este comando /help e irei te guiando!'
+                str1 = 'Existe um jogo em andamento\nUse /chutarletra para tentar!'
                 rpl = [str1]
             else:
                 rpl = ['Comando nao reconhecido no momento']

@@ -10,8 +10,8 @@ from random import randint
 def updateList(palavras, dicas):
     bds.updateList(palavras, dicas)
 
-def getPalavra(k):
-    return bds.getPalavra(k)
+def getNPeD(k):
+    return bds.getNPeD(k)
 
 def setPreGame(chat_id, status):
     bds.setPreGame(chat_id, status)
@@ -43,16 +43,31 @@ def getAdm(chat_id):
 def cleanPlayers(chat_id):
     bds.cleanPlayers(chat_id)
 
-def setMascara(chat_id, ped):
-    return bds.setMascara(chat_id, ped)
+def setPeD(chat_id, ped):
+    bds.setPeD(chat_id, ped)
+
+def setMascara(chat_id, mascara):
+    bds.setMascara(chat_id, mascara)
+
+def getMascara(chat_id):
+    return bds.getMascara(chat_id)
+
+def setLetra(chat_id, letra):
+    bds.setLetra(chat_id, letra)
+
+def getLetras(chat_id):
+    return bds.getLetras(chat_id, letra)
+
+def cleanLetras(chat_id):
+    bds.cleanLetras(chat_id)
 
 #Classe que contem toda logica do jogo (a ser melhor comentada)
 
 class PreJogo:
 
     def preGame(self, uId, uName, chat_id, text):
-        palavras = ['teste','madalena','rodrigo schulz']
-        dicas = ['Nome da variavel usado frequentemente','A professora complexa','Sem ressentimentos']
+        palavras = ['teste','madalena','rodrigo schulz', 'lolzinho', 'computador', 'ciencia da computacao']
+        dicas = ['Nome da variavel usado frequentemente','A professora complexa','Sem ressentimentos', 'jogo do mal', 'bagulho que te faz ficar sentado', 'curso op']
         rpl = []
         preState = getPreGame(chat_id)
         state = getInGame(chat_id)
@@ -71,6 +86,7 @@ class PreJogo:
                     setAdm(chat_id, uId)
                     addPlayer(chat_id, uId, uName)
                     updateList(palavras,dicas)
+                    cleanLetras(chat_id)
                     rpl = [str1, str2, str3]
                 elif text.startswith('/help') or text.startswith('/help@forca_bot'):
                     str1 = 'Nao existe jogo em andamento, utilize /novojogo para comecar e irei te guiando :)'
@@ -112,11 +128,12 @@ class PreJogo:
                             rpl.append(nomes[i])
                         setInGame(chat_id,True)
                         rpl.append('O jogo vai comecar agora!') #Mudar talvez
-                        ped = getPalavra(randint(0,2))
-                        mascara = setMascara(chat_id, ped)
-                        rpl.append('A palavra eh: '+ped[0])
+                        ped = getNPeD(randint(0,5))
+                        setPeD(chat_id, ped)
+                        mascara = '*'*(len(ped[0]))
+                        setMascara(chat_id, mascara)
+                        rpl.append('A palavra eh: '+mascara)
                         rpl.append('A dica eh: '+ped[1])
-                        rpl.append('A mascara eh: '+mascara)
                     else:
                         str1 = 'Voce nao tem autorizacao para cancelar o jogo\nApenas o administrador pode fazer isso'
                         rpl = [str1]

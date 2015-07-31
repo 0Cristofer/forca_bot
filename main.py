@@ -1,4 +1,4 @@
-#Responsavel pela comunicação do nosso codigo com o app engine (a ser melhor comentado)
+#Responsavel pela comunicacao do nosso codigo com o app engine (a ser melhor comentado)
 
 #Imports necessarios para codificação dos dados
 
