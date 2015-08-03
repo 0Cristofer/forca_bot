@@ -123,13 +123,16 @@ class WebhookHandler(webapp2.RequestHandler):
 
             logging.info('send response:')
             logging.info(resp)
-        inGame = getInGame(chat_id)
-        if inGame:
-            send = Jogo.game(uId, uName, chat_id, text)
-        else:
-            send = preJogo.preGame(uId, uName, chat_id, text)
-        for i in range(0, len(send)):
-            reply(send[i])
+        try:
+            inGame = getInGame(chat_id)
+            if inGame:
+                send = Jogo.game(uId, uName, chat_id, text)
+            else:
+                send = preJogo.preGame(uId, uName, chat_id, text)
+            for i in range(0, len(send)):
+                reply(send[i])
+        except Excepti:
+            reply('Erro bem louco')
 #-------------------
 app = webapp2.WSGIApplication([
     ('/me', MeHandler),

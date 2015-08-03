@@ -39,6 +39,22 @@ def getLetras(chat_id):
 def cleanLetras(chat_id):
     bds.cleanLetras(chat_id)
 
+def setRound(chat_id, rd):
+    bds.setRound(chat_id, rd)
+
+def getRound(chat_id):
+    return bds.getRound(chat_id)
+
+def checkRound(chat_id, uId):
+    rd = getRound(chat_id)
+    print "check rd"+str(rd)
+    uIds = getuIds(chat_id)
+    print str(len(uIds))
+    if (uId == uIds[rd]):
+        return True
+    else:
+        return False
+
 class Jogo:
     def game(self, uId, uName, chat_id, text):
         palavras = ['teste','madalena','rodrigo schulz']
@@ -46,6 +62,8 @@ class Jogo:
         rpl = []
         nomes = getPlayers(chat_id)
         uIds = getuIds(chat_id)
+        #print "nomes "+str(nomes[0])
+        #print "uid " +str(uIds[0])
         adm = getAdm(chat_id)
         palavra = getPeD(chat_id)[0]
         dica = getPeD(chat_id)[1]
@@ -69,23 +87,33 @@ class Jogo:
                     locais = []
                     mscra = ''
                     newM = ''
-                    if letra in palavra:
-                        for i in range(len(palavra)):
-                            if palavra[i] == letra:
-                                mscra = mscra+letra
-                            else:
-                                mscra = mscra+'*'
-                        for i in range(len(mascara)):
-                            if (mascara[i] == '*') and (mscra[i] == '*'):
-                                newM = newM+'*'
-                            elif mascara[i] == '*':
-                                newM = newM+mscra[i]
-                            elif mscra[i] == '*':
-                                newM = newM+mascara[i]
-                        setMascara(chat_id, newM)
-                        rpl = ['acertoooo']
+                    rd = getRound(chat_id)
+                    print "chutar rd"+str(rd)
+                    if checkRound(chat_id,uId):
+                        nRd = rd+1
+                        if nRd > (len(uIds)-1):
+                            nRd = 0
+                        setRound(chat_id, nRd)
+                        if letra in palavra:
+                            for i in range(len(palavra)):
+                                if palavra[i] == letra:
+                                    mscra = mscra+letra
+                                else:
+                                    mscra = mscra+'*'
+                            for i in range(len(mascara)):
+                                if (mascara[i] == '*') and (mscra[i] == '*'):
+                                    newM = newM+'*'
+                                elif mascara[i] == '*':
+                                    newM = newM+mscra[i]
+                                elif mscra[i] == '*':
+                                    newM = newM+mascara[i]
+                            setMascara(chat_id, newM)
+                            rpl = ['Voce acertou!']
+                            rpl.append(getMascara(chat_id))
+                        else:
+                            rpl = ['Errou...']
                     else:
-                        rpl = ['errrrou']
+                        rpl = ['Nao eh sua vez de jogar, eh a vez do: '+nomes[rd]]
                 else:
                     rpl = ['Nao pode chutar mais que uma letra']
             elif text.startswith('/getpalavra'):
@@ -95,8 +123,7 @@ class Jogo:
             elif text.startswith('/getletras'):
                 rpl = ['As letras ate agora foram:']
                 for i in range(len(letras)):
-                    if i != 0:    
-                        rpl.append(letras[i])
+                    rpl.append(letras[i])
             elif text.startswith('/help') or text.startswith('/help@forca_bot'):
                 str1 = 'Existe um jogo em andamento\nUse /chutarletra para tentar!'
                 rpl = [str1]

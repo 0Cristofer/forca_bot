@@ -66,7 +66,6 @@ def cleanLetras(chat_id):
     while(i >= 0):
         es.letras.remove(let[i])
         i -= 1
-
     es.put()
 
 #BD que guarda os estados de cada jogo
@@ -103,6 +102,7 @@ class Players(ndb.Model):
     jogadores = [ndb.StringProperty()]
     nomes = [ndb.StringProperty()]
     adm = ndb.StringProperty()
+    rnd = ndb.IntegerProperty()
 
 def addPlayer(chat_id, uId, uName):
     es = Players.get_or_insert(str(chat_id))
@@ -123,9 +123,7 @@ def getuIds(chat_id):
 
 def getPlayers(chat_id):
     es = Players.get_by_id(str(chat_id))
-    if es:
-        return es.nomes
-    return []
+    return es.nomes
 
 def getAdm(chat_id):
     es = Players.get_by_id(str(chat_id))
@@ -149,3 +147,12 @@ def cleanPlayers(chat_id):
         i -= 1
     es.adm = ''
     es.put()
+
+def setRound(chat_id, rd):
+    es = Players.get_or_insert(str(chat_id))
+    es.rnd = rd
+    es.put()
+
+def getRound(chat_id):
+    es = Players.get_by_id(str(chat_id))
+    return es.rnd

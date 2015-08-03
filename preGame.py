@@ -61,6 +61,12 @@ def getLetras(chat_id):
 def cleanLetras(chat_id):
     bds.cleanLetras(chat_id)
 
+def setRound(chat_id, rd):
+    bds.setRound(chat_id, rd)
+
+def getRound(chat_id):
+    return bds.getRound(chat_id)
+
 #Classe que contem toda logica do jogo (a ser melhor comentada)
 
 class PreJogo:
@@ -87,6 +93,7 @@ class PreJogo:
                     addPlayer(chat_id, uId, uName)
                     updateList(palavras,dicas)
                     cleanLetras(chat_id)
+                    setRound(chat_id, 0)
                     rpl = [str1, str2, str3]
                 elif text.startswith('/help') or text.startswith('/help@forca_bot'):
                     str1 = 'Nao existe jogo em andamento, utilize /novojogo para comecar e irei te guiando :)'
@@ -116,6 +123,7 @@ class PreJogo:
                         setPreGame(chat_id, False)
                         setInGame(chat_id, False)
                         cleanPlayers(chat_id)
+                        cleanLetras(chat_id)
                         rpl = [str1]
                     else:
                         str1 = 'Voce nao tem autorizacao para fechar o jogo\nApenas o administrador pode fazer isso'
@@ -131,6 +139,13 @@ class PreJogo:
                         ped = getNPeD(randint(0,5))
                         setPeD(chat_id, ped)
                         mascara = '*'*(len(ped[0]))
+                        lMascara = list(mascara)
+                        for i in range(len(mascara)):
+                            if ped[0][i]== ' ':
+                                lMascara[i] = ' '
+                            if ped[0][i]== '-':
+                                lMascara[i] = '-'
+                        mascara = "".join(lMascara)
                         setMascara(chat_id, mascara)
                         rpl.append('A palavra eh: '+mascara)
                         rpl.append('A dica eh: '+ped[1])
