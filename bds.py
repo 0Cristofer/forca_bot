@@ -32,6 +32,16 @@ class Game(ndb.Model):
     dica = ndb.StringProperty(default='noDica')
     mascara = ndb.StringProperty(default='noMascara')
     letras = ndb.StringProperty(repeated=True)
+    vidas = ndb.IntegerProperty(default = 6)
+
+def menosVida(chat_id):
+    v = ndb.Key(Game, chat_id).get()
+    v.vidas -= 1
+    v.put()
+
+def getVidas(chat_id):
+    v = ndb.Key(Game, chat_id).get()
+    return v.vidas 
 
 def setGame(chat_id):
     g = Game(id = chat_id)
