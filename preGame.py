@@ -13,6 +13,9 @@ def updateList(palavras, dicas):
 def getNPeD(k):
     return bds.getNPeD(k)
 
+def setGame(chat_id):
+    bds.setGame(chat_id)
+
 def setPreGame(chat_id, status):
     bds.setPreGame(chat_id, status)
 
@@ -40,9 +43,6 @@ def getPlayers(chat_id):
 def getAdm(chat_id):
     return bds.getAdm(chat_id)
 
-def cleanPlayers(chat_id):
-    bds.cleanPlayers(chat_id)
-
 def setPeD(chat_id, ped):
     bds.setPeD(chat_id, ped)
 
@@ -58,14 +58,14 @@ def setLetra(chat_id, letra):
 def getLetras(chat_id):
     return bds.getLetras(chat_id, letra)
 
-def cleanLetras(chat_id):
-    bds.cleanLetras(chat_id)
-
 def setRound(chat_id, rd):
     bds.setRound(chat_id, rd)
 
 def getRound(chat_id):
     return bds.getRound(chat_id)
+
+def cleanGame(chat_id):
+    bds.cleanGame(chat_id)
 
 #Classe que contem toda logica do jogo (a ser melhor comentada)
 
@@ -76,23 +76,18 @@ class PreJogo:
         dicas = ['Nome da variavel usado frequentemente','A professora complexa','Sem ressentimentos', 'jogo do mal', 'bagulho que te faz ficar sentado', 'curso op']
         rpl = []
         preState = getPreGame(chat_id)
-        state = getInGame(chat_id)
-        nomes = getPlayers(chat_id)
-        uIds = getuIds(chat_id)
-        adm = getAdm(chat_id)
         if text.startswith('/'):
                 #Bloco Inicial================================================
             if preState == False:
                 if text.startswith('/novojogo') or text.startswith('/novojogo@forca_bot'):
+                    setGame(chat_id)
                     str1 = 'Comecando um novo jogo! Voce sera o administrador dessa rodada '+uName
-                    setPreGame(chat_id,True)
                     str2 = 'Vamos comecar definindo os jogadores\nQuem quiser participar dessa rodada envie um /entrar :D'
                     str3 = 'Para fechar o grupo de participantes mande um /fecharjogo Administador'
-                    cleanPlayers(chat_id)
+                    setPreGame(chat_id, True)
                     setAdm(chat_id, uId)
                     addPlayer(chat_id, uId, uName)
                     updateList(palavras,dicas)
-                    cleanLetras(chat_id)
                     setRound(chat_id, 0)
                     rpl = [str1, str2, str3]
                 elif text.startswith('/help') or text.startswith('/help@forca_bot'):
@@ -110,6 +105,7 @@ class PreJogo:
                     str1 = 'Existe um jogo em modo de entrada, se quiser entrar digite /entrar'
                     rpl = [str1]
                 elif text.startswith('/entrar') or text.startswith('/entrar@forca_bot'):
+                    uIds = getuIds(chat_id)
                     if uId in uIds:
                         str1 = 'Voce ja participa desse jogo'
                         rpl = [str1]
@@ -118,17 +114,17 @@ class PreJogo:
                         str1 = 'Certo, '+uName+' voce vai participar desta rodada'
                         rpl = [str1]
                 elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
+                    adm = getAdm(chat_id)
                     if uId == adm:
                         str1 = 'Voce cancelou o jogo' #implementar cancelamento por votacao
-                        setPreGame(chat_id, False)
-                        setInGame(chat_id, False)
-                        cleanPlayers(chat_id)
-                        cleanLetras(chat_id)
+                        cleanGame(chat_id)
                         rpl = [str1]
                     else:
                         str1 = 'Voce nao tem autorizacao para fechar o jogo\nApenas o administrador pode fazer isso'
                         rpl = [str1]
                 elif text.startswith('/fecharjogo') or text.startswith('/fecharjogo@forca_bot'):
+                    adm = getAdm(chat_id)
+                    nomes = getPlayers(chat_id)
                     if uId == adm:
                         str1 = 'Grupo de participantes fechados! Jogarao nesta rodada:'
                         rpl = [str1]

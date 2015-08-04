@@ -1,6 +1,6 @@
 #Responsavel pela comunicacao do nosso codigo com o app engine (a ser melhor comentado)
 
-#Imports necessarios para codificação dos dados
+#Imports necessarios para codificacao dos dados
 
 import StringIO
 import json
@@ -123,16 +123,16 @@ class WebhookHandler(webapp2.RequestHandler):
 
             logging.info('send response:')
             logging.info(resp)
-        try:
-            inGame = getInGame(chat_id)
-            if inGame:
-                send = Jogo.game(uId, uName, chat_id, text)
-            else:
-                send = preJogo.preGame(uId, uName, chat_id, text)
-            for i in range(0, len(send)):
-                reply(send[i])
-        except Excepti:
-            reply('Erro bem louco')
+        #try:
+        inGame = getInGame(chat_id)
+        if inGame:
+            send = Jogo.game(uId, uName, chat_id, text)
+        else:
+            send = preJogo.preGame(uId, uName, chat_id, text)
+        for i in range(0, len(send)):
+            reply(send[i])
+        #except:
+        #    reply('Erro bem louco')
 #-------------------
 app = webapp2.WSGIApplication([
     ('/me', MeHandler),

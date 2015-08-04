@@ -18,9 +18,6 @@ def getPlayers(chat_id):
 def getAdm(chat_id):
     return bds.getAdm(chat_id)
 
-def cleanPlayers(chat_id):
-    bds.cleanPlayers(chat_id)
-
 def setPeD(chat_id, ped):
     bds.PeD(chat_id, ped)
 
@@ -36,9 +33,6 @@ def setLetra(chat_id, letra):
 def getLetras(chat_id):
     return bds.getLetras(chat_id)
 
-def cleanLetras(chat_id):
-    bds.cleanLetras(chat_id)
-
 def setRound(chat_id, rd):
     bds.setRound(chat_id, rd)
 
@@ -47,23 +41,20 @@ def getRound(chat_id):
 
 def checkRound(chat_id, uId):
     rd = getRound(chat_id)
-    print "check rd"+str(rd)
     uIds = getuIds(chat_id)
-    print str(len(uIds))
     if (uId == uIds[rd]):
         return True
     else:
         return False
 
+def cleanGame(chat_id):
+    bds.cleanGame(chat_id)
+
 class Jogo:
     def game(self, uId, uName, chat_id, text):
-        palavras = ['teste','madalena','rodrigo schulz']
-        dicas = ['Nome da variavel usado frequentemente','A professora complexa','Sem ressentimentos']
         rpl = []
         nomes = getPlayers(chat_id)
         uIds = getuIds(chat_id)
-        #print "nomes "+str(nomes[0])
-        #print "uid " +str(uIds[0])
         adm = getAdm(chat_id)
         palavra = getPeD(chat_id)[0]
         dica = getPeD(chat_id)[1]
@@ -73,9 +64,7 @@ class Jogo:
             if text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
                 if uId == adm:
                     str1 = 'Voce cancelou o jogo' #implementar cancelamento por votacao
-                    setPreGame(chat_id, False)
-                    setInGame(chat_id, False)
-                    cleanPlayers(chat_id)
+                    cleanGame(chat_id)
                     rpl = [str1]
                 else:
                     str1 = 'Voce nao tem autorizacao para cancelar o jogo\nApenas o administrador pode fazer isso'
