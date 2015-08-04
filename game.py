@@ -77,7 +77,6 @@ class Jogo:
                     mscra = ''
                     newM = ''
                     rd = getRound(chat_id)
-                    print "chutar rd"+str(rd)
                     if checkRound(chat_id,uId):
                         nRd = rd+1
                         if nRd > (len(uIds)-1):

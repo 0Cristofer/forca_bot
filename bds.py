@@ -11,7 +11,6 @@ class PeDs(ndb.Model):
     dicas = ndb.StringProperty(repeated=True)
 
 def getNPeD(k):
-    k = k+1
     PeD = ndb.Key(PeDs, 'PeDs').get()
     p = PeD.palavras[k]
     d = PeD.dicas[k]
@@ -75,7 +74,7 @@ def setPreGame(chat_id, status):
 def getPreGame(chat_id):
     GameState = ndb.Key(Game, chat_id).get()
     if GameState:
-        return GameState.state
+        return GameState.preState
     return False
 
 def setInGame(chat_id, status):
