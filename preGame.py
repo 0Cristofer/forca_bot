@@ -72,11 +72,12 @@ def cleanGame(chat_id):
 class PreJogo:
 
     def preGame(self, uId, uName, chat_id, text):
-        animais = ['Animal', 'Macaco']
-        comidas = ['Comida', 'Banana']
-        proficoes = ['Proficao', 'Professor']
-        zueracc = ['Relacionado a CC', 'Programador']
-        zuerauem = ['Relacionado a UEM', 'Rodrigo Schulz']
+        text = text.lower()
+        animais = ['Animal', 'macaco', 'elefante']
+        comidas = ['Comida', 'banana']
+        proficoes = ['Proficao', 'professor', 'zelador']
+        zueracc = ['Relacionado a CC', 'programador']
+        zuerauem = ['Relacionado a UEM', 'rodrigo Schulz']
         matriz = [animais, comidas, proficoes, zueracc, zuerauem]
         rpl = []
         preState = getPreGame(chat_id)
@@ -135,8 +136,10 @@ class PreJogo:
                             rpl.append(nomes[i])
                         setInGame(chat_id,True)
                         rpl.append('O jogo vai comecar agora! Instrucoes:\nUtilize o comando /chutarletra para chutar letras, quando estiver pronto para arriscar utilize o comando /arriscarpalavra Mas cuidado, se voce errar perde o jogo!\n*** 6 VIDAS ***')
-                        rnd1 = randint(0,len(matriz))
-                        rnd2 = randint(1,len(matriz[rnd1]))
+                        leng = len(matriz)-1
+                        rnd1 = randint(0,leng)
+                        leng = len(matriz[rnd1])-1
+                        rnd2 = randint(1, leng)
                         ped = getNPeD(rnd1, rnd2)
                         setPeD(chat_id, ped)
                         mascara = '*'*(len(ped[0]))

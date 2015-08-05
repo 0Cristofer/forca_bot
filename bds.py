@@ -12,17 +12,21 @@ class PeDs(ndb.Model):
 def getNPeD(rnd, rnd2):
     PeD = ndb.Key(PeDs, 'PeDs').get()
     matriz = []
-    print len(PeD.tams)
+
+    x = [0]
+    leg = (len(PeD.tams))
+    for i in range(leg):
+        a = i+1
+        soma = x[i] + PeD.tams[i]
+        x.append(soma)
+
     for i in range(len(PeD.tams)):
         pals = []
-        x = PeD.tams[i] if i > 0 else 0
-        for j in range(x, PeD.tams[i]):
-            print PeD.tams[i]
+        a = i+1
+        for j in range(x[i], x[a]):
             pals.append(PeD.pecs[j])
         matriz.append(pals)
-    for i in range(len(matriz)):
-        for j in range(len(matriz[i])):
-            print matriz[i][j]
+
     p = matriz[rnd][rnd2]
     d = matriz[rnd][0]
     ped = [p, d]

@@ -58,6 +58,7 @@ def getVidas(chat_id):
 
 class Jogo:
     def game(self, uId, uName, chat_id, text):
+        text = text.lower()
         rpl = []
         uIds = getuIds(chat_id)
         adm = getAdm(chat_id)
