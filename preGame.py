@@ -7,11 +7,11 @@ import bds
 from random import randint
 
 #Pega as funcoes dos BDs para poderem ser utilizadas nesse arquivo
-def updateList(palavras, dicas):
-    bds.updateList(palavras, dicas)
+def updateList(matriz):
+    bds.updateList(matriz)
 
-def getNPeD(k):
-    return bds.getNPeD(k)
+def getNPeD(rnd1, rnd2):
+    return bds.getNPeD(rnd1, rnd2)
 
 def setGame(chat_id):
     bds.setGame(chat_id)
@@ -72,8 +72,12 @@ def cleanGame(chat_id):
 class PreJogo:
 
     def preGame(self, uId, uName, chat_id, text):
-        palavras = ['teste','madalena','rodrigo schulz', 'lolzinho', 'computador', 'ciencia da computacao']
-        dicas = ['Nome de variavel usado frequentemente','A professora complexa','Sem ressentimentos', 'jogo do mal', 'bagulho que te faz ficar sentado', 'curso op']
+        animais = ['Animal', 'Macaco']
+        comidas = ['Comida', 'Banana']
+        proficoes = ['Proficao', 'Professor']
+        zueracc = ['Relacionado a CC', 'Programador']
+        zuerauem = ['Relacionado a UEM', 'Rodrigo Schulz']
+        matriz = [animais, comidas, proficoes, zueracc, zuerauem]
         rpl = []
         preState = getPreGame(chat_id)
         if text.startswith('/'):
@@ -81,15 +85,14 @@ class PreJogo:
             if preState == False:
                 if text.startswith('/novojogo') or text.startswith('/novojogo@forca_bot'):
                     setGame(chat_id)
-                    str1 = 'Comecando um novo jogo! Voce sera o administrador dessa rodada '+uName
-                    str2 = 'Vamos comecar definindo os jogadores\nQuem quiser participar dessa rodada envie o comando /entrar :D'
-                    str3 = 'Para fechar o grupo de participantes envie o comando /fecharjogo Administador '+uName
+                    rpl.append('Comecando um novo jogo! Voce sera o administrador dessa rodada '+uName)
+                    rpl.append('Vamos comecar definindo os jogadores\nQuem quiser participar dessa rodada envie o comando /entrar :D')
+                    rpl.append('Para fechar o grupo de participantes envie o comando /fecharjogo Administador '+uName)
                     setPreGame(chat_id, True)
                     setAdm(chat_id, uId)
                     addPlayer(chat_id, uId, uName)
-                    updateList(palavras,dicas)
+                    updateList(matriz)
                     setRound(chat_id, 0)
-                    rpl = [str1, str2, str3]
                 elif text.startswith('/help') or text.startswith('/help@forca_bot'):
                     str1 = 'Nao existe jogo em andamento, utilize o comando /novojogo para comecar e irei te guiando :)'
                     rpl = [str1]
@@ -132,7 +135,9 @@ class PreJogo:
                             rpl.append(nomes[i])
                         setInGame(chat_id,True)
                         rpl.append('O jogo vai comecar agora! Instrucoes:\nUtilize o comando /chutarletra para chutar letras, quando estiver pronto para arriscar utilize o comando /arriscarpalavra Mas cuidado, se voce errar perde o jogo!\n*** 6 VIDAS ***')
-                        ped = getNPeD(randint(0,5))
+                        rnd1 = randint(0,len(matriz))
+                        rnd2 = randint(1,len(matriz[rnd1]))
+                        ped = getNPeD(rnd1, rnd2)
                         setPeD(chat_id, ped)
                         mascara = '*'*(len(ped[0]))
                         lMascara = list(mascara)

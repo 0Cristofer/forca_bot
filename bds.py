@@ -5,20 +5,37 @@
 from google.appengine.ext import ndb
 
 #BD que grava as palavras
-
 class PeDs(ndb.Model):
-    palavras = ndb.StringProperty(repeated=True)
-    dicas = ndb.StringProperty(repeated=True)
+    pecs = ndb.StringProperty(repeated=True)
+    tams = ndb.IntegerProperty(repeated=True)
 
-def getNPeD(k):
+def getNPeD(rnd, rnd2):
     PeD = ndb.Key(PeDs, 'PeDs').get()
-    p = PeD.palavras[k]
-    d = PeD.dicas[k]
+    matriz = []
+    print len(PeD.tams)
+    for i in range(len(PeD.tams)):
+        pals = []
+        x = PeD.tams[i] if i > 0 else 0
+        for j in range(x, PeD.tams[i]):
+            print PeD.tams[i]
+            pals.append(PeD.pecs[j])
+        matriz.append(pals)
+    for i in range(len(matriz)):
+        for j in range(len(matriz[i])):
+            print matriz[i][j]
+    p = matriz[rnd][rnd2]
+    d = matriz[rnd][0]
     ped = [p, d]
     return ped
 
-def updateList(plvras, dcs):
-    PeD = PeDs(palavras = plvras, dicas = dcs, id = 'PeDs')
+def updateList(matriz):
+    pec = []
+    tam = []
+    for i in range(len(matriz)):
+        tam.append(len(matriz[i]))
+        for j in range(len(matriz[i])):
+            pec.append(matriz[i][j])
+    PeD = PeDs(pecs = pec, tams = tam, id = 'PeDs')
     PeD.put()
 
 class Game(ndb.Model):
@@ -41,7 +58,7 @@ def menosVida(chat_id):
 
 def getVidas(chat_id):
     v = ndb.Key(Game, chat_id).get()
-    return v.vidas 
+    return v.vidas
 
 def setGame(chat_id):
     g = Game(id = chat_id)
