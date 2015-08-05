@@ -73,7 +73,7 @@ class PreJogo:
 
     def preGame(self, uId, uName, chat_id, text):
         palavras = ['teste','madalena','rodrigo schulz', 'lolzinho', 'computador', 'ciencia da computacao']
-        dicas = ['Nome da variavel usado frequentemente','A professora complexa','Sem ressentimentos', 'jogo do mal', 'bagulho que te faz ficar sentado', 'curso op']
+        dicas = ['Nome de variavel usado frequentemente','A professora complexa','Sem ressentimentos', 'jogo do mal', 'bagulho que te faz ficar sentado', 'curso op']
         rpl = []
         preState = getPreGame(chat_id)
         if text.startswith('/'):
@@ -82,8 +82,8 @@ class PreJogo:
                 if text.startswith('/novojogo') or text.startswith('/novojogo@forca_bot'):
                     setGame(chat_id)
                     str1 = 'Comecando um novo jogo! Voce sera o administrador dessa rodada '+uName
-                    str2 = 'Vamos comecar definindo os jogadores\nQuem quiser participar dessa rodada envie um /entrar :D'
-                    str3 = 'Para fechar o grupo de participantes mande um /fecharjogo Administador'
+                    str2 = 'Vamos comecar definindo os jogadores\nQuem quiser participar dessa rodada envie o comando /entrar :D'
+                    str3 = 'Para fechar o grupo de participantes envie o comando /fecharjogo Administador '+uName
                     setPreGame(chat_id, True)
                     setAdm(chat_id, uId)
                     addPlayer(chat_id, uId, uName)
@@ -91,10 +91,10 @@ class PreJogo:
                     setRound(chat_id, 0)
                     rpl = [str1, str2, str3]
                 elif text.startswith('/help') or text.startswith('/help@forca_bot'):
-                    str1 = 'Nao existe jogo em andamento, utilize /novojogo para comecar e irei te guiando :)'
+                    str1 = 'Nao existe jogo em andamento, utilize o comando /novojogo para comecar e irei te guiando :)'
                     rpl = [str1]
                 elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
-                    str1 = 'Nao existe jogo no momento'
+                    str1 = 'Nao existe jogo no momento, envie o comando /help caso precise de ajuda!'
                     rpl = [str1]
                 else:
                     str1 = 'Comando nao reconhecido no momento'
@@ -116,11 +116,11 @@ class PreJogo:
                 elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
                     adm = getAdm(chat_id)
                     if uId == adm:
-                        str1 = 'Voce cancelou o jogo' #implementar cancelamento por votacao
+                        str1 = 'O Administador cancelou o jogo!' #implementar cancelamento por votacao
                         cleanGame(chat_id)
                         rpl = [str1]
                     else:
-                        str1 = 'Voce nao tem autorizacao para fechar o jogo\nApenas o administrador pode fazer isso'
+                        str1 = 'Voce nao tem autorizacao para fechar o jogo\nApenas o Administrador pode fazer isso'
                         rpl = [str1]
                 elif text.startswith('/fecharjogo') or text.startswith('/fecharjogo@forca_bot'):
                     adm = getAdm(chat_id)
@@ -131,7 +131,7 @@ class PreJogo:
                         for i in range(0,len(nomes)):
                             rpl.append(nomes[i])
                         setInGame(chat_id,True)
-                        rpl.append('O jogo vai comecar agora!') #Mudar talvez
+                        rpl.append('O jogo vai comecar agora! Instrucoes:\nUtilize o comando /chutarletra para chutar letras, quando estiver pronto para arriscar utilize o comando /arriscarpalavra Mas cuidado, se voce errar perde o jogo!\n*** 6 VIDAS ***')
                         ped = getNPeD(randint(0,5))
                         setPeD(chat_id, ped)
                         mascara = '*'*(len(ped[0]))
@@ -143,13 +143,13 @@ class PreJogo:
                                 lMascara[i] = '-'
                         mascara = "".join(lMascara)
                         setMascara(chat_id, mascara)
-                        rpl.append('A palavra eh: '+mascara)
-                        rpl.append('A dica eh: '+ped[1])
+                        rpl.append('Palavra secreta: '+mascara)
+                        rpl.append('Dica: '+ped[1])
                     else:
                         str1 = 'Voce nao tem autorizacao para cancelar o jogo\nApenas o administrador pode fazer isso'
                         rpl = [str1]
                 elif text.startswith('/help') or text.startswith('/help@forca_bot'):
-                    str1 = 'Nesse momento os a partida esta aberta para entrada de novos jogadores\nUtilize /entrar para participar'
+                    str1 = 'Nesse momento a partida esta aberta para entrada de novos jogadores\nEnvie o comando /entrar para participar'
                     rpl = [str1]
                 else:
                     str1 = 'Comando nao reconhecido no momento'
