@@ -68,7 +68,7 @@ class Jogo:
         if text.startswith('/'):
             if text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
                 if uId == adm:
-                    str1 = 'Voce cancelou o jogo' #implementar cancelamento por votacao
+                    str1 = 'O administrador cancelou o jogo' #implementar cancelamento por votacao
                     cleanGame(chat_id)
                     rpl = [str1]
                 else:
@@ -111,27 +111,39 @@ class Jogo:
                                 setLetra(chat_id, letra)
                                 menosVida(chat_id)
                                 if getVidas(chat_id) == 1:
-                                    rpl.append('Voces tem apenas uma vida restante! Tentem descobrir a palavra ou aceitem sua DERROTA!')
+                                    rpl.append('Voces tem apenas uma vida restante! Tentem descobrir a palavra ou aceitem a DERROTA!')
                                 elif getVidas(chat_id) == 0:
                                     rpl.append('***LOSERS!!!***')
+                                    rpl.append('Creditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersao Beta 1.0')
                                     cleanGame(chat_id)
                                 else:
                                     rpl.append('Restam '+str(getVidas(chat_id))+' Vidas!')
                         else:
                             nomes = getPlayers(chat_id)
-                            rpl = ['Nao eh sua vez de jogar, eh a vez do: '+nomes[rd]]
+                            rpl = ['Nao eh sua vez de jogar, vez de: '+nomes[rd]]
                 else:
-                    rpl = ['Nao pode chutar mais que uma letra']
+                    rpl = ['Chute invalido!']
+            elif text.startswith('/arriscarpalavra'):
+                arrisca = text[17:len(text)]
+                if arrisca == palavra:
+                    rpl.append('***Parabens '+uName+' voce acertou a palavra secreta e ganhou o jogo!***')
+                    rpl.append('Creditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersao Beta 1.0')
+                    cleanGame(chat_id)
+                else:
+                    rpl.append('***ERROU!***\n'+uName+' arriscou a palavra e errou, que burro!')
+                    rpl.append('***LOSERS!!!***')
+                    rpl.append('Creditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersao Beta 1.0')
+                    cleanGame(chat_id)
             elif text.startswith('/getpalavra'):
-                rpl = ['A palavra ate agora esta assim: '+mascara]
+                rpl = ['Palavra secreta: '+mascara]
             elif text.startswith('/getdica'):
-                rpl = ['A dica eh: '+dica]
+                rpl = ['Dica: '+dica]
             elif text.startswith('/getletras'):
-                rpl = ['As letras ate agora foram:']
+                rpl = ['Letras chutadas:']
                 for i in range(len(letras)):
                     rpl.append(letras[i])
             elif text.startswith('/help') or text.startswith('/help@forca_bot'):
-                str1 = 'Existe um jogo em andamento\nUse /chutarletra para tentar!'
+                str1 = 'Jogo em andamento, instrucoes:\n/chutarletra para chutar uma letra\n/getpalavra para checar a palavra\n/getdica para ver a dica\n/getletras para ver a lista de letras'
                 rpl = [str1]
             else:
                 rpl = ['Comando nao reconhecido no momento']
