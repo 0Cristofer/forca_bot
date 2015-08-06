@@ -138,7 +138,7 @@ class Jogo:
                             if len(uIds) == 0:
                                 rpl.append('***LOSERS!!!***')
                                 cleanGame(chat_id)
-                elif :
+                elif not (checkRound(chat_id)):
                     nomes = getPlayers(chat_id)
                     rpl = ['Nao eh sua vez de jogar, vez de: '+nomes[rd]]
                 elif text.startswith('/getpalavra'):
