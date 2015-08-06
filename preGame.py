@@ -73,12 +73,15 @@ class PreJogo:
 
     def preGame(self, uId, uName, chat_id, text):
         text = text.lower()
-        animais = ['Animal', 'macaco', 'elefante']
-        comidas = ['Comida', 'banana']
-        proficoes = ['Proficao', 'professor', 'zelador']
-        zueracc = ['Relacionado a CC', 'programador']
-        zuerauem = ['Relacionado a UEM', 'rodrigo Schulz']
-        matriz = [animais, comidas, proficoes, zueracc, zuerauem]
+        animais = ['Animais', 'Macaco', 'Elefante','zebra','papagaio','andorinha','golfinho','gorila','tubarao','lobo','ornitorrinco','cavalo','humano']
+        comidas = ['Comidas', 'Banana','Miojo','Cachorro quente','Lasanha','Salada de frutas','Carambola','x-salada','frango frito','batata frita','ketchup','chocolate','morango']
+        proficoes = ['Proficao', 'Professor', 'Zelador','Prostituta','Tia do Xerox','Medico','Marceneiro','Contrabandista','Traficante','designer','game developer','dublador','escritor']
+        zueracc = ['Relacionado a Computadores e a internet em geral', 'programador','Compilador','Servidor','Monitor','Algoritmo','Netflix','orkut','instagram','tumblr','twitter','rede neural','google','photoshop','wolfram alpha']
+        zuerauem = ['Relacionado a UEM', 'rodrigo Schulz','Erica Puta','Tio Elvio','Restaurante universitario','Biblioteca central','hackerspace','caccom']
+        azar = ['Voce deu azar e nao tem dica!','Chaves','Parafuseta','Rebimboca','Kibe','Penal','Orkut','android','telegram','whatsapp','ornitorrinco','skyrim','dota2','lolzinho','pipi','voce nao vai acertar essa','sim soh de zoas']
+        games = ['Videogames e games em geral!','The legend of Zelda','Super Mario','Counter Strike','Nintendo Wii','Gamecube','Super Nintendo','Playstation','Steam','Defense of the ancients','league of legends','final fantasy','doneky kong','angry birds','fallout','bioshock','tetris','the elders scroll']
+        tvecinema = ['Palavras ou nomes relacionados a TV e/ou Cinema!','How i met yout mother','Sense8','Netflix','American Beauty','Donnie Darko','Esqueceram de mim','The sixth sense','The shining','titanic','todo mundo odeia o cris','agostinho carrara','chapeleiro maluco','alice no pais das maravilhas','harry potter','Hora da aventura','Bob esponja']
+        matriz = [animais, comidas, proficoes, zueracc, zuerauem,azar,games,tvecinema]
         rpl = []
         preState = getPreGame(chat_id)
         if text.startswith('/'):
@@ -141,6 +144,7 @@ class PreJogo:
                         leng = len(matriz[rnd1])-1
                         rnd2 = randint(1, leng)
                         ped = getNPeD(rnd1, rnd2)
+                        ped[0] = ped[0].lower()
                         setPeD(chat_id, ped)
                         mascara = '*'*(len(ped[0]))
                         lMascara = list(mascara)
