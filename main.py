@@ -30,33 +30,15 @@ TOKEN = '123881753:AAEQXNdXS9fMLIFjzlVkpQw9mMd40vvChBw'
 
 BASE_URL = 'https://api.telegram.org/bot' + TOKEN + '/'
 
-preJogo = preGame.PreJogo()
-Jogo = game.Jogo()
-
 # ================================
-
-class EnableStatus(ndb.Model):
-    # key name: str(chat_id)
-    enabled = ndb.BooleanProperty(indexed=False, default=False)
-
-
-# ================================
-
-def setEnabled(chat_id, yes):
-    es = EnableStatus.get_or_insert(str(chat_id))
-    es.enabled = yes
-    es.put()
-
-def getEnabled(chat_id):
-    es = EnableStatus.get_by_id(str(chat_id))
-    if es:
-        return es.enabled
-    return False
-
 def getInGame(chat_id):
     return bds.getInGame(chat_id)
 
-# ================================
+def setEnabled(chat_id, status):
+    bds.setEnabled(chat_id, status)
+
+def getEnabled(chat_id):
+    return bds.getEnabled(chat_id)
 
 class MeHandler(webapp2.RequestHandler):
     def get(self):
@@ -124,11 +106,29 @@ class WebhookHandler(webapp2.RequestHandler):
             logging.info('send response:')
             logging.info(resp)
         #try:
+        preJogo = preGame.PreJogo()
+        Jogo = game.Jogo()
         inGame = getInGame(chat_id)
-        if inGame:
-            send = Jogo.game(uId, uName, chat_id, text)
-        else:
-            send = preJogo.preGame(uId, uName, chat_id, text)
+        enable = getEnabled(chat_id)
+        send = []
+        if text.startswith('/start@forca_bot') or text.startswith('/start'):
+            if enable:
+                send = ['Bot ja esta ligado']
+            else:
+                setEnabled(chat_id, True)
+                send = ['Forca bot ligado']
+        elif text.startswith('/stop@forca_bot') or text.startswith('/stop@forca_bot'):
+            if enable:
+                setEnabled(chat_id, False)
+                send = ['Forca bot desligado']
+            else:
+                send = ['Bot ja esta desligado']
+        elif enable:
+            if inGame:
+                send = Jogo.game(uId, uName, chat_id, text)
+            else:
+                send = preJogo.preGame(uId, uName, chat_id, text)
+
         for i in range(0, len(send)):
             reply(send[i])
         #except:

@@ -43,6 +43,7 @@ def updateList(matriz):
     PeD.put()
 
 class Game(ndb.Model):
+    enabled = ndb.BooleanProperty(indexed=False, default=True)
     preState = ndb.BooleanProperty(indexed=False, default=False)
     state = ndb.BooleanProperty(indexed=False, default=False)
     jogadores = ndb.StringProperty(repeated=True)
@@ -55,6 +56,18 @@ class Game(ndb.Model):
     letras = ndb.StringProperty(repeated=True)
     vidas = ndb.IntegerProperty(default = 6)
 
+def setEnabled(chat_id, status):
+    e = ndb.Key(Game, chat_id).get()
+    if e:
+        e.enabled = status
+        e.put()
+
+def getEnabled(chat_id):
+    e = ndb.Key(Game, chat_id).get()
+    if e:
+        return e.enabled
+    return True
+
 def menosVida(chat_id):
     v = ndb.Key(Game, chat_id).get()
     v.vidas -= 1
@@ -63,6 +76,11 @@ def menosVida(chat_id):
 def getVidas(chat_id):
     v = ndb.Key(Game, chat_id).get()
     return v.vidas
+
+def setVidas(chat_id, modVida):
+    v = ndb.Key(Game, chat_id).get()
+    v.vidas = v.vidas+modVida
+    v.put()
 
 def setGame(chat_id):
     g = Game(id = chat_id)
@@ -137,6 +155,12 @@ def getuIds(chat_id):
 def getPlayers(chat_id):
     p = ndb.Key(Game, chat_id).get()
     return p.nomes
+
+def rmPlayer(chat_id, rd):
+    p = ndb.Key(Game, chat_id).get()
+    p.jogadores.remove(p.jogadores[rd])
+    p.nomes.remove(p.nomes[rd])
+    p.put()
 
 def getAdm(chat_id):
     a = ndb.Key(Game, chat_id).get()
