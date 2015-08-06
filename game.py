@@ -148,9 +148,9 @@ class Jogo:
                 elif text.startswith('/getletras'):
                     rpl = ['Letras chutadas:']
                     for i in range(len(letras)):
+                        rpl.append(letras[i])
                 elif text.startswith('/help') or text.startswith('/help@forca_bot'):
                     rpl.append('Jogo em andamento, instrucoes:\n/chutarletra para chutar uma letra\n/getpalavra para checar a palavra\n/getdica para ver a dica\n/getletras para ver a lista de letras')
-                        rpl.append(letras[i])
                 else:
                     rpl = ['Comando nao reconhecido no momento']
             else:
