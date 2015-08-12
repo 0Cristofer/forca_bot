@@ -15,6 +15,9 @@ def getuIds(chat_id):
 def getPlayers(chat_id):
     return bds.getPlayers(chat_id)
 
+def rmPlayer(chat_id, rd):
+    bds.rmPlayer(chat_id, rd)
+
 def getAdm(chat_id):
     return bds.getAdm(chat_id)
 
@@ -49,12 +52,16 @@ def checkRound(chat_id, uId):
 
 def cleanGame(chat_id):
     bds.cleanGame(chat_id)
+    bds.updateRank(chat_id)
 
 def menosVida(chat_id):
     bds.menosVida(chat_id)
 
 def getVidas(chat_id):
     return bds.getVidas(chat_id)
+
+def addScore(chat_id, uName, score):
+    bds.addScore(chat_id, uName, score)
 
 class Jogo:
     def game(self, uId, uName, chat_id, text):
@@ -66,9 +73,18 @@ class Jogo:
         dica = getPeD(chat_id)[1]
         letras = getLetras(chat_id)
         mascara = getMascara(chat_id)
+        rd = getRound(chat_id)
         if text.startswith('/'):
             if uId in uIds:
-                if text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
+                if text.startswith('/getpalavra'):
+                    rpl = ['Palavra secreta: '+mascara]
+                elif text.startswith('/getdica'):
+                    rpl = ['Dica: '+dica]
+                elif text.startswith('/getletras'):
+                    rpl = ['Letras chutadas:']
+                    for i in range(len(letras)):
+                        rpl.append(letras[i])
+                elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
                     if uId == adm:
                         str1 = 'O administrador cancelou o jogo' #implementar cancelamento por votacao
                         cleanGame(chat_id)
@@ -76,17 +92,16 @@ class Jogo:
                     else:
                         str1 = 'Voce nao tem autorizacao para cancelar o jogo\nApenas o administrador pode fazer isso'
                         rpl = [str1]
-                elif text.startswith('/chutarletra'):
-                    if len(text) == 14:
-                        letra = text[13]
-                        if letra in letras:
-                            rpl = ['Essa letra ja foi chutada.\nUse /getletras para ver uma lista das letras chutadas!']
-                        else:
-                            locais = []
-                            mscra = ''
-                            newM = ''
-                            rd = getRound(chat_id)
-                            if checkRound(chat_id,uId):
+                elif checkRound(chat_id,uId):
+                    if text.startswith('/chutar'):
+                        if len(text) == 9:
+                            letra = text[8]
+                            if letra in letras:
+                                rpl = ['Essa letra ja foi chutada.\nUse /getletras para ver uma lista das letras chutadas!']
+                            else:
+                                locais = []
+                                mscra = ''
+                                newM = ''
                                 nRd = rd+1
                                 if nRd > (len(uIds)-1):
                                     nRd = 0
@@ -106,6 +121,7 @@ class Jogo:
                                             newM = newM+mascara[i]
                                     setMascara(chat_id, newM)
                                     rpl = ['Voce acertou!']
+                                    addScore(chat_id,uName, 2)
                                     setLetra(chat_id, letra)
                                     rpl.append(getMascara(chat_id))
                                 else:
@@ -120,32 +136,27 @@ class Jogo:
                                         cleanGame(chat_id)
                                     else:
                                         rpl.append('Restam '+str(getVidas(chat_id))+' Vidas!')
-                            else:
-                                nomes = getPlayers(chat_id)
-                                rpl = ['Nao eh sua vez de jogar, vez de: '+nomes[rd]]
-                    else:
-                        rpl = ['Chute invalido!']
-                elif text.startswith('/arriscarpalavra'):
-                    arrisca = text[17:len(text)]
-                    if arrisca == palavra:
-                        rpl.append('***Parabens '+uName+' voce acertou a palavra secreta e ganhou o jogo!***')
-                        rpl.append('Creditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersao Beta 1.0')
-                        cleanGame(chat_id)
-                    else:
-                        rpl.append('***ERROU!***\n'+uName+' arriscou a palavra e errou, que burro!')
-                        rpl.append('***LOSERS!!!***')
-                        rpl.append('Creditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersao Beta 1.0')
-                        cleanGame(chat_id)
-                elif text.startswith('/getpalavra'):
-                    rpl = ['Palavra secreta: '+mascara]
-                elif text.startswith('/getdica'):
-                    rpl = ['Dica: '+dica]
-                elif text.startswith('/getletras'):
-                    rpl = ['Letras chutadas:']
-                    for i in range(len(letras)):
-                        rpl.append(letras[i])
+                        elif not (checkRound(chat_id,uId)):
+                            rpl = ['Chute invalido!']
+                    elif text.startswith('/arriscar'):
+                        arrisca = text[9:len(text)]
+                        if arrisca == palavra:
+                            rpl.append('***Parabens '+uName+' voce acertou a palavra secreta e ganhou o jogo!***')
+                            rpl.append('Creditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersao Beta 1.1')
+                            addScore(chat_id,uName, len(palavra)*2)
+                            cleanGame(chat_id)
+                        else:
+                            rpl.append('***ERROU!***\n'+uName+' arriscou a palavra e errou, que burro!')
+                            rpl.append('***VOCE FOI OBLITERADO***')
+                            rmPlayer(chat_id, rd)
+                            if len(uIds) == 0:
+                                rpl.append('***LOSERS!!!***')
+                                cleanGame(chat_id)
+                elif not (checkRound(chat_id)):
+                    nomes = getPlayers(chat_id)
+                    rpl = ['Nao eh sua vez de jogar, vez de: '+nomes[rd]]
                 elif text.startswith('/help') or text.startswith('/help@forca_bot'):
-                    rpl.append('Jogo em andamento, instrucoes:\n/chutarletra para chutar uma letra\n/getpalavra para checar a palavra\n/getdica para ver a dica\n/getletras para ver a lista de letras')
+                    rpl.append('Jogo em andamento, instrucoes:\n/chutar para chutar uma letra\n/getpalavra para checar a palavra\n/getdica para ver a dica\n/getletras para ver a lista de letras')
                 else:
                     rpl = ['Comando nao reconhecido no momento']
             else:

@@ -30,6 +30,7 @@ def getInGame(chat_id):
 
 def addPlayer(chat_id, uId, uName):
     bds.addPlayer(chat_id, uId, uName)
+    bds.addPlayerRank(chat_id, uName)
 
 def setAdm(chat_id, uId):
     bds.setAdm(chat_id, uId)
@@ -64,8 +65,17 @@ def setRound(chat_id, rd):
 def getRound(chat_id):
     return bds.getRound(chat_id)
 
+def setVidas(chat_id, modVida):
+    bds.setVidas(chat_id, modVida)
+
+def getVidas(chat_id):
+    return bds.getVidas(chat_id)
+
 def cleanGame(chat_id):
     bds.cleanGame(chat_id)
+
+def getRank(chat_id):
+    return bds.getRank(chat_id)
 
 #Classe que contem toda logica do jogo (a ser melhor comentada)
 
@@ -81,7 +91,8 @@ class PreJogo:
         azar = ['Voce deu azar e nao tem dica!','Chaves','Parafuseta','Rebimboca','Kibe','Penal','Orkut','android','telegram','whatsapp','ornitorrinco','skyrim','dota2','lolzinho','pipi','voce nao vai acertar essa','sim soh de zoas']
         games = ['Videogames e games em geral!','The legend of Zelda','Super Mario','Counter Strike','Nintendo Wii','Gamecube','Super Nintendo','Playstation','Steam','Defense of the ancients','league of legends','final fantasy','doneky kong','angry birds','fallout','bioshock','tetris','the elders scroll']
         tvecinema = ['Palavras ou nomes relacionados a TV e/ou Cinema!','How i met yout mother','Sense8','Netflix','American Beauty','Donnie Darko','Esqueceram de mim','The sixth sense','The shining','titanic','todo mundo odeia o cris','agostinho carrara','chapeleiro maluco','alice no pais das maravilhas','harry potter','Hora da aventura','Bob esponja']
-        matriz = [animais, comidas, proficoes, zueracc, zuerauem,azar,games,tvecinema]
+        paises = ['Paises' 'Brasil', 'Estados Unidos', 'Alemanha', 'Japao', 'Coreia do Sul', 'Africa do Sul', 'Holanda', 'Argentina', 'Espanha', 'Chile', 'Equador', 'Canada', 'Singapura', 'India', 'Emirados Arabes', 'Italia', 'Inglaterra', 'Austria', 'Grecia', 'Republica Checa']
+        matriz = [animais, comidas, proficoes, zueracc, zuerauem,azar,games,tvecinema, paises]
         rpl = []
         preState = getPreGame(chat_id)
         if text.startswith('/'):
@@ -103,6 +114,12 @@ class PreJogo:
                 elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
                     str1 = 'Nao existe jogo no momento, envie o comando /help caso precise de ajuda!'
                     rpl = [str1]
+                elif text.startswith('/getrank') or text.startswith('/getrank@forca_bot'):
+                    rank = getRank(chat_id)
+                    rpl.append('***RANKING***')
+                    rpl.append('NOME - SCORE')
+                    for i in range(len(rank)):
+                        rpl.append(rank[i][0]+' - '+rank[i][1])
                 else:
                     str1 = 'Comando nao reconhecido no momento'
                     rpl = [str1]
@@ -131,20 +148,13 @@ class PreJogo:
                         rpl = [str1]
                 elif text.startswith('/fecharjogo') or text.startswith('/fecharjogo@forca_bot'):
                     adm = getAdm(chat_id)
-                    nomes = getPlayers(chat_id)
                     if uId == adm:
-                        str1 = 'Grupo de participantes fechados! Jogarao nesta rodada:'
-                        rpl = [str1]
-                        for i in range(0,len(nomes)):
-                            rpl.append(nomes[i])
                         setInGame(chat_id,True)
-                        rpl.append('O jogo vai comecar agora! Instrucoes:\nUtilize o comando /chutarletra para chutar letras, quando estiver pronto para arriscar utilize o comando /arriscarpalavra Mas cuidado, se voce errar perde o jogo!\n*** 6 VIDAS ***')
                         leng = len(matriz)-1
                         rnd1 = randint(0,leng)
                         leng = len(matriz[rnd1])-1
                         rnd2 = randint(1, leng)
                         ped = getNPeD(rnd1, rnd2)
-                        ped[0] = ped[0].lower()
                         setPeD(chat_id, ped)
                         mascara = '*'*(len(ped[0]))
                         lMascara = list(mascara)
@@ -155,6 +165,18 @@ class PreJogo:
                                 lMascara[i] = '-'
                         mascara = "".join(lMascara)
                         setMascara(chat_id, mascara)
+                        nomes = getPlayers(chat_id)
+                        modVida = len(ped[0])/5 if len(ped[0]) > 5 else 0
+                        modVida += len(nomes)-3 if len(nomes) > 4 else 0
+                        modVida = 9 if modVida > 9 else modVida
+                        setVidas(chat_id, modVida)
+                        vidas = str(getVidas(chat_id))+' VIDAS'
+                        str1 = 'Grupo de participantes fechados! Jogarao nesta rodada:'
+                        rpl = [str1]
+                        nomes = getPlayers(chat_id)
+                        for i in range(0,len(nomes)):
+                            rpl.append(nomes[i])
+                        rpl.append('O jogo vai comecar agora! Instrucoes:\nUtilize o comando /chutarletra para chutar letras, quando estiver pronto para arriscar utilize o comando /arriscarpalavra Mas cuidado, se voce errar perde o jogo!\n*** '+vidas+' ***')
                         rpl.append('Palavra secreta: '+mascara)
                         rpl.append('Dica: '+ped[1])
                     else:
