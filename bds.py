@@ -1,7 +1,7 @@
 #Contem todo o gerenciamento do banco de dados
 
-#Importa os BDs da Google
-
+#Imports
+from operator import itemgetter, attrgetter, methodcaller
 from google.appengine.ext import ndb
 
 #BD que grava as palavras
@@ -41,6 +41,54 @@ def updateList(matriz):
             pec.append(matriz[i][j])
     PeD = PeDs(pecs = pec, tams = tam, id = 'PeDs')
     PeD.put()
+
+
+class Rank(ndb.Model):
+    rank = ndb.StringProperty(repeated = True)
+
+def addPlayerRank(chat_id, uName):
+    r = ndb.Key(Rank, chat_id).get()
+    if not (uName in r.rank):
+        r.rank.append(uName)
+        r.rank.append('0')
+        r.put()
+
+def updateRank(chat_id):
+    r = ndb.Key(Rank, chat_id).get()
+    matriz = []
+    vet = []
+    for i in range(0, (len(r.rank)), 2):
+        aux = []
+        aux.append(r.rank[i])
+        aux.append(int(r.rank[i+1]))
+        matriz.append(aux)
+        i = i+1
+    matriz = sorted(matriz, key=itemgetter(1), reverse=True)
+    for i in range(len(matriz)):
+        vet.append(matriz[i][0])
+        vet.append(str(matriz[i][1]))
+    r.rank = vet
+    r.put()
+
+def getRank(chat_id):
+    r = ndb.Key(Rank, chat_id).get()
+    if not r:
+        r = Rank(id = chat_id)
+        r.put()
+        return []
+    matriz = []
+    for i in range(0, (len(r.rank)), 2):
+        aux = []
+        aux.append(r.rank[i])
+        aux.append(r.rank[i+1])
+        matriz.append(aux)
+    return matriz
+
+def addScore(chat_id, uName, score):
+    r = ndb.Key(Rank, chat_id).get()
+    index = r.rank.index(uName)+1
+    r.rank[index] = str(int(r.rank[index])+score)
+    r.put()
 
 class Game(ndb.Model):
     enabled = ndb.BooleanProperty(indexed=False, default=True)

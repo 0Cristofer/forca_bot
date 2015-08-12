@@ -106,28 +106,28 @@ class WebhookHandler(webapp2.RequestHandler):
             logging.info('send response:')
             logging.info(resp)
         #try:
-        preJogo = preGame.PreJogo()
+        preJogo = preGame.PreJogo() 
         Jogo = game.Jogo()
         inGame = getInGame(chat_id)
         enable = getEnabled(chat_id)
         send = []
-        if text.startswith('/start@forca_bot') or text.startswith('/start'):
-            if enable:
-                send = ['Bot ja esta ligado']
-            else:
-                setEnabled(chat_id, True)
-                send = ['Forca bot ligado']
-        elif text.startswith('/stop@forca_bot') or text.startswith('/stop@forca_bot'):
-            if enable:
-                setEnabled(chat_id, False)
-                send = ['Forca bot desligado']
-            else:
-                send = ['Bot ja esta desligado']
-        elif enable:
-            if inGame:
-                send = Jogo.game(uId, uName, chat_id, text)
-            else:
-                send = preJogo.preGame(uId, uName, chat_id, text)
+        #if text.startswith('/start@forca_bot') or text.startswith('/start'):
+        #    if enable:
+        #        send = ['Bot ja esta ligado']
+        #    else:
+        #        setEnabled(chat_id, True)
+        #        send = ['Forca bot ligado']
+        #elif text.startswith('/stop@forca_bot') or text.startswith('/stop@forca_bot'):
+        #    if enable:
+        #        setEnabled(chat_id, False)
+        #        send = ['Forca bot desligado']
+        #    else:
+        #        send = ['Bot ja esta desligado']
+        #elif enable:
+        if inGame:
+            send = Jogo.game(uId, uName, chat_id, text)
+        else:
+            send = preJogo.preGame(uId, uName, chat_id, text)
 
         for i in range(0, len(send)):
             reply(send[i])

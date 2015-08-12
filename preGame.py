@@ -30,6 +30,7 @@ def getInGame(chat_id):
 
 def addPlayer(chat_id, uId, uName):
     bds.addPlayer(chat_id, uId, uName)
+    bds.addPlayerRank(chat_id, uName)
 
 def setAdm(chat_id, uId):
     bds.setAdm(chat_id, uId)
@@ -73,6 +74,9 @@ def getVidas(chat_id):
 def cleanGame(chat_id):
     bds.cleanGame(chat_id)
 
+def getRank(chat_id):
+    return bds.getRank(chat_id)
+
 #Classe que contem toda logica do jogo (a ser melhor comentada)
 
 class PreJogo:
@@ -87,7 +91,8 @@ class PreJogo:
         azar = ['Voce deu azar e nao tem dica!','Chaves','Parafuseta','Rebimboca','Kibe','Penal','Orkut','android','telegram','whatsapp','ornitorrinco','skyrim','dota2','lolzinho','pipi','voce nao vai acertar essa','sim soh de zoas']
         games = ['Videogames e games em geral!','The legend of Zelda','Super Mario','Counter Strike','Nintendo Wii','Gamecube','Super Nintendo','Playstation','Steam','Defense of the ancients','league of legends','final fantasy','doneky kong','angry birds','fallout','bioshock','tetris','the elders scroll']
         tvecinema = ['Palavras ou nomes relacionados a TV e/ou Cinema!','How i met yout mother','Sense8','Netflix','American Beauty','Donnie Darko','Esqueceram de mim','The sixth sense','The shining','titanic','todo mundo odeia o cris','agostinho carrara','chapeleiro maluco','alice no pais das maravilhas','harry potter','Hora da aventura','Bob esponja']
-        matriz = [animais, comidas, proficoes, zueracc, zuerauem,azar,games,tvecinema]
+        paises = ['Paises' 'Brasil', 'Estados Unidos', 'Alemanha', 'Japao', 'Coreia do Sul', 'Africa do Sul', 'Holanda', 'Argentina', 'Espanha', 'Chile', 'Equador', 'Canada', 'Singapura', 'India', 'Emirados Arabes', 'Italia', 'Inglaterra', 'Austria', 'Grecia', 'Republica Checa']
+        matriz = [animais, comidas, proficoes, zueracc, zuerauem,azar,games,tvecinema, paises]
         rpl = []
         preState = getPreGame(chat_id)
         if text.startswith('/'):
@@ -109,6 +114,12 @@ class PreJogo:
                 elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
                     str1 = 'Nao existe jogo no momento, envie o comando /help caso precise de ajuda!'
                     rpl = [str1]
+                elif text.startswith('/getrank') or text.startswith('/getrank@forca_bot'):
+                    rank = getRank(chat_id)
+                    rpl.append('***RANKING***')
+                    rpl.append('NOME - SCORE')
+                    for i in range(len(rank)):
+                        rpl.append(rank[i][0]+' - '+rank[i][1])
                 else:
                     str1 = 'Comando nao reconhecido no momento'
                     rpl = [str1]
