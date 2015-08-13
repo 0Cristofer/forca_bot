@@ -136,10 +136,10 @@ class Jogo:
                                         cleanGame(chat_id)
                                     else:
                                         rpl.append('Restam '+str(getVidas(chat_id))+' Vidas!')
-                        elif not (checkRound(chat_id,uId)):
+                        else:
                             rpl = ['Chute invalido!']
                     elif text.startswith('/arriscar'):
-                        arrisca = text[9:len(text)]
+                        arrisca = text[10:len(text)]
                         if arrisca == palavra:
                             rpl.append('***Parabens '+uName+' voce acertou a palavra secreta e ganhou o jogo!***')
                             rpl.append('Creditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersao Beta 1.1')

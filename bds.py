@@ -42,16 +42,44 @@ def updateList(matriz):
     PeD = PeDs(pecs = pec, tams = tam, id = 'PeDs')
     PeD.put()
 
+class Enabled(ndb.Model):
+    enabled = ndb.BooleanProperty(indexed = False, default = False)
+
+def getEnabled(chat_id):
+    e = ndb.Key(Enabled, chat_id).get()
+    if e:
+        return e.enabled
+    e = Enabled(id = chat_id)
+    e.put()
+    return False
+
+def setEnabled(chat_id, status):
+    e = ndb.Key(Enabled, chat_id).get()
+    if e:
+        e.enabled = status
+        e.put()
+        return
+    e = Enabled(id = chat_id)
+    e.put()
+    e = ndb.Key(Enabled, chat_id).get()
+    e.enabled = status
+    e.put()
+    return False
 
 class Rank(ndb.Model):
     rank = ndb.StringProperty(repeated = True)
 
 def addPlayerRank(chat_id, uName):
     r = ndb.Key(Rank, chat_id).get()
+    if not r:
+        r = Rank(id = chat_id)
+        r.put()
+    r = ndb.Key(Rank, chat_id).get()
     if not (uName in r.rank):
         r.rank.append(uName)
         r.rank.append('0')
         r.put()
+        return
 
 def updateRank(chat_id):
     r = ndb.Key(Rank, chat_id).get()
@@ -91,7 +119,6 @@ def addScore(chat_id, uName, score):
     r.put()
 
 class Game(ndb.Model):
-    enabled = ndb.BooleanProperty(indexed=False, default=True)
     preState = ndb.BooleanProperty(indexed=False, default=False)
     state = ndb.BooleanProperty(indexed=False, default=False)
     jogadores = ndb.StringProperty(repeated=True)
@@ -103,18 +130,6 @@ class Game(ndb.Model):
     mascara = ndb.StringProperty(default='noMascara')
     letras = ndb.StringProperty(repeated=True)
     vidas = ndb.IntegerProperty(default = 6)
-
-def setEnabled(chat_id, status):
-    e = ndb.Key(Game, chat_id).get()
-    if e:
-        e.enabled = status
-        e.put()
-
-def getEnabled(chat_id):
-    e = ndb.Key(Game, chat_id).get()
-    if e:
-        return e.enabled
-    return True
 
 def menosVida(chat_id):
     v = ndb.Key(Game, chat_id).get()
@@ -221,6 +236,10 @@ def setRound(chat_id, rd):
 
 def getRound(chat_id):
     r = ndb.Key(Game, chat_id).get()
+    if len(r.jogadores) == 1:
+        r.rnd = 0
+        return 0
+        r.put()
     return r.rnd
 
 def cleanGame(chat_id):

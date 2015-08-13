@@ -91,7 +91,7 @@ class PreJogo:
         azar = ['Voce deu azar e nao tem dica!','Chaves','Parafuseta','Rebimboca','Kibe','Penal','Orkut','android','telegram','whatsapp','ornitorrinco','skyrim','dota2','lolzinho','pipi','voce nao vai acertar essa','sim soh de zoas']
         games = ['Videogames e games em geral!','The legend of Zelda','Super Mario','Counter Strike','Nintendo Wii','Gamecube','Super Nintendo','Playstation','Steam','Defense of the ancients','league of legends','final fantasy','doneky kong','angry birds','fallout','bioshock','tetris','the elders scroll']
         tvecinema = ['Palavras ou nomes relacionados a TV e/ou Cinema!','How i met yout mother','Sense8','Netflix','American Beauty','Donnie Darko','Esqueceram de mim','The sixth sense','The shining','titanic','todo mundo odeia o cris','agostinho carrara','chapeleiro maluco','alice no pais das maravilhas','harry potter','Hora da aventura','Bob esponja']
-        paises = ['Paises' 'Brasil', 'Estados Unidos', 'Alemanha', 'Japao', 'Coreia do Sul', 'Africa do Sul', 'Holanda', 'Argentina', 'Espanha', 'Chile', 'Equador', 'Canada', 'Singapura', 'India', 'Emirados Arabes', 'Italia', 'Inglaterra', 'Austria', 'Grecia', 'Republica Checa']
+        paises = ['Paises', 'Brasil', 'Estados Unidos', 'Alemanha', 'Japao', 'Coreia do Sul', 'Africa do Sul', 'Holanda', 'Argentina', 'Espanha', 'Chile', 'Equador', 'Canada', 'Singapura', 'India', 'Emirados Arabes', 'Italia', 'Inglaterra', 'Austria', 'Grecia', 'Republica Checa']
         matriz = [animais, comidas, proficoes, zueracc, zuerauem,azar,games,tvecinema, paises]
         rpl = []
         preState = getPreGame(chat_id)
@@ -117,9 +117,10 @@ class PreJogo:
                 elif text.startswith('/getrank') or text.startswith('/getrank@forca_bot'):
                     rank = getRank(chat_id)
                     rpl.append('***RANKING***')
-                    rpl.append('NOME - SCORE')
+                    str1 = 'NOME - SCORE\n'
                     for i in range(len(rank)):
-                        rpl.append(rank[i][0]+' - '+rank[i][1])
+                        str1 = str1 + rank[i][0]+' - '+rank[i][1]+'\n'
+                    rpl.append(str1)
                 else:
                     str1 = 'Comando nao reconhecido no momento'
                     rpl = [str1]
@@ -147,6 +148,7 @@ class PreJogo:
                         str1 = 'Voce nao tem autorizacao para fechar o jogo\nApenas o Administrador pode fazer isso'
                         rpl = [str1]
                 elif text.startswith('/fecharjogo') or text.startswith('/fecharjogo@forca_bot'):
+                    print 'fehou o jogo'
                     adm = getAdm(chat_id)
                     if uId == adm:
                         setInGame(chat_id,True)
