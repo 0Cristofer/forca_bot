@@ -140,18 +140,21 @@ class Jogo:
                             rpl = ['Chute invalido!']
                     elif text.startswith('/arriscar'):
                         arrisca = text[10:len(text)]
-                        if arrisca == palavra:
-                            rpl.append('***Parabens '+uName+' voce acertou a palavra secreta e ganhou o jogo!***')
-                            rpl.append('Creditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersao Beta 1.1')
-                            addScore(chat_id,uName, len(palavra)*2)
-                            cleanGame(chat_id)
-                        else:
-                            rpl.append('***ERROU!***\n'+uName+' arriscou a palavra e errou, que burro!')
-                            rpl.append('***VOCE FOI OBLITERADO***')
-                            rmPlayer(chat_id, rd)
-                            if len(uIds) == 0:
-                                rpl.append('***LOSERS!!!***')
+                        if not (len(arrisca) == 0)
+                            if arrisca == palavra:
+                                rpl.append('***Parabens '+uName+' voce acertou a palavra secreta e ganhou o jogo!***')
+                                rpl.append('Creditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersao Beta 1.1')
+                                addScore(chat_id,uName, len(palavra)*2)
                                 cleanGame(chat_id)
+                            else:
+                                rpl.append('***ERROU!***\n'+uName+' arriscou a palavra e errou, que burro!')
+                                rpl.append('***VOCE FOI OBLITERADO***')
+                                rmPlayer(chat_id, rd)
+                                if len(uIds) == 0:
+                                    rpl.append('***LOSERS!!!***')
+                                    cleanGame(chat_id)
+                        else:
+                            rpl.append('tentativa invalida')
                 elif not (checkRound(chat_id)):
                     nomes = getPlayers(chat_id)
                     rpl = ['Nao eh sua vez de jogar, vez de: '+nomes[rd]]

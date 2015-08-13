@@ -157,6 +157,7 @@ class PreJogo:
                         leng = len(matriz[rnd1])-1
                         rnd2 = randint(1, leng)
                         ped = getNPeD(rnd1, rnd2)
+                        ped[1] = ped[1].lower()
                         setPeD(chat_id, ped)
                         mascara = '*'*(len(ped[0]))
                         lMascara = list(mascara)
