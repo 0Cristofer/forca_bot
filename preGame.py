@@ -83,16 +83,18 @@ class PreJogo:
 
     def preGame(self, uId, uName, chat_id, text):
         text = text.lower()
-        animais = ['Animais', 'Macaco', 'Elefante','zebra','papagaio','andorinha','golfinho','gorila','tubarao','lobo','ornitorrinco','cavalo','humano']
-        comidas = ['Comidas', 'Banana','Miojo','Cachorro quente','Lasanha','Salada de frutas','Carambola','x-salada','frango frito','batata frita','ketchup','chocolate','morango']
-        proficoes = ['Proficao', 'Professor', 'Zelador','Prostituta','Tia do Xerox','Medico','Marceneiro','Contrabandista','Traficante','designer','game developer','dublador','escritor']
-        zueracc = ['Relacionado a Computadores e a internet em geral', 'programador','Compilador','Servidor','Monitor','Algoritmo','Netflix','orkut','instagram','tumblr','twitter','rede neural','google','photoshop','wolfram alpha']
-        zuerauem = ['Relacionado a UEM', 'rodrigo Schulz','Erica Puta','Tio Elvio','Restaurante universitario','Biblioteca central','hackerspace','caccom']
-        azar = ['Voce deu azar e nao tem dica!','Chaves','Parafuseta','Rebimboca','Kibe','Penal','Orkut','android','telegram','whatsapp','ornitorrinco','skyrim','dota2','lolzinho','pipi','voce nao vai acertar essa','sim soh de zoas']
-        games = ['Videogames e games em geral!','The legend of Zelda','Super Mario','Counter Strike','Nintendo Wii','Gamecube','Super Nintendo','Playstation','Steam','Defense of the ancients','league of legends','final fantasy','doneky kong','angry birds','fallout','bioshock','tetris','the elders scroll']
-        tvecinema = ['Palavras ou nomes relacionados a TV e/ou Cinema!','How i met yout mother','Sense8','Netflix','American Beauty','Donnie Darko','Esqueceram de mim','The sixth sense','The shining','titanic','todo mundo odeia o cris','agostinho carrara','chapeleiro maluco','alice no pais das maravilhas','harry potter','Hora da aventura','Bob esponja']
-        paises = ['Paises', 'Brasil', 'Estados Unidos', 'Alemanha', 'Japao', 'Coreia do Sul', 'Africa do Sul', 'Holanda', 'Argentina', 'Espanha', 'Chile', 'Equador', 'Canada', 'Singapura', 'India', 'Emirados Arabes', 'Italia', 'Inglaterra', 'Austria', 'Grecia', 'Republica Checa']
-        matriz = [animais, comidas, proficoes, zueracc, zuerauem,azar,games,tvecinema, paises]
+        matriz = [
+            ['Animais', 'Macaco', 'Elefante','zebra','papagaio','andorinha','golfinho','gorila','tubarao','lobo','ornitorrinco','cavalo','humano'],
+            ['Comidas', 'Banana','Miojo','Cachorro quente','Lasanha','Salada de frutas','Carambola','x-salada','frango frito','batata frita','ketchup','chocolate','morango'],
+            ['Proficao', 'Professor', 'Zelador','Prostituta','Tia do Xerox','Medico','Marceneiro','Contrabandista','Traficante','designer','game developer','dublador','escritor'],
+            ['Relacionado a Computadores e a internet em geral', 'programador','Compilador','Servidor','Monitor','Algoritmo','Netflix','orkut','instagram','tumblr','twitter','rede neural','google','photoshop','wolfram alpha'],
+            ['Relacionado a UEM', 'rodrigo Schulz','Erica Puta','Tio Elvio','Restaurante universitario','Biblioteca central','hackerspace','caccom'],
+            ['Voce deu azar e nao tem dica!','Chaves','Parafuseta','Rebimboca','Kibe','Penal','Orkut','android','telegram','whatsapp','ornitorrinco','skyrim','dota2','lolzinho','pipi','voce nao vai acertar essa','sim soh de zoas'],
+            ['Heroi ou vilao do mundo das HQ/cinema (DC e Marvel)','Batman','Flash','Mulher maravilha','Pinguim','Super Homem','lanterna verde','Duende verde','Homem aranha','Thor','Hulk','Homem de ferro','Homem formiga','Tocha humana','O coisa','viuva negra','arqueiro verde','Groot','Rocket Raccoon','Magneto','Wolverine'],
+            ['Videogames e games em geral!','The legend of Zelda','Super Mario','Counter Strike','Nintendo Wii','Super Nintendo','Playstation','Steam','Defense of the ancients','league of legends','final fantasy','doneky kong','angry birds','fallout','bioshock','tetris','the elders scroll','minecraft','Call of duty','Battlefield'],
+            ['Palavras ou nomes relacionados a TV e/ou Cinema!','How i met yout mother','Sense8','Netflix','American Beauty','Donnie Darko','Esqueceram de mim','The sixth sense','The shining','titanic','todo mundo odeia o cris','agostinho carrara','chapeleiro maluco','alice no pais das maravilhas','harry potter','Hora da aventura','Bob esponja'],
+            ['Paises', 'Brasil', 'Estados Unidos', 'Alemanha', 'Japao', 'Coreia do Sul', 'Africa do Sul', 'Holanda', 'Argentina', 'Espanha', 'Chile', 'Equador', 'Canada', 'Singapura', 'India', 'Emirados Arabes', 'Italia', 'Inglaterra', 'Austria', 'Grecia', 'Republica Checa']
+        ]
         rpl = []
         preState = getPreGame(chat_id)
         if text.startswith('/'):
