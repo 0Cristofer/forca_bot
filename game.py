@@ -82,8 +82,10 @@ class Jogo:
                     rpl = ['Dica: '+dica]
                 elif text.startswith('/getletras'):
                     rpl = ['Letras chutadas:']
+                    rpll = ' '
                     for i in range(len(letras)):
-                        rpl.append(letras[i])
+                        rpll= rpll+letras[i]+' '
+                    rpl.append(rpll)
                 elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
                     if uId == adm:
                         str1 = 'O administrador cancelou o jogo' #implementar cancelamento por votacao
@@ -140,7 +142,7 @@ class Jogo:
                             rpl = ['Chute invalido!']
                     elif text.startswith('/arriscar'):
                         arrisca = text[10:len(text)]
-                        if not (len(arrisca) == 0)
+                        if not (len(arrisca) == 0):
                             if arrisca == palavra:
                                 rpl.append('***Parabens '+uName+' voce acertou a palavra secreta e ganhou o jogo!***')
                                 rpl.append('Creditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersao Beta 1.1')
