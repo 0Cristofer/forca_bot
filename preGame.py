@@ -84,16 +84,16 @@ class PreJogo:
     def preGame(self, uId, uName, chat_id, text):
         text = text.lower()
         matriz = [
-            ['Animais', 'Macaco', 'Elefante','zebra','papagaio','andorinha','golfinho','gorila','tubarao','lobo','ornitorrinco','cavalo','humano'],
-            ['Comidas', 'Banana','Miojo','Cachorro quente','Lasanha','Salada de frutas','Carambola','x-salada','frango frito','batata frita','ketchup','chocolate','morango'],
-            ['Proficao', 'Professor', 'Zelador','Prostituta','Tia do Xerox','Medico','Marceneiro','Contrabandista','Traficante','designer','game developer','dublador','escritor'],
-            ['Relacionado a Computadores e a internet em geral', 'programador','Compilador','Servidor','Monitor','Algoritmo','Netflix','orkut','instagram','tumblr','twitter','rede neural','google','photoshop','wolfram alpha'],
+            ['Animais', 'macaco', 'elefante','zebra','papagaio','andorinha','golfinho','gorila','tubarao','lobo','ornitorrinco','cavalo','humano'],
+            ['Comidas', 'banana','miojo','cachorro quente','lasanha','salada de frutas','carambola','x-salada','frango frito','batata frita','ketchup','chocolate','morango'],
+            ['Proficao', 'professor', 'Zelador','Prostituta','Tia do Xerox','Medico','Marceneiro','Contrabandista','Traficante','designer','game developer','dublador','escritor'],
+            ['Relacionado a Computadores/Internet/Programacao', 'programador','compilador','servidor','monitor','algoritmo','netflix','orkut','instagram','tumblr','twitter','rede neural','google','photoshop','wolfram alpha','python','java','framework'],
             ['Relacionado a UEM', 'rodrigo Schulz','Erica Puta','Tio Elvio','Restaurante universitario','Biblioteca central','hackerspace','caccom'],
             ['Voce deu azar e nao tem dica!','Chaves','Parafuseta','Rebimboca','Kibe','Penal','Orkut','android','telegram','whatsapp','ornitorrinco','skyrim','dota2','lolzinho','pipi','voce nao vai acertar essa','sim soh de zoas'],
-            ['Heroi ou vilao do mundo das HQ/cinema (DC e Marvel)','Batman','Flash','Mulher maravilha','Pinguim','Super Homem','lanterna verde','Duende verde','Homem aranha','Thor','Hulk','Homem de ferro','Homem formiga','Tocha humana','O coisa','viuva negra','arqueiro verde','Groot','Rocket Raccoon','Magneto','Wolverine'],
-            ['Videogames e games em geral!','The legend of Zelda','Super Mario','Counter Strike','Nintendo Wii','Super Nintendo','Playstation','Steam','Defense of the ancients','league of legends','final fantasy','doneky kong','angry birds','fallout','bioshock','tetris','the elders scroll','minecraft','Call of duty','Battlefield'],
-            ['Palavras ou nomes relacionados a TV e/ou Cinema!','How i met yout mother','Sense8','Netflix','American Beauty','Donnie Darko','Esqueceram de mim','The sixth sense','The shining','titanic','todo mundo odeia o cris','agostinho carrara','chapeleiro maluco','alice no pais das maravilhas','harry potter','Hora da aventura','Bob esponja'],
-            ['Paises', 'Brasil', 'Estados Unidos', 'Alemanha', 'Japao', 'Coreia do Sul', 'Africa do Sul', 'Holanda', 'Argentina', 'Espanha', 'Chile', 'Equador', 'Canada', 'Singapura', 'India', 'Emirados Arabes', 'Italia', 'Inglaterra', 'Austria', 'Grecia', 'Republica Checa']
+            ['Heroi ou vilao do mundo das HQ/cinema (DC e Marvel)','batman','flash','mulher maravilha','pinguim','super Homem','lanterna verde','duende verde','homem aranha','thor','hulk','homem de ferro','homem formiga','tocha humana','o coisa','viuva negra','arqueiro verde','Groot','Rocket Raccoon','Magneto','Wolverine'],
+            ['Videogames e games em geral!','the legend of zelda','super mario','counter strike','nintendo wii','super nintendo','playstation','steam','defense of the ancients','league of legends','final fantasy','doneky kong','angry birds','fallout','bioshock','tetris','the elders scroll','minecraft','call of duty','battlefield'],
+            ['Palavras ou nomes relacionados a TV e/ou Cinema!','how i met yout mother','sense8','netflix','american Beauty','donnie Darko','esqueceram de mim','the sixth sense','the shining','titanic','todo mundo odeia o cris','agostinho carrara','chapeleiro maluco','alice no pais das maravilhas','harry potter','hora da aventura','bob esponja'],
+            ['Paises', 'brasil', 'estados Unidos', 'alemanha', 'japao', 'coreia do Sul', 'africa do sul', 'holanda', 'argentina', 'espanha', 'chile', 'equador', 'canada', 'singapura', 'india', 'emirados Arabes', 'italia', 'inglaterra', 'austria', 'grecia', 'Republica Checa']
         ]
         rpl = []
         preState = getPreGame(chat_id)
@@ -102,8 +102,7 @@ class PreJogo:
             if preState == False:
                 if text.startswith('/novojogo') or text.startswith('/novojogo@forca_bot'):
                     setGame(chat_id)
-                    rpl.append('Comecando um novo jogo! Voce sera o administrador dessa rodada '+uName)
-                    rpl.append('Vamos comecar definindo os jogadores\nQuem quiser participar dessa rodada envie o comando /entrar :D')
+                    rpl.append('Comecando um novo jogo! Voce sera o administrador dessa rodada '+uName+'\nVamos comecar definindo os jogadores\nQuem quiser participar dessa rodada envie o comando /entrar :D' )
                     rpl.append('Para fechar o grupo de participantes envie o comando /fecharjogo Administador '+uName)
                     setPreGame(chat_id, True)
                     setAdm(chat_id, uId)
@@ -111,7 +110,7 @@ class PreJogo:
                     updateList(matriz)
                     setRound(chat_id, 0)
                 elif text.startswith('/help') or text.startswith('/help@forca_bot'):
-                    str1 = 'Nao existe jogo em andamento, utilize o comando /novojogo para comecar e irei te guiando :)'
+                    str1 = 'Nao existe nenhum jogo em andamento, utilize o comando /novojogo para comecar e irei te guiando :)\nCaso deseje ver o ranking use /getrank'
                     rpl = [str1]
                 elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
                     str1 = 'Nao existe jogo no momento, envie o comando /help caso precise de ajuda!'

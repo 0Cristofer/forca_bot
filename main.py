@@ -117,9 +117,9 @@ class WebhookHandler(webapp2.RequestHandler):
         send = []
         if text.startswith('/start'):
             if enabled:
-                reply('forca_bot ja esta ligado')
+                reply('forca_bot ja esta ligadoSou um bot desenvolvido para ser o mestre dos jogos de forca! Voce pode jogar sozinho ou me adicionar a um grupo e jogar com seus amigos :)\nComo funciona: Use comandos que comecam com / para interagir comigo, organize uma partida que eu cuidarei do resto! Vou escolher uma palavra de uma determinada categoria e ela sera a palavra secreta, voce e seus amigos devem chutar letras e eu direi se voce acertou ou nao, quando voce estiver pronto pode arriscar a palavra, mas cuidado, se voce errar perde na hora!\n O numero de chutes de letras varia de acordo com a partida, tambem possuo um sistema de ranking!\nDuvidas e feedback envie uma mensagem para meus criadores: @bcesarg6 e @cristoferoswald :D\nUse /help para ajuda com os comandos e se divirta!')
             else:
-                reply('Ola eu sou o forca_bot!')
+                reply('Ola eu sou o forca_bot!\nSou um bot desenvolvido para ser o mestre dos jogos de forca! Voce pode jogar sozinho ou me adicionar a um grupo e jogar com seus amigos :)\nComo funciona: Use comandos que comecam com / para interagir comigo, organize uma partida que eu cuidarei do resto! Vou escolher uma palavra de uma determinada categoria e ela sera a palavra secreta, voce e seus amigos devem chutar letras e eu direi se voce acertou ou nao, quando voce estiver pronto pode arriscar a palavra, mas cuidado, se voce errar perde na hora!\n O numero de chutes de letras varia de acordo com a partida, tambem possuo um sistema de ranking!\nDuvidas e feedback envie uma mensagem para meus criadores: @bcesarg6 e @cristoferoswald :D\nUse /help para ajuda com os comandos e se divirta!')
                 setEnabled(chat_id, True)
                 if (inPreGame or inGame):
                     reply('Ja existe um jogo em andamento, se quiser eh so continuar jogando')

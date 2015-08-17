@@ -151,6 +151,7 @@ class Jogo:
                             else:
                                 rpl.append('***ERROU!***\n'+uName+' arriscou a palavra e errou, que burro!')
                                 rpl.append('***VOCE FOI OBLITERADO***')
+                                addScore(chat_id,uName, -(len(palavra)))
                                 rmPlayer(chat_id, rd)
                                 if len(uIds) == 0:
                                     rpl.append('***LOSERS!!!***')
