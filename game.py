@@ -128,22 +128,22 @@ class Jogo:
                                     rpl.append(getMascara(chat_id))
                                     nomes = getPlayers(chat_id)
                                     auxx = 0 if rd+1 > (len(nomes)-1) else rd + 1
-                                    rpl.append('Agora eh a vez do: '+nomes[auxx])
+                                    rpl.append('Agora eh a vez de: '+nomes[auxx])
                                 else:
                                     rpl = ['Errou...']
                                     setLetra(chat_id, letra)
                                     menosVida(chat_id)
                                     nomes = getPlayers(chat_id)
                                     auxx = 0 if rd+1 > (len(nomes)-1) else rd + 1
-                                    rpl.append('Agora eh a vez do: '+nomes[auxx])
                                     if getVidas(chat_id) == 1:
                                         rpl.append('Voces tem apenas uma vida restante! Tentem descobrir a palavra ou aceitem a DERROTA!')
                                     elif getVidas(chat_id) == 0:
                                         rpl.append('***LOSERS!!!***')
-                                        rpl.append('Creditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersao Beta 1.0')
+                                        rpl.append('Creditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersao Beta 1.7')
                                         cleanGame(chat_id)
                                     else:
                                         rpl.append('Restam '+str(getVidas(chat_id))+' Vidas!')
+                                        rpl.append('Agora eh a vez de: '+nomes[auxx])
                         else:
                             rpl = ['Chute invalido!']
                     elif text.startswith('/arriscar'):
@@ -151,7 +151,7 @@ class Jogo:
                         if not (len(arrisca) == 0):
                             if arrisca == palavra:
                                 rpl.append('***Parabens '+uName+' voce acertou a palavra secreta e ganhou o jogo!***')
-                                rpl.append('Creditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersao Beta 1.1')
+                                rpl.append('Creditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersao Beta 1.7')
                                 addScore(chat_id,uName, len(palavra)*2)
                                 cleanGame(chat_id)
                             else:
@@ -174,7 +174,7 @@ class Jogo:
                 else:
                     rpl = ['Comando nao reconhecido no momento']
             else:
-                rpl.append('Voce nao esta participando deste jogo '+uName+'\nlembre-se de entrar no proximo jogo se voce quer particupar')
+                rpl.append('Voce nao esta participando deste jogo '+uName+'\nlembre-se de entrar no proximo jogo se voce quer participar')
         else:
             rpl = ['Nao eh um comando, comandos comecam com "/"']
         return rpl
