@@ -222,15 +222,21 @@ def getPlayers(chat_id):
 def rmPlayer(chat_id, rd):
     p = ndb.Key(Game, chat_id).get()
     jog = p.jogadores
-    aux = rd+1 if (len(jog)-1) else 0
+    nom = p.nomes
+    isAdm = (p.adm == jog[rd])
+    aux = rd+1 if (len(jog)-2) >= rd+1 else 0
+    zero = True if len(jog) == 1 else False
     p.jogadores.remove(p.jogadores[rd])
     p.nomes.remove(p.nomes[rd])
-    if (p.adm == jog[rd]):
-         p.adm = jog[aux]
-         p.put()
-         return [True, nomes[aux]]
+    if (not zero) and isAdm:
+        jog = p.jogadores
+        nom = p.nomes
+        p.adm = jog[aux]
+        retorno = [True, nom[aux]]          #Maldito NDB
+        p.put()
+        return retorno
     p.put()
-    return [False, nomes[aux]]
+    return [False, 'sem nome']
 
 def getAdm(chat_id):
     a = ndb.Key(Game, chat_id).get()

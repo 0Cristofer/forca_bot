@@ -160,7 +160,7 @@ class Jogo:
                                 addScore(chat_id,uName, -(len(palavra)))
                                 change = rmPlayer(chat_id, rd)
                                 if change[0]:
-                                    rpl.append('O novo ADM é o(a): '+ change[1])
+                                    rpl.append('O novo ADM eh o(a): '+ change[1])
                                 if len(uIds) == 0:
                                     rpl.append('***LOSERS!!!***')
                                     cleanGame(chat_id)
