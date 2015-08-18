@@ -149,7 +149,6 @@ class PreJogo:
                         str1 = 'Voce nao tem autorizacao para fechar o jogo\nApenas o Administrador pode fazer isso'
                         rpl = [str1]
                 elif text.startswith('/fecharjogo') or text.startswith('/fecharjogo@forca_bot'):
-                    print 'fehou o jogo'
                     adm = getAdm(chat_id)
                     if uId == adm:
                         setInGame(chat_id,True)

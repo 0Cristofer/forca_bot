@@ -16,7 +16,7 @@ def getPlayers(chat_id):
     return bds.getPlayers(chat_id)
 
 def rmPlayer(chat_id, rd):
-    bds.rmPlayer(chat_id, rd)
+    return bds.rmPlayer(chat_id, rd)
 
 def getAdm(chat_id):
     return bds.getAdm(chat_id)
@@ -94,7 +94,7 @@ class Jogo:
                     else:
                         str1 = 'Voce nao tem autorizacao para cancelar o jogo\nApenas o administrador pode fazer isso'
                         rpl = [str1]
-                elif checkRound(chat_id,uId):
+                elif checkRound(chat_id, uId):
                     if text.startswith('/chutar'):
                         if len(text) == 9:
                             letra = text[8]
@@ -126,10 +126,16 @@ class Jogo:
                                     addScore(chat_id,uName, 2)
                                     setLetra(chat_id, letra)
                                     rpl.append(getMascara(chat_id))
+                                    nomes = getPlayers(chat_id)
+                                    auxx = 0 if rd+1 > (len(nomes)-1) else rd + 1
+                                    rpl.append('Agora eh a vez do: '+nomes[auxx])
                                 else:
                                     rpl = ['Errou...']
                                     setLetra(chat_id, letra)
                                     menosVida(chat_id)
+                                    nomes = getPlayers(chat_id)
+                                    auxx = 0 if rd+1 > (len(nomes)-1) else rd + 1
+                                    rpl.append('Agora eh a vez do: '+nomes[auxx])
                                     if getVidas(chat_id) == 1:
                                         rpl.append('Voces tem apenas uma vida restante! Tentem descobrir a palavra ou aceitem a DERROTA!')
                                     elif getVidas(chat_id) == 0:
@@ -152,13 +158,15 @@ class Jogo:
                                 rpl.append('***ERROU!***\n'+uName+' arriscou a palavra e errou, que burro!')
                                 rpl.append('***VOCE FOI OBLITERADO***')
                                 addScore(chat_id,uName, -(len(palavra)))
-                                rmPlayer(chat_id, rd)
+                                change = rmPlayer(chat_id, rd)
+                                if change[0]:
+                                    rpl.append('O novo ADM é o(a): '+ change[1])
                                 if len(uIds) == 0:
                                     rpl.append('***LOSERS!!!***')
                                     cleanGame(chat_id)
                         else:
                             rpl.append('tentativa invalida')
-                elif not (checkRound(chat_id)):
+                elif not (checkRound(chat_id,uId)):
                     nomes = getPlayers(chat_id)
                     rpl = ['Nao eh sua vez de jogar, vez de: '+nomes[rd]]
                 elif text.startswith('/help') or text.startswith('/help@forca_bot'):

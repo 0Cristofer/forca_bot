@@ -151,7 +151,7 @@ def setGame(chat_id):
 
 def setPeD(chat_id, ped):
     PeD = ndb.Key(Game, chat_id).get()
-    PeD.palavra = ped[0]
+    PeD.palavra = ped[0].lower()
     PeD.dica = ped[1]
     PeD.put()
 
@@ -221,9 +221,16 @@ def getPlayers(chat_id):
 
 def rmPlayer(chat_id, rd):
     p = ndb.Key(Game, chat_id).get()
+    jog = p.jogadores
+    aux = rd+1 if (len(jog)-1) else 0
     p.jogadores.remove(p.jogadores[rd])
     p.nomes.remove(p.nomes[rd])
+    if (p.adm == jog[rd]):
+         p.adm = jog[aux]
+         p.put()
+         return [True, nomes[aux]]
     p.put()
+    return [False, nomes[aux]]
 
 def getAdm(chat_id):
     a = ndb.Key(Game, chat_id).get()
@@ -239,6 +246,10 @@ def getRound(chat_id):
     if len(r.jogadores) == 1:
         r.rnd = 0
         return 0
+        r.put()
+    if (len(r.jogadores) == r.rnd) or (len(r.jogadores) < r.rnd):
+        return 0
+        r.rnd = 0
         r.put()
     return r.rnd
 
