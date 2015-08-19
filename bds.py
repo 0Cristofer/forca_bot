@@ -219,6 +219,12 @@ def getPlayers(chat_id):
     p = ndb.Key(Game, chat_id).get()
     return p.nomes
 
+def setShuffle(chat_id, nomes, uIds):
+    p = ndb.Key(Game, chat_id).get()
+    p.nomes = nomes
+    p.jogadores = uIds
+    p.put()
+
 def rmPlayer(chat_id, rd):
     p = ndb.Key(Game, chat_id).get()
     jog = p.jogadores

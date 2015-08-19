@@ -4,7 +4,7 @@
 import bds
 
 #Importa funcao que randomiza um int
-from random import randint
+from random import randint, shuffle
 
 #Pega as funcoes dos BDs para poderem ser utilizadas nesse arquivo
 def updateList(matriz):
@@ -77,6 +77,10 @@ def cleanGame(chat_id):
 def getRank(chat_id):
     return bds.getRank(chat_id)
 
+def setShuffle(chat_id, nomes, uIds):
+    bds.setShuffle(chat_id, nomes, uIds)
+
+
 #Classe que contem toda logica do jogo (a ser melhor comentada)
 
 class PreJogo:
@@ -85,11 +89,11 @@ class PreJogo:
         text = text.lower()
         matriz = [
             ['Animais', 'macaco', 'elefante','zebra','papagaio','andorinha','golfinho','gorila','tubarao','lobo','ornitorrinco','cavalo','humano'],
-            ['Comidas', 'banana','miojo','cachorro quente','lasanha','salada de frutas','carambola','x-salada','frango frito','batata frita','ketchup','chocolate','morango'],
+            ['Comidas', 'banana','miojo','cachorro quente','lasanha','salada de frutas','carambola','x-salada','frango frito','batata frita','ketchup','chocolate','morango','strogonoff','arroz e feijao','batata doce','pizza',''],
             ['Proficao', 'professor', 'zelador','prostituta','tia do Xerox','medico','marceneiro','contrabandista','traficante','designer','game developer','dublador','escritor'],
             ['Relacionado a Computadores/Internet/Programacao', 'programador','compilador','servidor','monitor','algoritmo','netflix','orkut','instagram','tumblr','twitter','rede neural','google','photoshop','wolfram alpha','python','java','framework','ruby','javascript','latex'],
-            ['Relacionado a UEM', 'rodrigo Schulz','Erica Puta','Tio Elvio','Restaurante universitario','Biblioteca central','hackerspace','caccom'],
-            ['Voce deu azar e nao tem dica!','Chaves','Parafuseta','Rebimboca','Kibe','Penal','Orkut','android','telegram','whatsapp','ornitorrinco','skyrim','dota2','lolzinho','pipa','voce nao vai acertar essa','sim soh de zoas'],
+            ['Relacionado a UEM', 'rodrigo Schulz','erica puta','tio elvio','restaurante universitario','biblioteca central','hackerspace','caccom'],
+            ['Voce deu azar e nao tem dica!','chaves','parafuseta','rebimboca','kibe','penal','orkut','android','telegram','whatsapp','ornitorrinco','skyrim','dota2','lolzinho','pipa','voce nao vai acertar essa','sim soh de zoas'],
             ['Heroi ou vilao do mundo das HQ/cinema (DC e Marvel)','batman','flash','mulher maravilha','pinguim','super Homem','lanterna verde','duende verde','homem aranha','thor','hulk','homem de ferro','homem formiga','tocha humana','o coisa','viuva negra','arqueiro verde','Groot','Rocket Raccoon','Magneto','Wolverine'],
             ['Videogames e games em geral!','the legend of zelda','super mario','counter strike','nintendo wii','super nintendo','playstation','steam','defense of the ancients','league of legends','final fantasy','doneky kong','angry birds','fallout','bioshock','tetris','the elders scroll','minecraft','call of duty','battlefield'],
             ['Palavras ou nomes relacionados a TV e/ou Cinema!','how i met your mother','sense8','netflix','american Beauty','donnie Darko','esqueceram de mim','the sixth sense','the shining','titanic','todo mundo odeia o cris','agostinho carrara','chapeleiro maluco','alice no pais das maravilhas','harry potter','hora da aventura','bob esponja'],
@@ -174,14 +178,27 @@ class PreJogo:
                         modVida = 9 if modVida > 9 else modVida
                         setVidas(chat_id, modVida)
                         vidas = str(getVidas(chat_id))+' VIDAS'
-                        str1 = 'Grupo de participantes fechados! Jogarao nesta rodada:'
-                        rpl = [str1]
+                        #Randomizar a lista de participantes
                         nomes = getPlayers(chat_id)
+                        uIds = getuIds(chat_id)
+                        # Given list1 and list2
+                        nomes_shuf = []
+                        uIds_shuf = []
+                        index_shuf = range(len(nomes))
+                        shuffle(index_shuf)
+                        for i in index_shuf:
+                            nomes_shuf.append(nomes[i])
+                            uIds_shuf.append(uIds[i])
+                        str1 = 'Grupo de participantes fechados! Voces jogarao nesta ordem:\n\n'
+                        nomes = nomes_shuf
+                        uIds = uIds_shuf
+                        setShuffle(chat_id, nomes, uIds)
                         for i in range(0,len(nomes)):
-                            rpl.append(nomes[i])
+                            str1 = str1+nomes[i]+'\n'
                         rpl.append('O jogo vai comecar agora! Instrucoes:\nUtilize o comando /chutarletra para chutar letras, quando estiver pronto para arriscar utilize o comando /arriscarpalavra Mas cuidado, se voce errar perde o jogo!\n*** '+vidas+' ***')
                         rpl.append('Palavra secreta: '+mascara)
                         rpl.append('Dica: '+ped[1])
+                        rpl.append(str1)
                     else:
                         str1 = 'Voce nao tem autorizacao para cancelar o jogo\nApenas o administrador pode fazer isso'
                         rpl = [str1]
