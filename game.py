@@ -88,7 +88,7 @@ class Jogo:
                     rpl.append(rpll)
                 elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
                     if uId == adm:
-                        str1 = 'O administrador cancelou o jogo' #implementar cancelamento por votacao
+                        str1 = 'O administrador cancelou o jogo'
                         cleanGame(chat_id)
                         rpl = [str1]
                     else:
