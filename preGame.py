@@ -88,14 +88,14 @@ class PreJogo:
     def preGame(self, uId, uName, chat_id, text):
         text = text.lower()
         matriz = [
-            ['Animais', 'macaco', 'elefante','zebra','papagaio','andorinha','golfinho','gorila','tubarao','lobo','ornitorrinco','cavalo','humano'],
-            ['Comidas', 'banana','miojo','cachorro quente','lasanha','salada de frutas','carambola','x-salada','frango frito','batata frita','ketchup','chocolate','morango','strogonoff','arroz e feijao','batata doce','pizza',''],
+            ['Animais ou especies', 'macaco', 'elefante','zebra','papagaio','andorinha','golfinho','gorila','tubarao','lobo','ornitorrinco','cavalo','humano','lebre','coelho','piriquito','pomba','dinossauro','macaco','borboleta'],
+            ['Comidas, sobremesas ou frutas', 'banana','miojo','cachorro quente','lasanha','salada de frutas','carambola','x-salada','frango frito','batata frita','ketchup','chocolate','morango','strogonoff','arroz e feijao','batata doce','pizza','sushi','temaki','fondue de chocolate','cupcake','donut','eclair','froyo','gingerbread','honeycomb','icecream sandwich','jellybean','kitkat','lollipop','marshmallow'],
             ['Profissao', 'professor', 'zelador','prostituta','tia do Xerox','medico','marceneiro','contrabandista','traficante','designer','game developer','dublador','escritor'],
-            ['Relacionado a Computadores/Internet/Programacao', 'programador','compilador','servidor','monitor','algoritmo','netflix','orkut','instagram','tumblr','twitter','rede neural','google','photoshop','wolfram alpha','python','java','framework','ruby','javascript','latex'],
-            ['Relacionado a UEM', 'rodrigo Schulz','erica puta','tio elvio','restaurante universitario','biblioteca central','hackerspace','caccom'],
+            ['Relacionado a Computadores/Internet/Programacao', 'programador','compilador','servidor','monitor','algoritmo','netflix','orkut','instagram','tumblr','twitter','rede neural','google','photoshop','wolfram alpha','python','java','framework','ruby','javascript','latex','android','stack overflow','wikipedia','debugging'],
+            ['Relacionado a UEM', 'rodrigo Schulz','erica puta','tio elvio','restaurante universitario','biblioteca central','hackerspace','caccom','tio juliao','rodrigo churros'],
             ['Voce deu azar e nao tem dica!','chaves','parafuseta','rebimboca','kibe','penal','orkut','android','telegram','whatsapp','ornitorrinco','skyrim','dota2','lolzinho','pipa','voce nao vai acertar essa','sim soh de zoas'],
             ['Heroi ou vilao do mundo das HQ/cinema (DC e Marvel)','batman','flash','mulher maravilha','pinguim','super Homem','lanterna verde','duende verde','homem aranha','thor','hulk','homem de ferro','homem formiga','tocha humana','o coisa','viuva negra','arqueiro verde','Groot','Rocket Raccoon','Magneto','Wolverine'],
-            ['Videogames e jogos em geral!','the legend of zelda','super mario','counter strike','nintendo wii','super nintendo','playstation','steam','defense of the ancients','league of legends','final fantasy','doneky kong','angry birds','fallout','bioshock','tetris','the elders scroll','minecraft','call of duty','battlefield'],
+            ['Videogames, jogos e empresas da area','the legend of zelda','super mario','counter strike','nintendo wii','super nintendo','playstation','steam','defense of the ancients','league of legends','final fantasy','donkey kong','angry birds','fallout','bioshock','tetris','the elders scroll','minecraft','call of duty','battlefield','bomberman','sonic the hedgehog','just dance','nintendo','sony','sega','dreamcast','bethesda','2k games','valve','riot'],
             ['Titulos ou nomes relacionados a TV e/ou Cinema!','how i met your mother','sense8','netflix','american Beauty','donnie Darko','esqueceram de mim','the sixth sense','the shining','titanic','todo mundo odeia o cris','agostinho carrara','chapeleiro maluco','alice no pais das maravilhas','harry potter','hora da aventura','bob esponja'],
             ['Paises', 'brasil', 'estados Unidos', 'alemanha', 'japao', 'coreia do Sul', 'africa do sul', 'holanda', 'argentina', 'espanha', 'chile', 'equador', 'canada', 'singapura', 'india', 'emirados Arabes', 'italia', 'inglaterra', 'austria', 'grecia', 'Republica Checa']
         ]
@@ -106,7 +106,7 @@ class PreJogo:
             if preState == False:
                 if text.startswith('/novojogo') or text.startswith('/novojogo@forca_bot'):
                     setGame(chat_id)
-                    rpl.append('Começando um novo jogo! Voce será o administrador dessa rodada '+uName+'\nVamos comecar definindo os jogadores\nQuem quiser participar dessa rodada envie o comando /entrar :D' )
+                    rpl.append('Comecando um novo jogo! Voce sera o administrador dessa rodada '+uName+'\nVamos comecar definindo os jogadores\nQuem quiser participar dessa rodada envie o comando /entrar :D' )
                     rpl.append('Para fechar o grupo de participantes envie o comando /fecharjogo Administador '+uName)
                     setPreGame(chat_id, True)
                     setAdm(chat_id, uId)
