@@ -88,16 +88,16 @@ class PreJogo:
     def preGame(self, uId, uName, chat_id, text):
         text = text.lower()
         matriz = [
-            ['Animais ou especies', 'macaco', 'elefante','zebra','papagaio','andorinha','golfinho','gorila','tubarao','lobo','ornitorrinco','cavalo','humano','lebre','coelho','piriquito','pomba','dinossauro','macaco','borboleta'],
+            ['Animais ou espécies', 'macaco', 'elefante','zebra','papagaio','andorinha','golfinho','gorila','tubarao','lobo','ornitorrinco','cavalo','humano','lebre','coelho','piriquito','pomba','dinossauro','macaco','borboleta'],
             ['Comidas, sobremesas ou frutas', 'banana','miojo','cachorro quente','lasanha','salada de frutas','carambola','x-salada','frango frito','batata frita','ketchup','chocolate','morango','strogonoff','arroz e feijao','batata doce','pizza','sushi','temaki','fondue de chocolate','cupcake','donut','eclair','froyo','gingerbread','honeycomb','icecream sandwich','jellybean','kitkat','lollipop','marshmallow'],
-            ['Profissao', 'professor', 'zelador','prostituta','tia do Xerox','medico','marceneiro','contrabandista','traficante','designer','game developer','dublador','escritor'],
-            ['Relacionado a Computadores/Internet/Programacao', 'programador','compilador','servidor','monitor','algoritmo','netflix','orkut','instagram','tumblr','twitter','rede neural','google','photoshop','wolfram alpha','python','java','framework','ruby','javascript','latex','android','stack overflow','wikipedia','debugging'],
+            ['Profissão', 'professor', 'zelador','prostituta','tia do Xerox','médico','marceneiro','contrabandista','traficante','designer','game developer','dublador','escritor'],
+            ['Relacionado a Computadores/Internet/Programação', 'programador','compilador','servidor','monitor','algoritmo','netflix','orkut','instagram','tumblr','twitter','rede neural','google','photoshop','wolfram alpha','python','java','framework','ruby','javascript','latex','android','stack overflow','wikipedia','debugging'],
             ['Relacionado a UEM', 'rodrigo Schulz','erica puta','tio elvio','restaurante universitario','biblioteca central','hackerspace','caccom','tio juliao','rodrigo churros'],
-            ['Voce deu azar e nao tem dica!','chaves','parafuseta','rebimboca','kibe','penal','orkut','android','telegram','whatsapp','ornitorrinco','skyrim','dota2','lolzinho','pipa','voce nao vai acertar essa','sim soh de zoas'],
-            ['Heroi ou vilao do mundo das HQ/cinema (DC e Marvel)','batman','flash','mulher maravilha','pinguim','super Homem','lanterna verde','duende verde','homem aranha','thor','hulk','homem de ferro','homem formiga','tocha humana','o coisa','viuva negra','arqueiro verde','Groot','Rocket Raccoon','Magneto','Wolverine'],
+            ['Você deu azar e não tem dica!','chaves','parafuseta','rebimboca','kibe','penal','orkut','android','telegram','whatsapp','ornitorrinco','skyrim','dota2','lolzinho','pipa','você não vai acertar essa','sim só de zoas'],
+            ['Herói ou vilão do mundo das HQ/cinema (DC e Marvel)','batman','flash','mulher maravilha','pinguim','super Homem','lanterna verde','duende verde','homem aranha','thor','hulk','homem de ferro','homem formiga','tocha humana','o coisa','viuva negra','arqueiro verde','Groot','Rocket Raccoon','Magneto','Wolverine'],
             ['Videogames, jogos e empresas da area','the legend of zelda','super mario','counter strike','nintendo wii','super nintendo','playstation','steam','defense of the ancients','league of legends','final fantasy','donkey kong','angry birds','fallout','bioshock','tetris','the elders scroll','minecraft','call of duty','battlefield','bomberman','sonic the hedgehog','just dance','nintendo','sony','sega','dreamcast','bethesda','2k games','valve','riot'],
-            ['Titulos ou nomes relacionados a TV e/ou Cinema!','how i met your mother','sense8','netflix','american Beauty','donnie Darko','esqueceram de mim','the sixth sense','the shining','titanic','todo mundo odeia o cris','agostinho carrara','chapeleiro maluco','alice no pais das maravilhas','harry potter','hora da aventura','bob esponja'],
-            ['Paises', 'brasil', 'estados Unidos', 'alemanha', 'japao', 'coreia do Sul', 'africa do sul', 'holanda', 'argentina', 'espanha', 'chile', 'equador', 'canada', 'singapura', 'india', 'emirados Arabes', 'italia', 'inglaterra', 'austria', 'grecia', 'Republica Checa']
+            ['Títulos ou nomes relacionados a TV e/ou Cinema!','how i met your mother','sense8','netflix','american Beauty','donnie Darko','esqueceram de mim','the sixth sense','the shining','titanic','todo mundo odeia o cris','agostinho carrara','chapeleiro maluco','alice no pais das maravilhas','harry potter','hora da aventura','bob esponja'],
+            ['Países', 'brasil', 'estados Unidos', 'alemanha', 'japão', 'coréia do Sul', 'áfrica do sul', 'holanda', 'argentina', 'espanha', 'chile', 'equador', 'canadá', 'singapura', 'índia', 'emirados árabes', 'itália', 'inglaterra', 'austria', 'grécia', 'República Checa']
         ]
         rpl = []
         preState = getPreGame(chat_id)
@@ -106,7 +106,7 @@ class PreJogo:
             if preState == False:
                 if text.startswith('/novojogo') or text.startswith('/novojogo@forca_bot'):
                     setGame(chat_id)
-                    rpl.append('Comecando um novo jogo! Voce sera o administrador dessa rodada '+uName+'\nVamos comecar definindo os jogadores\nQuem quiser participar dessa rodada envie o comando /entrar :D' )
+                    rpl.append('Começando um novo jogo! Você sera o administrador dessa rodada '+uName+'\nVamos começar definindo os jogadores\nQuem quiser participar dessa rodada envie o comando /entrar :D' )
                     rpl.append('Para fechar o grupo de participantes envie o comando /fecharjogo Administador '+uName)
                     setPreGame(chat_id, True)
                     setAdm(chat_id, uId)
@@ -114,20 +114,20 @@ class PreJogo:
                     updateList(matriz)
                     setRound(chat_id, 0)
                 elif text.startswith('/help') or text.startswith('/help@forca_bot'):
-                    str1 = 'Nao existe nenhum jogo em andamento, utilize o comando /novojogo para comecar e irei te guiando :)\nCaso deseje ver o ranking use /getrank'
+                    str1 = 'Não existe nenhum jogo em andamento, utilize o comando /novojogo para começar e irei te guiando :)\nCaso deseje ver o ranking use /getrank'
                     rpl = [str1]
                 elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
-                    str1 = 'Nao existe jogo no momento, envie o comando /help caso precise de ajuda!'
+                    str1 = 'Não existe jogo no momento, envie o comando /help caso precise de ajuda!'
                     rpl = [str1]
                 elif text.startswith('/getrank') or text.startswith('/getrank@forca_bot'):
                     rank = getRank(chat_id)
                     rpl.append('***RANKING***')
                     str1 = 'NOME - SCORE\n'
                     for i in range(len(rank)):
-                        str1 = str1 + rank[i][0]+' - '+rank[i][1]+'\n'
+                        str1 = str1 + str(rank[i][0])+' - '+str(rank[i][1])+'\n'
                     rpl.append(str1)
                 else:
-                    str1 = 'Comando nao reconhecido no momento'
+                    str1 = 'Comando não reconhecido no momento'
                     rpl = [str1]
             #Fim do bloco incial /// Comeco do bloco PreGame ===================================
             else:
@@ -137,11 +137,11 @@ class PreJogo:
                 elif text.startswith('/entrar') or text.startswith('/entrar@forca_bot'):
                     uIds = getuIds(chat_id)
                     if uId in uIds:
-                        str1 = 'Voce ja participa desse jogo'
+                        str1 = 'Você já participa desse jogo'
                         rpl = [str1]
                     else:
                         addPlayer(chat_id, uId, uName)
-                        str1 = 'Certo, '+uName+' voce vai participar desta rodada'
+                        str1 = 'Certo, '+uName+' você vai participar desta rodada'
                         rpl = [str1]
                 elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
                     adm = getAdm(chat_id)
@@ -150,7 +150,7 @@ class PreJogo:
                         cleanGame(chat_id)
                         rpl = [str1]
                     else:
-                        str1 = 'Voce nao tem autorizacao para fechar o jogo\nApenas o Administrador pode fazer isso'
+                        str1 = 'Você não tem autorização para fechar o jogo\nApenas o Administrador pode fazer isso'
                         rpl = [str1]
                 elif text.startswith('/fecharjogo') or text.startswith('/fecharjogo@forca_bot'):
                     adm = getAdm(chat_id)
@@ -189,25 +189,26 @@ class PreJogo:
                         for i in index_shuf:
                             nomes_shuf.append(nomes[i])
                             uIds_shuf.append(uIds[i])
-                        str1 = 'Grupo de participantes fechados! Voces jogarao nesta ordem:\n\n'
                         nomes = nomes_shuf
                         uIds = uIds_shuf
                         setShuffle(chat_id, nomes, uIds)
-                        for i in range(0,len(nomes)):
+                        str1 = ''
+                        for i in range(0, len(nomes)):
                             str1 = str1+nomes[i]+'\n'
-                        rpl.append('O jogo vai comecar agora! Instrucoes:\nUtilize o comando /chutarletra para chutar letras, quando estiver pronto para arriscar utilize o comando /arriscarpalavra Mas cuidado, se voce errar perde o jogo!\n*** '+vidas+' ***')
+                        rpl.append('O jogo vai começar agora! Instruções:\nUtilize o comando /chutar para chutar letras, quando estiver pronto para arriscar utilize o comando /arriscar, mas cuidado, se você errar perde o jogo!\n*** '+vidas+' ***')
                         rpl.append('Palavra secreta: '+mascara)
-                        rpl.append('Dica: '+ped[1])
+                        rpl.append('Dica: '+str(ped[1]))
+                        rpl.append('Grupo de participantes fechados! Vocês jogarão nesta ordem:')
                         rpl.append(str1)
                     else:
-                        str1 = 'Voce nao tem autorizacao para cancelar o jogo\nApenas o administrador pode fazer isso'
+                        str1 = 'Você não tem autorização para cancelar o jogo\nApenas o administrador pode fazer isso'
                         rpl = [str1]
                 elif text.startswith('/help') or text.startswith('/help@forca_bot'):
-                    str1 = 'Nesse momento a partida esta aberta para entrada de novos jogadores\nEnvie o comando /entrar para participar'
+                    str1 = 'Nesse momento a partida está aberta para entrada de novos jogadores\nEnvie o comando /entrar para participar'
                     rpl = [str1]
                 else:
-                    str1 = 'Comando nao reconhecido no momento'
+                    str1 = 'Comando não reconhecido no momento'
                     rpl = [str1]
         else:
-            rpl = ['Nao eh um comando, lembre se que comandos comecam com /']
+            rpl = ['Não é um comando, lembre se que comandos começam com /']
         return rpl

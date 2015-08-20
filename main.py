@@ -89,9 +89,10 @@ class WebhookHandler(webapp2.RequestHandler):
 
         def reply(msg=None, img=None):
             if msg:
+                mg = msg.decode('utf-8')
                 resp = urllib2.urlopen(BASE_URL + 'sendMessage', urllib.urlencode({
                     'chat_id': str(chat_id),
-                    'text': msg.encode('utf-8'),
+                    'text': mg.encode('utf-8'),
                     'disable_web_page_preview': 'true',
                     #'reply_to_message_id': str(message_id),
                 })).read()
@@ -108,7 +109,6 @@ class WebhookHandler(webapp2.RequestHandler):
 
             logging.info('send response:')
             logging.info(resp)
-        #try:
         preJogo = preGame.PreJogo()
         Jogo = game.Jogo()
         inPreGame = getPreGame(chat_id)
@@ -117,15 +117,15 @@ class WebhookHandler(webapp2.RequestHandler):
         send = []
         if text.startswith('/start'):
             if enabled:
-                reply('forca_bot ja esta ligadoSou um bot desenvolvido para ser o mestre dos jogos de forca! Voce pode jogar sozinho ou me adicionar a um grupo e jogar com seus amigos :)\nComo funciona: Use comandos que comecam com / para interagir comigo, organize uma partida que eu cuidarei do resto! Vou escolher uma palavra de uma determinada categoria e ela sera a palavra secreta, voce e seus amigos devem chutar letras e eu direi se voce acertou ou nao, quando voce estiver pronto pode arriscar a palavra, mas cuidado, se voce errar perde na hora!\n O numero de chutes de letras varia de acordo com a partida, tambem possuo um sistema de ranking!\nDuvidas e feedback envie uma mensagem para meus criadores: @bcesarg6 e @cristoferoswald :D\nUse /help para ajuda com os comandos e se divirta!')
+                reply('forca_bot já esta ligado')
             else:
-                reply('Ola eu sou o forca_bot!\nSou um bot desenvolvido para ser o mestre dos jogos de forca! Voce pode jogar sozinho ou me adicionar a um grupo e jogar com seus amigos :)\nComo funciona: Use comandos que comecam com / para interagir comigo, organize uma partida que eu cuidarei do resto! Vou escolher uma palavra de uma determinada categoria e ela sera a palavra secreta, voce e seus amigos devem chutar letras e eu direi se voce acertou ou nao, quando voce estiver pronto pode arriscar a palavra, mas cuidado, se voce errar perde na hora!\n O numero de chutes de letras varia de acordo com a partida, tambem possuo um sistema de ranking!\nDuvidas e feedback envie uma mensagem para meus criadores: @bcesarg6 e @cristoferoswald :D\nUse /help para ajuda com os comandos e se divirta!')
+                reply('Olá eu sou o forca_bot!\nSou um bot desenvolvido para ser o mestre dos jogos de forca! Você pode jogar sozinho ou me adicionar a um grupo e jogar com seus amigos :)\nComo funciona: Use comandos que começam com / para interagir comigo, organize uma partida que eu cuidarei do resto! Vou escolher uma palavra de uma determinada categoria e ela será a palavra secreta, você e seus amigos devem chutar letras e eu direi se você acertou ou não, quando você estiver pronto pode arriscar a palavra, mas cuidado, se você errar perde na hora!\n O número de chutes de letras varia de acordo com a partida, também possuo um sistema de ranking!\nDuvidas e feedback envie uma mensagem para meus criadores: @bcesarg6 e @cristoferoswald :D\nUse /help para ajuda com os comandos e se divirta!')
                 setEnabled(chat_id, True)
                 if (inPreGame or inGame):
-                    reply('Ja existe um jogo em andamento, se quiser eh so continuar jogando')
+                    reply('Já existe um jogo em andamento, se quiser é só continuar jogando')
         elif text.startswith('/stop'):
             if not enabled:
-                reply('forca_bot ja esta desligado')
+                reply('forca_bot já esta desligado')
             else:
                 reply('forca_bot desligado')
                 setEnabled(chat_id, False)
@@ -138,8 +138,6 @@ class WebhookHandler(webapp2.RequestHandler):
 
         for i in range(0, len(send)):
             reply(send[i])
-        #except:
-        #    reply('Erro bem louco')
 #-------------------
 app = webapp2.WSGIApplication([
     ('/me', MeHandler),

@@ -12,21 +12,17 @@ class PeDs(ndb.Model):
 def getNPeD(rnd, rnd2):
     PeD = ndb.Key(PeDs, 'PeDs').get()
     matriz = []
-
     x = [0]
     leg = (len(PeD.tams))
     for i in range(leg):
-        a = i+1
         soma = x[i] + PeD.tams[i]
         x.append(soma)
-
     for i in range(len(PeD.tams)):
         pals = []
         a = i+1
         for j in range(x[i], x[a]):
-            pals.append(PeD.pecs[j])
+            pals.append(str(PeD.pecs[j].encode('utf-8'))) #Ódio ao NDB aumentando
         matriz.append(pals)
-
     p = matriz[rnd][rnd2]
     d = matriz[rnd][0]
     ped = [p, d]
@@ -107,8 +103,8 @@ def getRank(chat_id):
     matriz = []
     for i in range(0, (len(r.rank)), 2):
         aux = []
-        aux.append(r.rank[i])
-        aux.append(r.rank[i+1])
+        aux.append(str(r.rank[i].encode('utf-8')))
+        aux.append(str(r.rank[i+1].encode('utf-8')))
         matriz.append(aux)
     return matriz
 
@@ -157,7 +153,7 @@ def setPeD(chat_id, ped):
 
 def getPeD(chat_id):
     PeD = ndb.Key(Game, chat_id).get()
-    ped = [PeD.palavra, PeD.dica]
+    ped = [str(PeD.palavra.encode('utf-8')), str(PeD.dica.encode('utf-8'))]
     return ped
 
 def setMascara(chat_id, masc):
@@ -167,7 +163,7 @@ def setMascara(chat_id, masc):
 
 def getMascara(chat_id):
     msc = ndb.Key(Game, chat_id).get()
-    return msc.mascara
+    return str(msc.mascara.encode('utf-8'))
 
 def setLetra(chat_id, letra):
     let = ndb.Key(Game, chat_id).get()
@@ -176,7 +172,10 @@ def setLetra(chat_id, letra):
 
 def getLetras(chat_id):
     let = ndb.Key(Game, chat_id).get()
-    return let.letras
+    letras = []
+    for i in range(len(let.letras)):
+        letras.append(str(let.letras[i].encode('utf-8')))
+    return letras
 
 def setPreGame(chat_id, status):
     GameState = ndb.Key(Game, chat_id).get()
@@ -213,11 +212,17 @@ def setAdm(chat_id, uId):
 
 def getuIds(chat_id):
     u = ndb.Key(Game, chat_id).get()
-    return u.jogadores
+    jogadores = []
+    for i in range(len(u.jogadores)):
+        jogadores.append(str(u.jogadores[i].encode('utf-8')))
+    return jogadores
 
 def getPlayers(chat_id):
     p = ndb.Key(Game, chat_id).get()
-    return p.nomes
+    nomes = []
+    for i in range(len(p.nomes)):
+        nomes.append(str(p.nomes[i].encode('utf-8')))
+    return nomes
 
 def setShuffle(chat_id, nomes, uIds):
     p = ndb.Key(Game, chat_id).get()
@@ -246,7 +251,7 @@ def rmPlayer(chat_id, rd):
 
 def getAdm(chat_id):
     a = ndb.Key(Game, chat_id).get()
-    return a.adm
+    return str(a.adm.encode('utf-8'))
 
 def setRound(chat_id, rd):
     r = ndb.Key(Game, chat_id).get()
