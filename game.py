@@ -65,7 +65,7 @@ def addScore(chat_id, uName, score):
 
 class Jogo:
     def game(self, uId, uName, chat_id, text):
-        text = text.lower()
+        text = str(text.lower().encode('utf-8'))
         rpl = []
         uIds = getuIds(chat_id)
         adm = getAdm(chat_id)
@@ -163,6 +163,7 @@ class Jogo:
                                 change = rmPlayer(chat_id, rd)
                                 if change[0]:
                                     rpl.append('O novo ADM é o(a): '+ change[1])
+                                uIds = getuIds(chat_id)
                                 if len(uIds) == 0:
                                     rpl.append('***LOSERS!!!***')
                                     cleanGame(chat_id)

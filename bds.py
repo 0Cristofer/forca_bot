@@ -243,7 +243,7 @@ def rmPlayer(chat_id, rd):
         jog = p.jogadores
         nom = p.nomes
         p.adm = jog[aux]
-        retorno = [True, nom[aux]]          #Maldito NDB
+        retorno = [True, str(nom[aux].encode('utf-8'))]          #Maldito NDB
         p.put()
         return retorno
     p.put()
