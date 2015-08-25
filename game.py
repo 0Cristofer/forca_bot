@@ -63,9 +63,17 @@ def getVidas(chat_id):
 def addScore(chat_id, uName, score):
     bds.addScore(chat_id, uName, score)
 
+def getRank(chat_id):
+    rank = bds.getRank(chat_id)
+    str1 = 'NOME - SCORE\n'
+    for i in range(len(rank)):
+        str1 = str1 + str(rank[i][0])+' - '+str(rank[i][1])+'\n'
+    return str1
+
 class Jogo:
     def game(self, uId, uName, chat_id, text):
         text = str(text.lower().encode('utf-8'))
+        uName = str(uName.encode('utf-8'))
         rpl = []
         uIds = getuIds(chat_id)
         adm = getAdm(chat_id)
@@ -76,16 +84,20 @@ class Jogo:
         rd = getRound(chat_id)
         if text.startswith('/'):
             if uId in uIds:
-                if text.startswith('/getpalavra'):
+                if text.startswith('/palavra'):
                     rpl = ['Palavra secreta: '+str(mascara)]
-                elif text.startswith('/getdica'):
+                elif text.startswith('/dica'):
                     rpl = ['Dica: '+str(dica)]
-                elif text.startswith('/getletras'):
+                elif text.startswith('/letras'):
                     rpl = ['Letras chutadas:']
                     rpll = ' '
                     for i in range(len(letras)):
                         rpll= rpll+str(letras[i])+' '
                     rpl.append(rpll)
+                elif text.startswith('/rank') or text.startswith('/rank@forca_bot'):
+                    rpl.append('***RANKING***')
+                    rank = getRank(chat_id)
+                    rpl.append(rank)
                 elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
                     if uId == adm:
                         str1 = 'O administrador cancelou o jogo'
@@ -130,7 +142,7 @@ class Jogo:
                                     rpl.append(getMascara(chat_id))
                                     nomes = getPlayers(chat_id)
                                     auxx = 0 if rd+1 > (len(nomes)-1) else rd + 1
-                                    rpl.append('Agora eh a vez de: '+str(nomes[auxx]))
+                                    rpl.append('Agora é a vez de: '+str(nomes[auxx]))
                                 else:
                                     rpl = ['Errou...']
                                     setLetra(chat_id, letra)
@@ -141,11 +153,12 @@ class Jogo:
                                         rpl.append('Vocês têm apenas uma vida restante! Tentem descobrir a palavra ou aceitem a DERROTA!')
                                     elif getVidas(chat_id) == 0:
                                         rpl.append('***LOSERS!!!***')
+                                        rpl.append('O jogo acabou, utilize /novojogo para começar um novo')
                                         rpl.append('Creditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersão Beta 1.7')
                                         cleanGame(chat_id)
                                     else:
                                         rpl.append('Restam '+str(getVidas(chat_id))+' Vidas!')
-                                        rpl.append('Agora eh a vez de: '+nomes[auxx])
+                                        rpl.append('Agora é a vez de: '+nomes[auxx])
                         else:
                             rpl = ['Chute invalido!']
                     elif text.startswith('/arriscar'):
@@ -153,6 +166,7 @@ class Jogo:
                         if not (len(arrisca) == 0):
                             if arrisca == palavra:
                                 rpl.append('***Parabéns '+uName+' você acertou a palavra secreta e ganhou o jogo!***')
+                                rpl.append('O jogo acabou, utilize /novojogo para começar um novo')
                                 rpl.append('Creditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersão Beta 1.7')
                                 addScore(chat_id,uName, len(palavra)*2)
                                 cleanGame(chat_id)
@@ -166,16 +180,18 @@ class Jogo:
                                 uIds = getuIds(chat_id)
                                 if len(uIds) == 0:
                                     rpl.append('***LOSERS!!!***')
+                                    rpl.append('O jogo acabou, utilize /novojogo para começar um novo')
+                                    rpl.append('Créditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersão Beta 1.7')
                                     cleanGame(chat_id)
                         else:
-                            rpl.append('tentativa invalida')
+                            rpl.append('Tentativa inválida')
                     else:
-                        rpl = ['Comando não reconhecido no momento']
+                        rpl = ['Comando não reconhecido no momento, comandos reconhecidos no momento:\n/chutar "letra", /arriscar "palavra", /dica, /palavra, /letras, /rank, /cancelar (adm)']
                 elif not (checkRound(chat_id,uId)):
                     nomes = getPlayers(chat_id)
                     rpl = ['Não é sua vez de jogar, vez de: '+nomes[rd]]
                 else:
-                    rpl = ['Comando não reconhecido no momento']
+                    rpl = ['Comando não reconhecido no momento, comandos reconhecidos no momento:\n/chutar "letra", /arriscar "palavra", /dica, /palavra, /letras, /rank, /cancelar (adm)']
             else:
                 rpl.append('Você não esta participando deste jogo '+uName+'\nlembre-se de entrar no proximo jogo se você quer participar')
         else:

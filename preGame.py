@@ -75,18 +75,23 @@ def cleanGame(chat_id):
     bds.cleanGame(chat_id)
 
 def getRank(chat_id):
-    return bds.getRank(chat_id)
+    rank = bds.getRank(chat_id)
+    str1 = 'NOME - SCORE\n'
+    for i in range(len(rank)):
+        str1 = str1 + str(rank[i][0])+' - '+str(rank[i][1])+'\n'
+    return str1
 
 def setShuffle(chat_id, nomes, uIds):
     bds.setShuffle(chat_id, nomes, uIds)
 
-
+#\u2764\ufe0f
 #Classe que contem toda logica do jogo (a ser melhor comentada)
 
 class PreJogo:
 
     def preGame(self, uId, uName, chat_id, text):
-        text = text.lower()
+        text = str(text.lower().encode('utf-8'))
+        uName = str(uName.encode('utf-8'))
         matriz = [
             ['Animais ou espécies', 'macaco', 'elefante','zebra','papagaio','andorinha','golfinho','gorila','tubarao','lobo','ornitorrinco','cavalo','humano','lebre','coelho','piriquito','pomba','dinossauro','macaco','borboleta'],
             ['Comidas, sobremesas ou frutas', 'banana','miojo','cachorro quente','lasanha','salada de frutas','carambola','x-salada','frango frito','batata frita','ketchup','chocolate','morango','strogonoff','arroz e feijao','batata doce','pizza','sushi','temaki','fondue de chocolate','cupcake','donut','eclair','froyo','gingerbread','honeycomb','icecream sandwich','jellybean','kitkat','lollipop','marshmallow'],
@@ -119,21 +124,22 @@ class PreJogo:
                 elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
                     str1 = 'Não existe jogo no momento, envie o comando /help caso precise de ajuda!'
                     rpl = [str1]
-                elif text.startswith('/getrank') or text.startswith('/getrank@forca_bot'):
-                    rank = getRank(chat_id)
+                elif text.startswith('/rank') or text.startswith('/rank@forca_bot'):
                     rpl.append('***RANKING***')
-                    str1 = 'NOME - SCORE\n'
-                    for i in range(len(rank)):
-                        str1 = str1 + str(rank[i][0])+' - '+str(rank[i][1])+'\n'
-                    rpl.append(str1)
+                    rank = getRank(chat_id)
+                    rpl.append(rank)
                 else:
-                    str1 = 'Comando não reconhecido no momento'
+                    str1 = 'Comando não reconhecido no momento, comandos reconhecidos no momento:\n/novojogo, /rank, /help'
                     rpl = [str1]
             #Fim do bloco incial /// Comeco do bloco PreGame ===================================
             else:
                 if text.startswith('/novojogo') or text.startswith('/novojogo@forca_bot'):
                     str1 = 'Existe um jogo em modo de entrada, se quiser entrar digite /entrar'
                     rpl = [str1]
+                elif text.startswith('/rank') or text.startswith('/rank@forca_bot'):
+                    rpl.append('***RANKING***')
+                    rank = getRank(chat_id)
+                    rpl.append(rank)
                 elif text.startswith('/entrar') or text.startswith('/entrar@forca_bot'):
                     uIds = getuIds(chat_id)
                     if uId in uIds:
@@ -195,7 +201,7 @@ class PreJogo:
                         str1 = ''
                         for i in range(0, len(nomes)):
                             str1 = str1+nomes[i]+'\n'
-                        rpl.append('O jogo vai começar agora! Instruções:\nUtilize o comando /chutar para chutar letras, quando estiver pronto para arriscar utilize o comando /arriscar, mas cuidado, se você errar perde o jogo!\n*** '+vidas+' ***')
+                        rpl.append('O jogo vai começar agora! Instruções:\nUtilize o comando /chutar "letra" para chutar letras, quando estiver pronto para arriscar utilize o comando /arriscar "palavra", mas cuidado, se você errar perde o jogo!\n*** '+vidas+' ***')
                         rpl.append('Palavra secreta: '+mascara)
                         rpl.append('Dica: '+str(ped[1]))
                         rpl.append('Grupo de participantes fechados! Vocês jogarão nesta ordem:')
@@ -207,7 +213,7 @@ class PreJogo:
                     str1 = 'Nesse momento a partida está aberta para entrada de novos jogadores\nEnvie o comando /entrar para participar'
                     rpl = [str1]
                 else:
-                    str1 = 'Comando não reconhecido no momento'
+                    str1 = 'Comando não reconhecido no momento\nComandos reconhecidos no momento:\n/entrar, /fecharjogo, /cancelar, /rank, /help'
                     rpl = [str1]
         else:
             rpl = ['Não é um comando, lembre se que comandos começam com /']

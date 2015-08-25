@@ -43,6 +43,9 @@ def setEnabled(chat_id, status):
 def getEnabled(chat_id):
     return bds.getEnabled(chat_id)
 
+def checkChat(chat_id):
+    return bds.checkChat(chat_id)
+
 class MeHandler(webapp2.RequestHandler):
     def get(self):
         urlfetch.set_default_fetch_deadline(60)
@@ -81,19 +84,19 @@ class WebhookHandler(webapp2.RequestHandler):
         chat_id = str(chat['id']) #gets chat id
         user_id = message['from']
         uId = str(user_id.get('id'))    #gets user id
-        uName = str(user_id.get('first_name')) #gets user first name
+        uName = str(user_id.get('first_name').encode('utf-8')) #gets user first name
 
         if not text:
             logging.info('no text')
             return
 
-        def reply(msg=None, img=None):
+        def reply(msg=None, img=None, emj = None):
             if msg:
                 mg = msg.decode('utf-8')
                 resp = urllib2.urlopen(BASE_URL + 'sendMessage', urllib.urlencode({
                     'chat_id': str(chat_id),
                     'text': mg.encode('utf-8'),
-                    'disable_web_page_preview': 'true',
+                    #'disable_web_page_preview': 'true',
                     #'reply_to_message_id': str(message_id),
                 })).read()
             elif img:
@@ -103,6 +106,15 @@ class WebhookHandler(webapp2.RequestHandler):
                 ], [
                     ('photo', 'image.jpg', img),
                 ])
+            elif emj:
+                for i in range(len(a)):
+                    print a[i]
+                    resp = urllib2.urlopen(BASE_URL + 'sendMessage', urllib.urlencode({
+                        'chat_id': a[i],
+                        'text': emj,
+                        'disable_web_page_preview': 'true',
+                        #'reply_to_message_id': str(message_id),
+                    })).read()
             else:
                 logging.error('no msg or img specified')
                 resp = None
@@ -115,11 +127,18 @@ class WebhookHandler(webapp2.RequestHandler):
         inGame = getInGame(chat_id)
         enabled = getEnabled(chat_id)
         send = []
-        if text.startswith('/start'):
+        if text.startswith('/cris'):
+            #a = "\u2764\ufe0f"
+            #print a
+            a = 'Desculpem o incoveniente, tivemos um problema'
+            reply(emj=a)
+        elif text.startswith('/start'):
+            checkChat(chat_id)
             if enabled:
                 reply('forca_bot já esta ligado')
             else:
-                reply('Olá eu sou o forca_bot!\nSou um bot desenvolvido para ser o mestre dos jogos de forca! Você pode jogar sozinho ou me adicionar a um grupo e jogar com seus amigos :)\nComo funciona: Use comandos que começam com / para interagir comigo, organize uma partida que eu cuidarei do resto! Vou escolher uma palavra de uma determinada categoria e ela será a palavra secreta, você e seus amigos devem chutar letras e eu direi se você acertou ou não, quando você estiver pronto pode arriscar a palavra, mas cuidado, se você errar perde na hora!\n O número de chutes de letras varia de acordo com a partida, também possuo um sistema de ranking!\nDuvidas e feedback envie uma mensagem para meus criadores: @bcesarg6 e @cristoferoswald :D\nUse /help para ajuda com os comandos e se divirta!')
+                #reply('Olá eu sou o forca_bot!\nSou um bot desenvolvido para ser o mestre dos jogos de forca! Você pode jogar sozinho ou me adicionar a um grupo e jogar com seus amigos :)\nComo funciona: Use comandos que começam com / para interagir comigo, organize uma partida que eu cuidarei do resto! Vou escolher uma palavra de uma determinada categoria e ela será a palavra secreta, você e seus amigos devem chutar letras e eu direi se você acertou ou não, quando você estiver pronto pode arriscar a palavra, mas cuidado, se você errar perde na hora!\n O número de chutes de letras varia de acordo com a partida, também possuo um sistema de ranking!\nDuvidas e feedback envie uma mensagem para meus criadores: @bcesarg6 e @cristoferoswald :D\nUse /help para ajuda com os comandos e se divirta!')
+                reply('Olá, eu sou o forca_bot!\nSou um bot em desenvolvimento para ser o mestre de jogos de forca.\nPara começar um novo jogo digite /novojogo')
                 setEnabled(chat_id, True)
                 if (inPreGame or inGame):
                     reply('Já existe um jogo em andamento, se quiser é só continuar jogando')
@@ -135,7 +154,6 @@ class WebhookHandler(webapp2.RequestHandler):
                     send = Jogo.game(uId, uName, chat_id, text)
                 else:
                     send = preJogo.preGame(uId, uName, chat_id, text)
-
         for i in range(0, len(send)):
             reply(send[i])
 #-------------------

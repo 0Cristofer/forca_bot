@@ -5,6 +5,15 @@ from operator import itemgetter, attrgetter, methodcaller
 from google.appengine.ext import ndb
 
 #BD que grava as palavras
+class Chats(ndb.Model):
+    chats = ndb.StringProperty(repeated=True)
+
+def checkChat(chat_id):
+    c = ndb.Key(Chats, 'chats').get()
+    if not (chat_id in c.chats):
+        c.chats.append(chat_id)
+        c.put()
+
 class PeDs(ndb.Model):
     pecs = ndb.StringProperty(repeated=True)
     tams = ndb.IntegerProperty(repeated=True)
