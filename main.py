@@ -90,7 +90,7 @@ class WebhookHandler(webapp2.RequestHandler):
             logging.info('no text')
             return
 
-        def reply(msg=None, img=None, emj = None):
+        def reply(msg=None, img=None):
             if msg:
                 mg = msg.decode('utf-8')
                 resp = urllib2.urlopen(BASE_URL + 'sendMessage', urllib.urlencode({
@@ -106,15 +106,6 @@ class WebhookHandler(webapp2.RequestHandler):
                 ], [
                     ('photo', 'image.jpg', img),
                 ])
-            elif emj:
-                for i in range(len(a)):
-                    print a[i]
-                    resp = urllib2.urlopen(BASE_URL + 'sendMessage', urllib.urlencode({
-                        'chat_id': a[i],
-                        'text': emj,
-                        'disable_web_page_preview': 'true',
-                        #'reply_to_message_id': str(message_id),
-                    })).read()
             else:
                 logging.error('no msg or img specified')
                 resp = None
@@ -128,10 +119,9 @@ class WebhookHandler(webapp2.RequestHandler):
         enabled = getEnabled(chat_id)
         send = []
         if text.startswith('/cris'):
-            #a = "\u2764\ufe0f"
-            #print a
-            a = 'Desculpem o incoveniente, tivemos um problema'
-            reply(emj=a)
+            a = u'\u2764\ufe0f'
+            a = a.encode('utf-8')
+            reply(a)
         elif text.startswith('/start'):
             checkChat(chat_id)
             if enabled:
