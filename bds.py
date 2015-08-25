@@ -135,6 +135,7 @@ class Game(ndb.Model):
     mascara = ndb.StringProperty(default='noMascara')
     letras = ndb.StringProperty(repeated=True)
     vidas = ndb.IntegerProperty(default = 6)
+    vidas_init = ndb.IntegerProperty(default = 6)
 
 def menosVida(chat_id):
     v = ndb.Key(Game, chat_id).get()
@@ -145,9 +146,18 @@ def getVidas(chat_id):
     v = ndb.Key(Game, chat_id).get()
     return v.vidas
 
+def getVidasInit(chat_id):
+    v = ndb.Key(Game, chat_id).get()
+    return v.vidas_init
+
 def setVidas(chat_id, modVida):
     v = ndb.Key(Game, chat_id).get()
     v.vidas = v.vidas+modVida
+    v.put()
+
+def setVidasInit(chat_id, modVida):
+    v = ndb.Key(Game, chat_id).get()
+    v.vidas_init = v.vidas_init+modVida
     v.put()
 
 def setGame(chat_id):

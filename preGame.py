@@ -68,6 +68,9 @@ def getRound(chat_id):
 def setVidas(chat_id, modVida):
     bds.setVidas(chat_id, modVida)
 
+def setVidasInit(chat_id,modVida):
+    bds.setVidasInit(chat_id,modVida)
+
 def getVidas(chat_id):
     return bds.getVidas(chat_id)
 
@@ -91,7 +94,14 @@ class PreJogo:
 
     def preGame(self, uId, uName, chat_id, text):
         text = str(text.lower().encode('utf-8'))
-        uName = str(uName.encode('utf-8'))
+        #uName = str(uName.encode('utf-8'))
+        emoji_heart = (u'\u2764\ufe0f').encode('utf-8')
+        emoji_heartb = (u'\U0001f494').encode('utf-8')
+        emoji_confetti = (u'\U0001f389').encode('utf-8')
+        emoji_claps = (u'\U0001f44f\U0001f3fc').encode('utf-8')
+        emoji_feliz = (u'\U0001f601').encode('utf-8')
+        emoji_lua = (u'\U0001f31a').encode('utf-8')
+        emoji_coroa = (u'\U0001f451').encode('utf-8')
         matriz = [
             ['Animais ou espécies', 'macaco', 'elefante','zebra','papagaio','andorinha','golfinho','gorila','tubarao','lobo','ornitorrinco','cavalo','humano','lebre','coelho','piriquito','pomba','dinossauro','macaco','borboleta'],
             ['Comidas, sobremesas ou frutas', 'banana','miojo','cachorro quente','lasanha','salada de frutas','carambola','x-salada','frango frito','batata frita','ketchup','chocolate','morango','strogonoff','arroz e feijao','batata doce','pizza','sushi','temaki','fondue de chocolate','cupcake','donut','eclair','froyo','gingerbread','honeycomb','icecream sandwich','jellybean','kitkat','lollipop','marshmallow'],
@@ -118,8 +128,8 @@ class PreJogo:
                     addPlayer(chat_id, uId, uName)
                     updateList(matriz)
                     setRound(chat_id, 0)
-                elif text.startswith('/help') or text.startswith('/help@forca_bot'):
-                    str1 = 'Não existe nenhum jogo em andamento, utilize o comando /novojogo para começar e irei te guiando :)\nCaso deseje ver o ranking use /getrank'
+                elif text.startswith('/help') or text.startswith('/ajuda'):
+                    str1 = 'Não existe nenhum jogo em andamento, utilize o comando /novojogo para começar e irei te guiando'+emoji_feliz+'\nCaso deseje ver o ranking use /getrank'
                     rpl = [str1]
                 elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
                     str1 = 'Não existe jogo no momento, envie o comando /help caso precise de ajuda!'
@@ -137,17 +147,17 @@ class PreJogo:
                     str1 = 'Existe um jogo em modo de entrada, se quiser entrar digite /entrar'
                     rpl = [str1]
                 elif text.startswith('/rank') or text.startswith('/rank@forca_bot'):
-                    rpl.append('***RANKING***')
+                    rpl.append(emoji_coroa+'RANKING'+emoji_coroa)
                     rank = getRank(chat_id)
                     rpl.append(rank)
                 elif text.startswith('/entrar') or text.startswith('/entrar@forca_bot'):
                     uIds = getuIds(chat_id)
                     if uId in uIds:
-                        str1 = 'Você já participa desse jogo'
+                        str1 = 'Você já participa desse jogo'+emoji_lua
                         rpl = [str1]
                     else:
                         addPlayer(chat_id, uId, uName)
-                        str1 = 'Certo, '+uName+' você vai participar desta rodada'
+                        str1 = 'Certo, '+uName+' você vai participar desta rodada'+emoji_feliz
                         rpl = [str1]
                 elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
                     adm = getAdm(chat_id)
@@ -183,7 +193,8 @@ class PreJogo:
                         modVida += len(nomes)-3 if len(nomes) > 4 else 0
                         modVida = 9 if modVida > 9 else modVida
                         setVidas(chat_id, modVida)
-                        vidas = str(getVidas(chat_id))+' VIDAS'
+                        setVidasInit(chat_id, modVida)
+                        vidas = getVidas(chat_id)
                         #Randomizar a lista de participantes
                         nomes = getPlayers(chat_id)
                         uIds = getuIds(chat_id)
@@ -201,7 +212,10 @@ class PreJogo:
                         str1 = ''
                         for i in range(0, len(nomes)):
                             str1 = str1+nomes[i]+'\n'
-                        rpl.append('O jogo vai começar agora! Instruções:\nUtilize o comando /chutar "letra" para chutar letras, quando estiver pronto para arriscar utilize o comando /arriscar "palavra", mas cuidado, se você errar perde o jogo!\n*** '+vidas+' ***')
+                        str2='O jogo vai começar agora! Instruções:\nUtilize o comando /chutar "letra" para chutar letras, quando estiver pronto para arriscar utilize o comando /arriscar "palavra", mas cuidado, se você errar perde o jogo!\nVIDAS:'
+                        for i in range(vidas):
+                            str2 = str2 + emoji_heart
+                        rpl.append(str2)
                         rpl.append('Palavra secreta: '+mascara)
                         rpl.append('Dica: '+str(ped[1]))
                         rpl.append('Grupo de participantes fechados! Vocês jogarão nesta ordem:')
