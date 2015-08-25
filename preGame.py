@@ -101,7 +101,7 @@ class PreJogo:
         emoji_claps = (u'\U0001f44f\U0001f3fc').encode('utf-8')
         emoji_feliz = (u'\U0001f601').encode('utf-8')
         emoji_lua = (u'\U0001f31a').encode('utf-8')
-
+        emoji_coroa = (u'\U0001f451').encode('utf-8')
         matriz = [
             ['Animais ou espécies', 'macaco', 'elefante','zebra','papagaio','andorinha','golfinho','gorila','tubarao','lobo','ornitorrinco','cavalo','humano','lebre','coelho','piriquito','pomba','dinossauro','macaco','borboleta'],
             ['Comidas, sobremesas ou frutas', 'banana','miojo','cachorro quente','lasanha','salada de frutas','carambola','x-salada','frango frito','batata frita','ketchup','chocolate','morango','strogonoff','arroz e feijao','batata doce','pizza','sushi','temaki','fondue de chocolate','cupcake','donut','eclair','froyo','gingerbread','honeycomb','icecream sandwich','jellybean','kitkat','lollipop','marshmallow'],
@@ -147,7 +147,7 @@ class PreJogo:
                     str1 = 'Existe um jogo em modo de entrada, se quiser entrar digite /entrar'
                     rpl = [str1]
                 elif text.startswith('/rank') or text.startswith('/rank@forca_bot'):
-                    rpl.append('***RANKING***')
+                    rpl.append(emoji_coroa+'RANKING'+emoji_coroa)
                     rank = getRank(chat_id)
                     rpl.append(rank)
                 elif text.startswith('/entrar') or text.startswith('/entrar@forca_bot'):

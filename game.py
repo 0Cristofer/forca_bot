@@ -85,8 +85,9 @@ class Jogo:
         emoji_negativo = (u'\U0001f44e\U0001f3fb').encode('utf-8')
         emoji_bug = (u'\U0001f41e').encode('utf-8')
         emoji_point = (u'\U0001f448\U0001f3fb').encode('utf-8')
+        emoji_coroa = (u'\U0001f451').encode('utf-8')
         text = str(text.lower().encode('utf-8'))
-        uName = str(uName.encode('utf-8'))
+        uName = uName.decode('utf-8')
         rpl = []
         uIds = getuIds(chat_id)
         adm = getAdm(chat_id)
@@ -109,7 +110,7 @@ class Jogo:
                         rpll= rpll+str(letras[i])+' '
                     rpl.append(rpll)
                 elif text.startswith('/rank') or text.startswith('/rank@forca_bot'):
-                    rpl.append('***RANKING***')
+                    rpl.append(emoji_coroa+'RANKING'+emoji_coroa)
                     rank = getRank(chat_id)
                     rpl.append(rank)
                 elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
