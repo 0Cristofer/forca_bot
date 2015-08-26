@@ -13,6 +13,12 @@ def checkChat(chat_id):
     if not (chat_id in c.chats):
         c.chats.append(chat_id)
         c.put()
+        return True
+    return False
+
+def getChats():
+    c = ndb.Key(Chats, 'chats').get()
+    return c.chats
 
 class PeDs(ndb.Model):
     pecs = ndb.StringProperty(repeated=True)
@@ -119,6 +125,7 @@ def getRank(chat_id):
 
 def addScore(chat_id, uName, score):
     r = ndb.Key(Rank, chat_id).get()
+    uName = uName.decode('utf-8')
     index = r.rank.index(uName)+1
     r.rank[index] = str(int(r.rank[index])+score)
     r.put()
