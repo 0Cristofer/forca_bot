@@ -46,6 +46,9 @@ def getEnabled(chat_id):
 def checkChat(chat_id):
     return bds.checkChat(chat_id)
 
+def getChats():
+    return bds.getChats()
+
 class MeHandler(webapp2.RequestHandler):
     def get(self):
         urlfetch.set_default_fetch_deadline(60)
@@ -90,7 +93,7 @@ class WebhookHandler(webapp2.RequestHandler):
             logging.info('no text')
             return
 
-        def reply(msg=None, img=None):
+        def reply(msg=None, img=None, aux=None, esp=None):
             if msg:
                 mg = msg.decode('utf-8')
                 resp = urllib2.urlopen(BASE_URL + 'sendMessage', urllib.urlencode({
@@ -106,6 +109,20 @@ class WebhookHandler(webapp2.RequestHandler):
                 ], [
                     ('photo', 'image.jpg', img),
                 ])
+            elif aux:
+                resp = urllib2.urlopen(BASE_URL + 'sendMessage', urllib.urlencode({
+                    'chat_id': str(aux),
+                    'text': 'Nova versão Churrasco 1.0 do forca_bot ONLINE\nNovidades:\n\t- Primeira versão oficial lançada e pronta para uso!\n\t- Uso de Emojis\n\t- Bug fixes\nDuvidas ou problemas fale com @bcesarg6 ou @cristoferoswald',
+                    #'disable_web_page_preview': 'true',
+                    #'reply_to_message_id': str(message_id),
+                })).read()
+            elif esp:
+                resp = urllib2.urlopen(BASE_URL + 'sendMessage', urllib.urlencode({
+                    'chat_id': str(-34151177),
+                    'text': 'Novo chat criado',
+                    #'disable_web_page_preview': 'true',
+                    #'reply_to_message_id': str(message_id),
+                })).read()
             else:
                 logging.error('no msg or img specified')
                 resp = None
@@ -118,12 +135,13 @@ class WebhookHandler(webapp2.RequestHandler):
         inGame = getInGame(chat_id)
         enabled = getEnabled(chat_id)
         send = []
-        if text.startswith('/cris'):
-            a = u'\u2764\ufe0f'
-            a = a.encode('utf-8')
-            reply(a)
+        if text.startswith('/Newws'):
+            a = getChats()
+            for i in range(len(a)):
+                reply(aux=a[i])
         elif text.startswith('/start'):
-            checkChat(chat_id)
+            if checkChat(chat_id):
+                reply(esp='loucura')
             if enabled:
                 reply('forca_bot já esta ligado')
             else:

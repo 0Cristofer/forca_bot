@@ -87,7 +87,6 @@ class Jogo:
         emoji_point = (u'\U0001f448\U0001f3fb').encode('utf-8')
         emoji_coroa = (u'\U0001f451').encode('utf-8')
         text = str(text.lower().encode('utf-8'))
-        uName = uName.decode('utf-8')
         rpl = []
         uIds = getuIds(chat_id)
         adm = getAdm(chat_id)

@@ -94,7 +94,7 @@ class PreJogo:
 
     def preGame(self, uId, uName, chat_id, text):
         text = str(text.lower().encode('utf-8'))
-        #uName = str(uName.encode('utf-8'))
+        #uName = str(uName.decode('utf-8'))
         emoji_heart = (u'\u2764\ufe0f').encode('utf-8')
         emoji_heartb = (u'\U0001f494').encode('utf-8')
         emoji_confetti = (u'\U0001f389').encode('utf-8')
@@ -135,7 +135,7 @@ class PreJogo:
                     str1 = 'Não existe jogo no momento, envie o comando /help caso precise de ajuda!'
                     rpl = [str1]
                 elif text.startswith('/rank') or text.startswith('/rank@forca_bot'):
-                    rpl.append('***RANKING***')
+                    rpl.append(emoji_coroa+'RANKING'+emoji_coroa)
                     rank = getRank(chat_id)
                     rpl.append(rank)
                 else:
