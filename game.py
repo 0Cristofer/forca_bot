@@ -127,7 +127,7 @@ class Jogo:
                         if len(text) == 9:
                             letra = text[8]
                             if letra in letras:
-                                rpl = ['Essa letra já foi chutada.\nUse /getletras para ver uma lista das letras chutadas!']
+                                rpl = ['Essa letra já foi chutada.\nUse /letras para ver uma lista das letras chutadas!']
                             else:
                                 locais = []
                                 mscra = ''
@@ -165,6 +165,7 @@ class Jogo:
                                     auxx = 0 if rd+1 > (len(nomes)-1) else rd + 1
                                     if getVidas(chat_id) == 1:
                                         rpl.append('Vocês têm apenas uma vida restante! Tentem descobrir a palavra ou aceitem a DERROTA! '+emoji_lua)
+                                        rpl.append('Agora é a vez de: '+nomes[auxx]+emoji_point)
                                     elif getVidas(chat_id) == 0:
                                         rpl.append(emoji_poop+'LOSERS'+emoji_poop)
                                         rpl.append('O jogo acabou, utilize /novojogo para começar um novo')
@@ -192,8 +193,11 @@ class Jogo:
                                 addScore(chat_id,uName, len(palavra)*2)
                                 cleanGame(chat_id)
                             else:
+                                nomes = getPlayers(chat_id)
+                                auxx = 0 if rd+1 > (len(nomes)-1) else rd + 1
                                 rpl.append('ERROU! '+emoji_negativo+'\n'+uName+' arriscou a palavra e errou, que burro!')
                                 rpl.append('*VOCÊ FOI OBLITERADO* '+emoji_poop+emoji_lua)
+                                rpl.append('Agora é a vez de: '+nomes[auxx]+emoji_point)
                                 addScore(chat_id,uName, -(len(palavra)))
                                 change = rmPlayer(chat_id, rd)
                                 if change[0]:
