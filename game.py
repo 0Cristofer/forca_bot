@@ -121,7 +121,7 @@ class Jogo:
                         str1 = 'Você não tem autorização para cancelar o jogo\nApenas o administrador pode fazer isso'
                         rpl = [str1]
                 elif text.startswith('/help') or text.startswith('/ajuda'):
-                    rpl.append('Jogo em andamento, instruções:\n/chutar para chutar uma letra\n/getpalavra para checar a palavra\n/getdica para ver a dica\n/getletras para ver a lista de letras')
+                    rpl.append('Jogo em andamento, instruções:\n/chutar "letra" para chutar um letra\n/arriscar "palavra" para tentar acertar a palavra\n/palavra para checar a palavra até agora\n/dica para ver a dica\n/letras para ver a lista de letras\n/cancelar para o adm cancelar a partida\n/rank para ver o ranking')
                 elif checkRound(chat_id, uId):
                     if text.startswith('/chutar'):
                         if len(text) == 9:
@@ -178,6 +178,7 @@ class Jogo:
                                         for i in range(aux):
                                             str1 = str1 + emoji_heartb
                                         rpl.append(str1)
+                                        rpl.append(getMascara(chat_id))
                                         rpl.append('Agora é a vez de: '+nomes[auxx]+emoji_point)
                         else:
                             rpl = ['Chute invalido!'+emoji_lua]

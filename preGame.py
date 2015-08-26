@@ -108,7 +108,7 @@ class PreJogo:
             ['Profissão', 'professor', 'zelador','prostituta','tia do Xerox','medico','marceneiro','contrabandista','traficante','designer','game developer','dublador','escritor'],
             ['Relacionado a Computadores/Internet/Programação', 'programador','compilador','servidor','monitor','algoritmo','netflix','orkut','instagram','tumblr','twitter','rede neural','google','photoshop','wolfram alpha','python','java','framework','ruby','javascript','latex','android','stack overflow','wikipedia','debugging'],
             ['Pessoas importantes (ex: Presidentes ou cientistas)','albert einstein','barack obama','abraham lincoln','nikola tesla','carl sagan','larry page','steves jobs','mark zuckerberg','tim cook','charles chaplin','platao','aristoteles','dilma rousseff','luiz inacio lula da silva','fernando herinque cardoso','george washington','george walker bush','adolf hitler','shigeru miyamoto'],
-            ['Você deu azar e não tem dica!','chaves','parafuseta','rebimboca','kibe','penal','orkut','android','telegram','whatsapp','ornitorrinco','skyrim','dota2','lolzinho','pipa','voce nao vai acertar essa','sim so de zoas'],
+            #['Você deu azar e não tem dica!','chaves','parafuseta','rebimboca','kibe','penal','orkut','android','telegram','whatsapp','ornitorrinco','skyrim','dota2','lolzinho','pipa','voce nao vai acertar essa','sim so de zoas'],
             ['Cidades do mundo','brasilia','curitiba','maringa','new york','tokio','barcelona','amsterda','paris','milao','pequim','berlim','sao paulo','rio de janeiro','salvador','manaus','rio branco','orlando','los angeles','calgary','toronto','montreal','dallas','londres'],
             ['Herói ou vilão do mundo das HQ/cinema (DC e Marvel)','batman','flash','mulher maravilha','pinguim','super Homem','lanterna verde','duende verde','homem aranha','thor','hulk','homem de ferro','homem formiga','tocha humana','o coisa','viuva negra','arqueiro verde','Groot','Rocket Raccoon','Magneto','Wolverine'],
             ['Videogames, jogos e empresas da area','the legend of zelda','super mario','counter strike','nintendo wii','super nintendo','playstation','steam','defense of the ancients','league of legends','final fantasy','donkey kong','angry birds','fallout','bioshock','tetris','the elders scroll','minecraft','call of duty','battlefield','bomberman','sonic the hedgehog','just dance','nintendo','sony','sega','dreamcast','bethesda','2k games','valve','riot'],
@@ -130,7 +130,7 @@ class PreJogo:
                     updateList(matriz)
                     setRound(chat_id, 0)
                 elif text.startswith('/help') or text.startswith('/ajuda'):
-                    str1 = 'Não existe nenhum jogo em andamento, utilize o comando /novojogo para começar e irei te guiando'+emoji_feliz+'\nCaso deseje ver o ranking use /getrank'
+                    str1 = 'Não existe nenhum jogo em andamento, utilize o comando /novojogo para começar e irei te guiando'+emoji_feliz+'\nCaso deseje ver o ranking use /rank'
                     rpl = [str1]
                 elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
                     str1 = 'Não existe jogo no momento, envie o comando /help caso precise de ajuda!'
@@ -225,10 +225,10 @@ class PreJogo:
                         str1 = 'Você não tem autorização para cancelar o jogo\nApenas o administrador pode fazer isso'
                         rpl = [str1]
                 elif text.startswith('/help') or text.startswith('/help@forca_bot'):
-                    str1 = 'Nesse momento a partida está aberta para entrada de novos jogadores\nEnvie o comando /entrar para participar'
+                    str1 = 'Nesse momento a partida está aberta para entrada de novos jogadores\nEnvie o comando /entrar para participar ou /fecharjogo para iniciar o jogo'
                     rpl = [str1]
                 else:
-                    str1 = 'Comando não reconhecido no momento\nComandos reconhecidos no momento:\n/entrar, /fecharjogo, /cancelar, /rank, /help'
+                    str1 = 'Comando não reconhecido no momento\nComandos reconhecidos no momento:\n/entrar, /fecharjogo (adm), /cancelar (adm), /rank, /help'
                     rpl = [str1]
         else:
             rpl = ['Não é um comando, lembre se que comandos começam com /']
