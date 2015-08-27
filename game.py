@@ -86,6 +86,7 @@ class Jogo:
         emoji_bug = (u'\U0001f41e').encode('utf-8')
         emoji_point = (u'\U0001f448\U0001f3fb').encode('utf-8')
         emoji_coroa = (u'\U0001f451').encode('utf-8')
+        emoji_blz = (u'\U0001f44d\U0001f3fb').encode('utf-8')
         text = str(text.lower().encode('utf-8'))
         rpl = []
         uIds = getuIds(chat_id)
@@ -99,15 +100,19 @@ class Jogo:
         if text.startswith('/'):
             if uId in uIds:
                 if text.startswith('/palavra'):
-                    rpl = ['Palavra secreta: '+str(mascara)]
+                    rpl.append('Palavra secreta: '+str(mascara))
                 elif text.startswith('/dica'):
-                    rpl = ['Dica: '+str(dica)]
+                    rpl.append('Dica: '+str(dica))
                 elif text.startswith('/letras'):
-                    rpl = ['Letras chutadas:']
-                    rpll = ' '
-                    for i in range(len(letras)):
-                        rpll= rpll+str(letras[i])+' '
-                    rpl.append(rpll)
+                    letras = getLetras(chat_id)
+                    if not (len(letras) == 0):
+                        rpl.append('Letras chutadas:')
+                        str1 = ''
+                        for i in range(len(letras)):
+                            str1 = str1+str(letras[i])+' '
+                        rpl.append(str1)
+                    else:
+                        rpl.append('Não forma chutas letras ainda!')
                 elif text.startswith('/rank') or text.startswith('/rank@forca_bot'):
                     rpl.append(emoji_coroa+'RANKING'+emoji_coroa)
                     rank = getRank(chat_id)
@@ -165,11 +170,12 @@ class Jogo:
                                     auxx = 0 if rd+1 > (len(nomes)-1) else rd + 1
                                     if getVidas(chat_id) == 1:
                                         rpl.append('Vocês têm apenas uma vida restante! Tentem descobrir a palavra ou aceitem a DERROTA! '+emoji_lua)
+                                        rpl.append(getMascara(chat_id))
                                         rpl.append('Agora é a vez de: '+nomes[auxx]+emoji_point)
                                     elif getVidas(chat_id) == 0:
                                         rpl.append(emoji_poop+'LOSERS'+emoji_poop)
                                         rpl.append('O jogo acabou, utilize /novojogo para começar um novo')
-                                        rpl.append('Creditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersão Churrasco 1.0'+emoji_bug)
+                                        rpl.append('Creditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersão Churrasco 1.2 '+emoji_bug+'\nSe você gostou avalie nosso bot em https://telegram.me/storebot?start=forca_bot '+emoji_blz)
                                         cleanGame(chat_id)
                                     else:
                                         aux = vida_init - getVidas(chat_id)
@@ -189,7 +195,7 @@ class Jogo:
                             if arrisca == palavra:
                                 rpl.append(emoji_confetti+'Parabéns '+uName+' você acertou a palavra secreta e ganhou o jogo!'+emoji_confetti)
                                 rpl.append('O jogo acabou, utilize /novojogo para começar um novo')
-                                rpl.append('Creditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersão Churrasco 1.0 '+emoji_bug)
+                                rpl.append('Creditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersão Churrasco 1.2 '+emoji_bug+'\nSe você gostou avalie nosso bot em https://telegram.me/storebot?start=forca_bot '+emoji_blz)
                                 addScore(chat_id,uName, len(palavra)*2)
                                 cleanGame(chat_id)
                             else:
@@ -197,7 +203,6 @@ class Jogo:
                                 auxx = 0 if rd+1 > (len(nomes)-1) else rd + 1
                                 rpl.append('ERROU! '+emoji_negativo+'\n'+uName+' arriscou a palavra e errou, que burro!')
                                 rpl.append('*VOCÊ FOI OBLITERADO* '+emoji_poop+emoji_lua)
-                                rpl.append('Agora é a vez de: '+nomes[auxx]+emoji_point)
                                 addScore(chat_id,uName, -(len(palavra)))
                                 change = rmPlayer(chat_id, rd)
                                 if change[0]:
@@ -206,8 +211,10 @@ class Jogo:
                                 if len(uIds) == 0:
                                     rpl.append(emoji_poop+'LOSERS'+emoji_poop)
                                     rpl.append('O jogo acabou, utilize /novojogo para começar um novo')
-                                    rpl.append('Créditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersão Churrasco 1.0 '+emoji_bug)
+                                    rpl.append('Créditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersão Churrasco 1.2 '+emoji_bug+'\nSe você gostou avalie nosso bot em https://telegram.me/storebot?start=forca_bot '+emoji_blz)
                                     cleanGame(chat_id)
+                                else:
+                                    rpl.append('Agora é a vez de: '+nomes[auxx]+emoji_point)
                         else:
                             rpl.append('Tentativa inválida')
                     else:

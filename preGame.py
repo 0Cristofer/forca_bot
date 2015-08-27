@@ -102,6 +102,7 @@ class PreJogo:
         emoji_feliz = (u'\U0001f601').encode('utf-8')
         emoji_lua = (u'\U0001f31a').encode('utf-8')
         emoji_coroa = (u'\U0001f451').encode('utf-8')
+        emoji_sorriso = (u'\U0001f601').encode('utf-8')
         matriz = [
             ['Animais ou espécies', 'macaco', 'elefante','zebra','papagaio','andorinha','golfinho','gorila','tubarao','lobo','ornitorrinco','cavalo','humano','lebre','coelho','piriquito','pomba','dinossauro','macaco','borboleta'],
             ['Comidas, sobremesas ou frutas', 'banana','miojo','cachorro quente','lasanha','salada de frutas','carambola','x-salada','frango frito','batata frita','ketchup','chocolate','morango','strogonoff','arroz e feijao','batata doce','pizza','sushi','temaki','fondue de chocolate','cupcake','donut','eclair','froyo','gingerbread','honeycomb','icecream sandwich','jellybean','kitkat','lollipop','marshmallow'],
@@ -122,7 +123,7 @@ class PreJogo:
             if preState == False:
                 if text.startswith('/novojogo') or text.startswith('/novojogo@forca_bot'):
                     setGame(chat_id)
-                    rpl.append('Começando um novo jogo! Você sera o administrador dessa rodada '+uName+'\nVamos começar definindo os jogadores\nQuem quiser participar dessa rodada envie o comando /entrar :D' )
+                    rpl.append('Começando um novo jogo! Você sera o administrador dessa rodada '+uName+'\nVamos começar definindo os jogadores\nQuem quiser participar dessa rodada envie o comando /entrar '+emoji_sorriso+'\nSe precisar de ajude mande um /help')
                     rpl.append('Para fechar o grupo de participantes envie o comando /fecharjogo Administador '+uName)
                     setPreGame(chat_id, True)
                     setAdm(chat_id, uId)
