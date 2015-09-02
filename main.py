@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 #Responsavel pela comunicacao do nosso codigo com o app engine (a ser melhor comentado)
 
 #Imports necessarios para codificacao dos dados
@@ -95,12 +96,9 @@ class WebhookHandler(webapp2.RequestHandler):
 
         def reply(msg=None, img=None, aux=None, esp=None):
             if msg:
-                mg = msg.decode('utf-8')
                 resp = urllib2.urlopen(BASE_URL + 'sendMessage', urllib.urlencode({
-                    'chat_id': str(chat_id),
-                    'text': mg.encode('utf-8'),
-                    #'disable_web_page_preview': 'true',
-                    #'reply_to_message_id': str(message_id),
+                'chat_id': str(chat_id),
+                'text': msg,
                 })).read()
             elif img:
                 resp = multipart.post_multipart(BASE_URL + 'sendPhoto', [
@@ -135,6 +133,9 @@ class WebhookHandler(webapp2.RequestHandler):
         inGame = getInGame(chat_id)
         enabled = getEnabled(chat_id)
         send = []
+        def toDict(chat_id, text, replyTo = None, replyMarkup = None):
+            return dict(chat_id = chat_id, text = text, reply_to_message_id = replyTo, reply_markup = replyMarkup)
+
         if text.startswith('/Newws'):
             a = getChats()
             for i in range(len(a)):
