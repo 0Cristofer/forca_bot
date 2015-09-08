@@ -50,6 +50,9 @@ def checkChat(chat_id):
 def getChats():
     return bds.getChats()
 
+def delChat(chat_id):
+    bds.delChat(chat_id)
+
 class MeHandler(webapp2.RequestHandler):
     def get(self):
         urlfetch.set_default_fetch_deadline(60)
@@ -110,7 +113,7 @@ class WebhookHandler(webapp2.RequestHandler):
             elif aux:
                 resp = urllib2.urlopen(BASE_URL + 'sendMessage', urllib.urlencode({
                     'chat_id': str(aux),
-                    'text': 'Nova versão Churrasco 1.0 do forca_bot ONLINE\nNovidades:\n\t- Primeira versão oficial lançada e pronta para uso!\n\t- Uso de Emojis\n\t- Bug fixes\nDuvidas ou problemas fale com @bcesarg6 ou @cristoferoswald',
+                    'text': 'Nova versão Churrasco 1.4 do forca_bot ONLINE\nNovidades:\n\t- Nova função *Conheça*: Explicação da palavra\n\t- Nova categoria Pokémon: Os 151 originais\n\t- Bug fixes\nDesculpem pelo transtorno. Duvidas ou problemas fale com @bcesarg6 ou @cristoferoswald',
                     #'disable_web_page_preview': 'true',
                     #'reply_to_message_id': str(message_id),
                 })).read()
@@ -136,11 +139,18 @@ class WebhookHandler(webapp2.RequestHandler):
         def toDict(chat_id, text, replyTo = None, replyMarkup = None):
             return dict(chat_id = chat_id, text = text, reply_to_message_id = replyTo, reply_markup = replyMarkup)
 
-        if text.startswith('/Newws'):
-            a = getChats()
-            for i in range(len(a)):
-                reply(aux=a[i])
-        elif text.startswith('/start'):
+        '''if text.startswith('/Newws'):
+            try:
+                a = getChats()
+                for i in range(len(a)):
+                    try:
+                        reply(aux=a[i])
+                    except:
+                        print 'nao tem chat'
+                        delChat(a[i])
+            except:
+                print 'erro loco'''
+        if text.startswith('/start'):
             if checkChat(chat_id):
                 reply(esp='loucura')
             if enabled:

@@ -20,6 +20,13 @@ def getChats():
     c = ndb.Key(Chats, 'chats').get()
     return c.chats
 
+def delChat(chat_id):
+    c = ndb.Key(Chats, 'chats').get()
+    if chat_id in c.chats:
+        c.chats.remove(chat_id)
+    c.put()
+    return
+
 class PeDs(ndb.Model):
     pecs = ndb.StringProperty(repeated=True)
     tams = ndb.IntegerProperty(repeated=True)

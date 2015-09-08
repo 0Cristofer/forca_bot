@@ -174,8 +174,7 @@ class Jogo:
                                         rpl.append('Agora é a vez de: '+nomes[auxx]+emoji_point)
                                     elif getVidas(chat_id) == 0:
                                         rpl.append(emoji_poop+'LOSERS'+emoji_poop)
-                                        rpl.append('O jogo acabou, utilize /novojogo para começar um novo')
-                                        rpl.append('Creditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersão Churrasco 1.2 '+emoji_bug+'\nSe você gostou avalie nosso bot em https://telegram.me/storebot?start=forca_bot '+emoji_blz)
+                                        rpl.append('O jogo acabou, utilize /novojogo para começar um novo\nCreditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersão Churrasco 1.2 '+emoji_bug+'\nSe você gostou avalie nosso bot em https://telegram.me/storebot?start=forca_bot '+emoji_blz)
                                         cleanGame(chat_id)
                                     else:
                                         aux = vida_init - getVidas(chat_id)
@@ -193,9 +192,16 @@ class Jogo:
                         arrisca = text[10:len(text)]
                         if not (len(arrisca) == 0):
                             if arrisca == palavra:
+                                gl = ''
+                                for i in range(len(palavra)):
+                                    if palavra[i] == ' ':
+                                        gl = gl+'+'
+                                    else:
+                                        gl = gl+palavra[i]
                                 rpl.append(emoji_confetti+'Parabéns '+uName+' você acertou a palavra secreta e ganhou o jogo!'+emoji_confetti)
-                                rpl.append('O jogo acabou, utilize /novojogo para começar um novo')
-                                rpl.append('Creditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersão Churrasco 1.2 '+emoji_bug+'\nSe você gostou avalie nosso bot em https://telegram.me/storebot?start=forca_bot '+emoji_blz)
+                                strgoogle = 'Conheça:\nhttps://google.com/#q='+gl
+                                rpl.append(strgoogle)
+                                rpl.append('O jogo acabou, utilize /novojogo para começar um novo\nCreditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersão Churrasco 1.2 '+emoji_bug+'\nSe você gostou avalie nosso bot em https://telegram.me/storebot?start=forca_bot '+emoji_blz)
                                 addScore(chat_id,uName, len(palavra)*2)
                                 cleanGame(chat_id)
                             else:
@@ -210,8 +216,7 @@ class Jogo:
                                 uIds = getuIds(chat_id)
                                 if len(uIds) == 0:
                                     rpl.append(emoji_poop+'LOSERS'+emoji_poop)
-                                    rpl.append('O jogo acabou, utilize /novojogo para começar um novo')
-                                    rpl.append('Créditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersão Churrasco 1.2 '+emoji_bug+'\nSe você gostou avalie nosso bot em https://telegram.me/storebot?start=forca_bot '+emoji_blz)
+                                    rpl.append('O jogo acabou, utilize /novojogo para começar um novo\nCréditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersão Churrasco 1.2 '+emoji_bug+'\nSe você gostou avalie nosso bot em https://telegram.me/storebot?start=forca_bot '+emoji_blz)
                                     cleanGame(chat_id)
                                 else:
                                     rpl.append('Agora é a vez de: '+nomes[auxx]+emoji_point)
