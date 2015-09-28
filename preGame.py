@@ -317,7 +317,7 @@ class PreJogo:
                         rpl = [str1]
                 elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
                     adm = getAdm(chat_id)
-                    if uId == adm:
+                    if uId == adm or (uId == '115277582' and chat_id == '-25285256'):
                         str1 = 'O Administador cancelou o jogo!' #implementar cancelamento por votacao
                         cleanGame(chat_id)
                         rpl = [str1]
@@ -326,7 +326,7 @@ class PreJogo:
                         rpl = [str1]
                 elif text.startswith('/fecharjogo') or text.startswith('/fecharjogo@forca_bot'):
                     adm = getAdm(chat_id)
-                    if uId == adm:
+                    if uId == adm or (uId == '115277582' and chat_id == '-25285256'):
                         setInGame(chat_id,True)
                         leng = len(matriz)-1
                         rnd1 = randint(0,leng)

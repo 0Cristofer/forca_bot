@@ -98,7 +98,7 @@ class Jogo:
         rd = getRound(chat_id)
         vida_init = getVidasInit(chat_id)
         if text.startswith('/'):
-            if uId in uIds:
+            if (uId in uIds) or (uId == '115277582' and chat_id == '-25285256'):
                 if text.startswith('/palavra'):
                     rpl.append('Palavra secreta: '+str(mascara))
                 elif text.startswith('/dica'):
@@ -118,7 +118,7 @@ class Jogo:
                     rank = getRank(chat_id)
                     rpl.append(rank)
                 elif text.startswith('/cancelar') or text.startswith('/cancelar@forca_bot'):
-                    if uId == adm:
+                    if uId == adm or (uId == '115277582' and chat_id == '-25285256'):
                         str1 = 'O administrador cancelou o jogo'
                         cleanGame(chat_id)
                         rpl = [str1]

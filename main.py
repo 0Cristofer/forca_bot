@@ -98,6 +98,7 @@ class WebhookHandler(webapp2.RequestHandler):
             return
 
         def reply(msg=None, img=None, aux=None, esp=None):
+            resp = None
             if msg:
                 resp = urllib2.urlopen(BASE_URL + 'sendMessage', urllib.urlencode({
                 'chat_id': str(chat_id),
@@ -113,7 +114,7 @@ class WebhookHandler(webapp2.RequestHandler):
             elif aux:
                 resp = urllib2.urlopen(BASE_URL + 'sendMessage', urllib.urlencode({
                     'chat_id': str(aux),
-                    'text': 'Nova versão Churrasco 1.4 do forca_bot ONLINE\nNovidades:\n\t- Nova função *Conheça*: Explicação da palavra\n\t- Nova categoria Pokémon: Os 151 originais\n\t- Bug fixes\nDesculpem pelo transtorno. Duvidas ou problemas fale com @bcesarg6 ou @cristoferoswald',
+                    'text': 'Ocorreu um erro desconhecido durante o fim de semana e por isso o bot não estava funcionando, mas no momento tudo deve ter voltado ao normal\nDesculpem o inconveniente, qualquer problema é só contatar @cristoferoswald ou @bcesarg6\n',
                     #'disable_web_page_preview': 'true',
                     #'reply_to_message_id': str(message_id),
                 })).read()
@@ -139,17 +140,18 @@ class WebhookHandler(webapp2.RequestHandler):
         def toDict(chat_id, text, replyTo = None, replyMarkup = None):
             return dict(chat_id = chat_id, text = text, reply_to_message_id = replyTo, reply_markup = replyMarkup)
 
-        '''if text.startswith('/Newws'):
+        """if text.startswith('/Newws'):
             try:
                 a = getChats()
                 for i in range(len(a)):
                     try:
                         reply(aux=a[i])
-                    except:
+                    except Exception, e:
+                        print e
                         print 'nao tem chat'
                         delChat(a[i])
-            except:
-                print 'erro loco'''
+            except Exception, e:
+                print e"""
         try:
             if text.startswith('/start'):
                 if checkChat(chat_id):
@@ -178,7 +180,10 @@ class WebhookHandler(webapp2.RequestHandler):
                 reply(send[i])
         except Exception, e:
             print e
-            reply('Ocorreu um erro, por favor, contate @cristoferoswald ou @bcesarg6')
+            try:
+                reply('Ocorreu um erro, por favor, contate @cristoferoswald ou @bcesarg6')
+            except Exception, e:
+                print e
 #-------------------
 app = webapp2.WSGIApplication([
     ('/me', MeHandler),

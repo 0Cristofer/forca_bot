@@ -89,6 +89,7 @@ class Rank(ndb.Model):
 
 def addPlayerRank(chat_id, uName):
     r = ndb.Key(Rank, chat_id).get()
+    uName = uName.decode('utf-8')
     if not r:
         r = Rank(id = chat_id)
         r.put()
