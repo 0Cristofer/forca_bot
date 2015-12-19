@@ -9,6 +9,7 @@ import logging
 import random
 import urllib
 import urllib2
+import time
 
 #Para enviar imagens
 
@@ -92,7 +93,7 @@ class WebhookHandler(webapp2.RequestHandler):
         user_id = message['from']
         uId = str(user_id.get('id'))    #gets user id
         uName = str(user_id.get('first_name').encode('utf-8')) #gets user first name
-
+        emoji_gritar = ' ' + (u'\U0001f4e2').encode('utf-8')
         if not text:
             logging.info('no text')
             return
@@ -114,7 +115,8 @@ class WebhookHandler(webapp2.RequestHandler):
             elif aux:
                 resp = urllib2.urlopen(BASE_URL + 'sendMessage', urllib.urlencode({
                     'chat_id': str(aux),
-                    'text': 'Ocorreu um erro desconhecido durante o fim de semana e por isso o bot não estava funcionando, mas no momento tudo deve ter voltado ao normal\nDesculpem o inconveniente, qualquer problema é só contatar @cristoferoswald ou @bcesarg6\n',
+                    'text': 'Olá jogadores do focar_bot, estivemos passando por alguns problemas na última hora como alguns devem ter percebido. Caso não estejam conseguindo jogar, recomendamos que cancelem o jogo atual e começem um novo. Caso ainda assim não estejam conseguindo jogar, contate @cristoferoswald ou @bcesarg6. Desculpem o inconveniente.'
+                    #'text':'\t'+emoji_gritar+'***AVISO***'+emoji_gritar+'\nJogadores do forca_bot, uma nova versão do bot foi lançada! A versão 2.0 traz muitas novidades e uma interface totalmente nova. Recomendamos que você passe a utilizar o novo bot. Basta clicar em @PlayHangmanBot. Informamos que essa versão do bot não receberá mais atualizações e eventualmente será desligada, portanto utilizem o novo. Avisem seus amigos e se divirtam!',
                     #'disable_web_page_preview': 'true',
                     #'reply_to_message_id': str(message_id),
                 })).read()
@@ -137,13 +139,12 @@ class WebhookHandler(webapp2.RequestHandler):
         inGame = getInGame(chat_id)
         enabled = getEnabled(chat_id)
         send = []
-        def toDict(chat_id, text, replyTo = None, replyMarkup = None):
-            return dict(chat_id = chat_id, text = text, reply_to_message_id = replyTo, reply_markup = replyMarkup)
-
+        
         """if text.startswith('/Newws'):
             try:
                 a = getChats()
                 for i in range(len(a)):
+                    time.sleep(1)
                     try:
                         reply(aux=a[i])
                     except Exception, e:
