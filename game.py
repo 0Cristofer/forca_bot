@@ -201,7 +201,7 @@ class Jogo:
                                 rpl.append(emoji_confetti+'Parabéns '+uName+' você acertou a palavra secreta e ganhou o jogo!'+emoji_confetti)
                                 strgoogle = 'Conheça:\nhttps://google.com/#q='+gl
                                 rpl.append(strgoogle)
-                                rpl.append('O jogo acabou, utilize /novojogo para começar um novo\nCreditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersão Churrasco 1.2 '+emoji_bug+'\n Uma nova versão está disponível: Conheça o @playhangmanbot a nova versão do seu bot de jogo da forca! :)')
+                                rpl.append('O jogo acabou, utilize /novojogo para começar um novo\nCreditos: Bot criado por @bcesarg6 e @cristoferoswald\n Uma nova versão está disponível: Conheça o @playhangmanbot a nova versão do seu bot de jogo da forca! :)')
                                 addScore(chat_id,uName, len(palavra)*2)
                                 cleanGame(chat_id)
                             else:

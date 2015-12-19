@@ -139,7 +139,7 @@ class WebhookHandler(webapp2.RequestHandler):
         inGame = getInGame(chat_id)
         enabled = getEnabled(chat_id)
         send = []
-        
+
         """if text.startswith('/Newws'):
             try:
                 a = getChats()
