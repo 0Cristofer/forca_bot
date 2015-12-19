@@ -174,7 +174,7 @@ class Jogo:
                                         rpl.append('Agora é a vez de: '+nomes[auxx]+emoji_point)
                                     elif getVidas(chat_id) == 0:
                                         rpl.append(emoji_poop+'LOSERS'+emoji_poop)
-                                        rpl.append('O jogo acabou, utilize /novojogo para começar um novo\nCreditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersão Churrasco 1.2 '+emoji_bug+'\nSe você gostou avalie nosso bot em https://telegram.me/storebot?start=forca_bot '+emoji_blz)
+                                        rpl.append('O jogo acabou, utilize /novojogo para começar um novo\nCreditos: Bot criado por @bcesarg6 e @cristoferoswald\n Uma nova versão está disponível: Conheça o @playhangmanbot a nova versão do seu bot de jogo da forca! :)')
                                         cleanGame(chat_id)
                                     else:
                                         aux = vida_init - getVidas(chat_id)
@@ -201,7 +201,7 @@ class Jogo:
                                 rpl.append(emoji_confetti+'Parabéns '+uName+' você acertou a palavra secreta e ganhou o jogo!'+emoji_confetti)
                                 strgoogle = 'Conheça:\nhttps://google.com/#q='+gl
                                 rpl.append(strgoogle)
-                                rpl.append('O jogo acabou, utilize /novojogo para começar um novo\nCreditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersão Churrasco 1.2 '+emoji_bug+'\nSe você gostou avalie nosso bot em https://telegram.me/storebot?start=forca_bot '+emoji_blz)
+                                rpl.append('O jogo acabou, utilize /novojogo para começar um novo\nCreditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersão Churrasco 1.2 '+emoji_bug+'\n Uma nova versão está disponível: Conheça o @playhangmanbot a nova versão do seu bot de jogo da forca! :)')
                                 addScore(chat_id,uName, len(palavra)*2)
                                 cleanGame(chat_id)
                             else:
@@ -216,7 +216,7 @@ class Jogo:
                                 uIds = getuIds(chat_id)
                                 if len(uIds) == 0:
                                     rpl.append(emoji_poop+'LOSERS'+emoji_poop)
-                                    rpl.append('O jogo acabou, utilize /novojogo para começar um novo\nCréditos: Bot criado por @bcesarg6 e @cristoferoswald\nVersão Churrasco 1.2 '+emoji_bug+'\nSe você gostou avalie nosso bot em https://telegram.me/storebot?start=forca_bot '+emoji_blz)
+                                    rpl.append('O jogo acabou, utilize /novojogo para começar um novo\nCréditos: Bot criado por @bcesarg6 e @cristoferoswald\n Uma nova versão está disponível: Conheça o @playhangmanbot a nova versão do seu bot de jogo da forca! :)')
                                     cleanGame(chat_id)
                                 else:
                                     rpl.append('Agora é a vez de: '+nomes[auxx]+emoji_point)

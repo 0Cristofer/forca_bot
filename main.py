@@ -157,18 +157,17 @@ class WebhookHandler(webapp2.RequestHandler):
                 if checkChat(chat_id):
                     reply(esp='loucura')
                 if enabled:
-                    reply('forca_bot já esta ligado')
+                    reply('forca_bot já esta ligado. Conheça o @playhangmanbot a nova versão do seu bot de jogo da forca! :)')
                 else:
-                    #reply('Olá eu sou o forca_bot!\nSou um bot desenvolvido para ser o mestre dos jogos de forca! Você pode jogar sozinho ou me adicionar a um grupo e jogar com seus amigos :)\nComo funciona: Use comandos que começam com / para interagir comigo, organize uma partida que eu cuidarei do resto! Vou escolher uma palavra de uma determinada categoria e ela será a palavra secreta, você e seus amigos devem chutar letras e eu direi se você acertou ou não, quando você estiver pronto pode arriscar a palavra, mas cuidado, se você errar perde na hora!\n O número de chutes de letras varia de acordo com a partida, também possuo um sistema de ranking!\nDuvidas e feedback envie uma mensagem para meus criadores: @bcesarg6 e @cristoferoswald :D\nUse /help para ajuda com os comandos e se divirta!')
-                    reply('Olá, eu sou o forca_bot!\nSou um bot em desenvolvimento para ser o mestre de jogos de forca.\nPara começar um novo jogo digite /novojogo')
+                    reply('Olá, eu sou o forca_bot!\n Uma nova versão está disponível: Conheça o @playhangmanbot a nova versão do seu bot de jogo da forca! :).\nPara começar um novo jogo digite /novojogo')
                     setEnabled(chat_id, True)
                     if (inPreGame or inGame):
                         reply('Já existe um jogo em andamento, se quiser é só continuar jogando')
             elif text.startswith('/stop'):
                 if not enabled:
-                    reply('forca_bot já esta desligado')
+                    reply('forca_bot já esta desligado. Conheça o @playhangmanbot a nova versão do seu bot de jogo da forca! :)')
                 else:
-                    reply('forca_bot desligado')
+                    reply('forca_bot desligado. Conheça o @playhangmanbot a nova versão do seu bot de jogo da forca! :)')
                     setEnabled(chat_id, False)
             else:
                 if enabled:
@@ -181,7 +180,7 @@ class WebhookHandler(webapp2.RequestHandler):
         except Exception, e:
             print e
             try:
-                reply('Ocorreu um erro, por favor, contate @cristoferoswald ou @bcesarg6')
+                reply('Ocorreu um erro, por favor, contate @cristoferoswald ou @bcesarg6. Considere migrar para o @playhangmanbot a nova versão do seu bot de jogo da forca! :)')
             except Exception, e:
                 print e
 #-------------------
